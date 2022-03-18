@@ -29,7 +29,7 @@
     "vite": "^2.8.0"
   },
     "lint-staged": {
-      "src/index.tsx": "npx eslint 'src/index.tsx'"
+      "src/index.tsx": "npx eslint "
     }
   ,
   "husky": {
