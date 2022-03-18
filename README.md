@@ -4,7 +4,7 @@ This project was bootstrapped with [Vite](https://vitejs.dev/).
 
 ## Available Scripts
 
-When you install all needed packages with:
+When you install all needed packages:
 
 ### `npm install`
 
