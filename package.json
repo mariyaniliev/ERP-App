@@ -30,7 +30,7 @@
     "vite": "^2.8.0"
   },
   "lint-staged": {
-    "src/index.tsx*": "prettier --write ."
+    "src/index.tsx": "prettier --write ."
   },
   "husky": {
     "hooks": {
