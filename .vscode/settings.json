@@ -1,0 +1,7 @@
+{
+  "workbench.editor.untitled.hint": "hidden",
+  "editor.codeActionsOnSave": { "source.fixAll.eslint": true },
+  "editor.formatOnSave": true,
+  "eslint.alwaysShowStatus": true,
+  "files.autoSave": "onFocusChange",
+}
