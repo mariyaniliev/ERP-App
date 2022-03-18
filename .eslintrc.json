@@ -23,7 +23,7 @@
     "no-duplicate-imports": "error",
     "unused-imports/no-unused-imports": "error",
     "quotes": ["error", "double", { "allowTemplateLiterals": true }],
-    "eqeqeq":"error",
+    "eqeqeq": "error",
     "no-redeclare": "error",
     "prettier/prettier": [
       "error",
