@@ -30,7 +30,7 @@
     "vite": "^2.8.0"
   },
   "lint-staged": {
-    "*": "eslint --fix"
+    "*": "eslint --fix ."
   },
   "husky": {
     "hooks": {
