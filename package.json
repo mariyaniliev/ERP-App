@@ -30,12 +30,11 @@
     "vite": "^2.8.0"
   },
   "lint-staged": {
-    "**/*": "prettier --check  "
+    "*": "eslint --fix"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "lint-staged"
+      "pre-commit": "lint-staged"
     }
   }
 }
