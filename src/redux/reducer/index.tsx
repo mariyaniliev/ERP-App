@@ -1,7 +1,12 @@
 import { combineReducers } from "redux";
 import counterReducer from "./counter";
+import { CounterState } from "./state-types";
 
-const rootReducer = combineReducers({
+interface RootReducerType {
+  counter: CounterState;
+}
+
+const rootReducer = combineReducers<RootReducerType>({
   counter: counterReducer,
 });
 
