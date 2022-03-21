@@ -1,12 +1,12 @@
-import React from "react"
-import ReactDOM from "react-dom"
-import { store } from "./redux/store"
-import { Provider } from "react-redux"
-import Counter from "./Counter"
-import { PersistGate } from "redux-persist/integration/react"
-import { persistStore } from "redux-persist"
+import React from "react";
+import ReactDOM from "react-dom";
+import store from "./redux/store";
+import { Provider } from "react-redux";
+import Counter from "./Counter";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 
-const persistor = persistStore(store)
+const persistor = persistStore(store);
 
 ReactDOM.render(
   <React.StrictMode>
@@ -18,4 +18,4 @@ ReactDOM.render(
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
-)
+);

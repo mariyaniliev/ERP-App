@@ -1,12 +1,11 @@
-import React from "react"
-import { RootState } from "./redux/store"
-import { useAppSelector, useAppDispatch } from "./redux/hooks"
+import React from "react";
+import { RootState, useAppSelector, useAppDispatch } from "./redux/store";
 
-import { decrement, increment } from "./redux/reducer/counter"
+import { decrement, increment } from "./redux/reducer/counter";
 
 const Counter = () => {
-  const count = useAppSelector((state: RootState) => state.counter.value)
-  const dispatch = useAppDispatch()
+  const count = useAppSelector((state: RootState) => state.counter.value);
+  const dispatch = useAppDispatch();
 
   return (
     <div>
@@ -26,6 +25,6 @@ const Counter = () => {
         </button>
       </div>
     </div>
-  )
-}
-export default Counter
+  );
+};
+export default Counter;
