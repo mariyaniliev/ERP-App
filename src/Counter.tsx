@@ -26,7 +26,7 @@ const Counter = () => {
         >
           Decrement
         </button>
-        <button onClick={() => dispatch(redirect("/s"))}>link</button>
+        <button onClick={() => dispatch(redirect("/test1"))}>link</button>
       </div>
     </div>
   );
