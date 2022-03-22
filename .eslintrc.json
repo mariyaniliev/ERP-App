@@ -31,6 +31,9 @@
       {
         "endOfLine": "auto"
       }
-    ]
+    ],
+    "no-else-return": "error",
+    "dot-notation": "error",
+    "no-param-reassign": "error"
   }
 }
