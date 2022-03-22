@@ -2,6 +2,8 @@ import React from "react";
 import { RootState, useAppSelector, useAppDispatch } from "./redux/store";
 
 import { decrement, increment } from "./redux/reducer/counter";
+import { redirect } from "./CustomRedirect/redirectReducer";
+import CustomRedirect from "./CustomRedirect/CustomRedirect";
 
 const Counter = () => {
   const count = useAppSelector((state: RootState) => state.counter.value);
@@ -9,6 +11,7 @@ const Counter = () => {
 
   return (
     <div>
+      <CustomRedirect />
       <div>
         <button
           aria-label="Increment value"
@@ -23,6 +26,7 @@ const Counter = () => {
         >
           Decrement
         </button>
+        <button onClick={() => dispatch(redirect("/s"))}>link</button>
       </div>
     </div>
   );
