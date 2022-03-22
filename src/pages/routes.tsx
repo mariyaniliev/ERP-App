@@ -18,7 +18,7 @@ export const routes: RouteObject[] = [
       {
         path: "/TestPage1",
         element: <TestPage1 />,
-        // B is chiled of A and use same path as A
+        // TestPage2 is chiled of TestPage1 and use same path as TestPage1
         children: [{ index: true, element: <TestPage2 /> }],
       },
       { path: "*", element: <TestNoMatch /> },
