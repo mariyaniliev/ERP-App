@@ -8,7 +8,7 @@ const CustomRedirect = () => {
   /** Object which contains parameters to next page {pathname: ... , state: ...} */
   const { redirect } = useAppSelector((state: RootState) => state.redirect);
 
-  const [redirectPath, setRedirectPath] = useState(redirect);
+  const [redirectPath, setRedirectPath] = useState<string>(redirect);
 
   useEffect(() => {
     window.onpopstate = () => {
