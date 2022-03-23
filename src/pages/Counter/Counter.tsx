@@ -2,7 +2,7 @@ import React from "react";
 import { RootState, useAppSelector, useAppDispatch } from "../../redux/store";
 
 import { decrement, increment } from "../../redux/reducer/counter";
-import { redirect } from "../../CustomRedirect/redirectReducer";
+import { Link } from "react-router-dom";
 
 const Counter = () => {
   const count = useAppSelector((state: RootState) => state.counter.value);
@@ -24,9 +24,7 @@ const Counter = () => {
         >
           Decrement
         </button>
-        <button onClick={() => dispatch(redirect("/TestPage1"))}>
-          TestPage1
-        </button>
+        <Link to="/TestPage1">TestPage1</Link>
       </div>
     </div>
   );
