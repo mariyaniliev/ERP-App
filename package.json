@@ -13,7 +13,13 @@
     "lint:fix": "eslint --fix \"{src,stories}/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.5.1",
+    "@mui/material": "^5.5.2",
+    "@mui/types": "^7.1.3",
     "@reduxjs/toolkit": "^1.8.0",
+    "@types/material-ui": "^0.21.12",
     "axios": "^0.26.1",
     "lodash": "^4.17.21",
     "react": "^17.0.2",
