@@ -1,0 +1,36 @@
+## General ##
+#############
+COMPOSE_PROJECT_NAME=genericsoft
+
+## db connection ##
+#############
+DATABASE_URL="postgresql://postgres:mysecretpassword@localhost:5432/postgres?schema=api"
+
+## Database ##
+##############
+POSTGRES_HOST=db
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=mysecretpassword
+POSTGRES_PORT=5432
+POSTGRES_NAME=postgres
+
+## Services ##
+##############
+API_PORT=4000
+
+## JWT ##
+##############
+JWT_SECRET_KEY=shhhh
+JWT_TOKEN_TTL=2h
+JWT_REFRESH_TOKEN_TTL=1y
+
+## bcrypt ##
+##############
+SALT_ROUNDS=10
+
+
+
+
+
+
+

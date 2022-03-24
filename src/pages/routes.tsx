@@ -1,11 +1,11 @@
 import * as React from "react";
 import type { RouteObject } from "react-router-dom";
-import Counter from "./Counter";
-import Home from "./Home";
-import TestPage1 from "./TestPage1";
-import TestPage2 from "./TestPage2";
-import TestPage3 from "./TestPage3";
-import TestNoMatch from "./TestNoMatch";
+import Counter from "./Counter/Counter";
+import Home from "./Home/Home";
+import TestPage1 from "./TestPage1/TestPage1";
+import TestPage2 from "./TestPage2/TestPage2";
+import TestPage3 from "./TestPage3/TestPage3";
+import TestNoMatch from "./TestNoMatch/TestNoMatch";
 
 export const routes: RouteObject[] = [
   {

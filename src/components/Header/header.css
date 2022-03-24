@@ -1,0 +1,53 @@
+.header {
+  background: rgb(9, 55, 92);
+  height: 3.5rem;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 35rem;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.1rem;
+}
+
+.user__logout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logout-text {
+  color: rgb(190, 11, 11);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.no-user {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.1rem;
+}
+
+.no-user__login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-text {
+  cursor: pointer;
+}
+
+.no-user__username,
+.user__username {
+  color: wheat;
+}
+.sideBarButtonIcon {
+  color: red;
+}
