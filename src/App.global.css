@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Palette+Mosaic&family=Poppins:wght@100&display=swap');
+
+:root {
+    --color-primary-gradient: linear-gradient(
+        to right,
+        #5ED3E1,
+        #7F53AC 59%);
+  --color-aquablue: #5ED3E1;
+  --color-purple: #7F53AC;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
