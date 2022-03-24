@@ -45,11 +45,11 @@
     "vite": "^2.8.0"
   },
   "lint-staged": {
-    "*.tsx": [
+    ".tsx": [
       "eslint --fix .",
       "eslint ."
     ],
-    "*.ts": [
+    ".ts": [
       "eslint --fix .",
       "eslint ."
     ]

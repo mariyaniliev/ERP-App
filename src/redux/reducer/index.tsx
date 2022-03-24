@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import counterReducer from "./counter";
-import dreawerHeaderReducer from "./dreawerHeader";
+import dreawerHeaderReducer from "./drawerHeader";
 import { CounterState, DrawerHeaderState } from "./state-types";
 
 interface RootReducerType {

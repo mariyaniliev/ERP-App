@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector, RootState } from "../../redux/store";
-import Logo from "../Logo/Logo";
 import { styled, useTheme } from "@mui/material/styles";
 import { IconButton } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { toggle } from "../../redux/reducer/dreawerHeader";
+import { toggle } from "../../redux/reducer/drawerHeader";
+import logo from "../../theme/assets/gs-logo.png";
 import "./header.css";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -25,35 +25,19 @@ const HeaderComponent = () => {
 
   return (
     <div className="header">
-      <DrawerHeader>
-        <IconButton onClick={() => dispatch(toggle())}>
-          {open ? (
-            <ChevronLeftIcon className="sideBarButtonIcon" />
-          ) : (
-            <ChevronRightIcon className="sideBarButtonIcon" />
-          )}
-        </IconButton>
-      </DrawerHeader>
-      <Logo />
-      {user ? (
-        <div className="user">
-          <div className="user__logout">
-            <a href="#" className="logout-text">
-              LogOut
-            </a>
-          </div>
-          <div className="user__username">User:{user}</div>
-        </div>
-      ) : (
-        <div className="no-user">
-          <div className="no-user__login">
-            <a href="#" className="login-text">
-              Log In
-            </a>
-          </div>
-          <div className="no-user__username">User:{user}</div>
-        </div>
-      )}
+      <div className="headerButtonAndLogo">
+        <DrawerHeader>
+          <IconButton onClick={() => dispatch(toggle())}>
+            {open ? (
+              <ChevronLeftIcon className="sideBarButtonIcon" />
+            ) : (
+              <ChevronRightIcon className="sideBarButtonIcon" />
+            )}
+          </IconButton>
+        </DrawerHeader>
+        <img className="logo" src={logo} alt="Logo" />
+      </div>
+      <div className="username">User:{user}</div>
     </div>
   );
 };
