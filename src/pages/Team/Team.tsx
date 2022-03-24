@@ -1,13 +1,12 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
-const TestPage1 = () => {
+const Team = () => {
   return (
     <div>
-      sdasdasdadsdasdasdaas
-      <Link to="/TestPage1">TestPage1</Link>
+      <Link to="/team">Team</Link>
       {/* without Outlet component, children property doesnt work */}
       <Outlet />
     </div>
   );
 };
-export default TestPage1;
+export default Team;

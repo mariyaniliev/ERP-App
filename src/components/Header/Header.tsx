@@ -28,9 +28,9 @@ const HeaderComponent = () => {
       <DrawerHeader>
         <IconButton onClick={() => dispatch(toggle())}>
           {open ? (
-            <ChevronRightIcon className="sideBarButtonIcon" />
-          ) : (
             <ChevronLeftIcon className="sideBarButtonIcon" />
+          ) : (
+            <ChevronRightIcon className="sideBarButtonIcon" />
           )}
         </IconButton>
       </DrawerHeader>

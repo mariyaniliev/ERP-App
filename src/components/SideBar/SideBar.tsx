@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import { RootState, useAppSelector } from "../../redux/store";
 import { styled, Theme, CSSObject } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
@@ -6,18 +7,18 @@ import {
   Box,
   List,
   CssBaseline,
-  Divider,
   ListItemButton,
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import "./sideBar.css";
 
 const drawerWidth = 200;
 
 const openedMixin = (theme: Theme): CSSObject => ({
+  justifyContent: "space-between",
+  gap: 250,
   position: "relative",
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -28,6 +29,8 @@ const openedMixin = (theme: Theme): CSSObject => ({
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
+  justifyContent: "space-between",
+  gap: 250,
   position: "relative",
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
@@ -43,7 +46,6 @@ const closedMixin = (theme: Theme): CSSObject => ({
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  position: "relative",
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
@@ -60,20 +62,35 @@ const Drawer = styled(MuiDrawer, {
 
 const SideBar = () => {
   const open = useAppSelector((state: RootState) => state.drawerHeader.open);
+  const navigate = useNavigate();
+
+  const sideBarSectionsTop = [
+    { content: "Team", section: "/team", icon: MailIcon },
+    { content: "User", section: "/user", icon: MailIcon },
+    { content: "Positions", section: "/positions", icon: MailIcon },
+    { content: "Timeoffs", section: "/timeoffs", icon: MailIcon },
+  ];
+
+  const sideBarSectionsBottum = [
+    { content: "System", section: "/system", icon: MailIcon },
+    { content: "About", section: "/about", icon: MailIcon },
+    { content: "Log out", section: "/logout", icon: MailIcon },
+  ];
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <Drawer variant="permanent" open={open}>
-        <Divider />
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+          {sideBarSectionsTop.map((section, index) => (
             <ListItemButton
-              key={text}
+              key={section.content}
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
               }}
+              onClick={() => navigate(section.section)}
             >
               <ListItemIcon
                 sx={{
@@ -82,22 +99,26 @@ const SideBar = () => {
                   justifyContent: "center",
                 }}
               >
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {<section.icon />}
               </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+                primary={section.content}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
             </ListItemButton>
           ))}
         </List>
-        <Divider />
+
         <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
+          {sideBarSectionsBottum.map((section, index) => (
             <ListItemButton
-              key={text}
+              key={section.content}
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
               }}
+              onClick={() => navigate(section.section)}
             >
               <ListItemIcon
                 sx={{
@@ -106,9 +127,12 @@ const SideBar = () => {
                   justifyContent: "center",
                 }}
               >
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {<section.icon />}
               </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+                primary={section.content}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
             </ListItemButton>
           ))}
         </List>

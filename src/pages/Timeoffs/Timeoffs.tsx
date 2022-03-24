@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const TestNoMatch = () => {
+const Timeoffs = () => {
   return (
     <div>
-      <Link to="/">TestNoMatch</Link>
+      <Link to="/timeoffs">Timeoffs</Link>
     </div>
   );
 };
-export default TestNoMatch;
+export default Timeoffs;

@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const TestPage2 = () => {
+const User = () => {
   return (
     <div>
-      <Link to="/TestPage2">TestPage2</Link>
+      <Link to="/user">User</Link>
     </div>
   );
 };
-export default TestPage2;
+export default User;

@@ -1,11 +1,12 @@
 .header {
-  background: rgb(9, 55, 92);
+  background: #fff;
   height: 3.5rem;
   font-size: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: space-around;
   gap: 35rem;
+  border-bottom: 3px solid rgba(192, 189, 189, 0.24);
 }
 
 .user {
@@ -47,7 +48,4 @@
 .no-user__username,
 .user__username {
   color: wheat;
-}
-.sideBarButtonIcon {
-  color: red;
 }

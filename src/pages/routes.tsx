@@ -2,10 +2,10 @@ import * as React from "react";
 import type { RouteObject } from "react-router-dom";
 import Counter from "./Counter/Counter";
 import Home from "./Home/Home";
-import TestPage1 from "./TestPage1/TestPage1";
-import TestPage2 from "./TestPage2/TestPage2";
-import TestPage3 from "./TestPage3/TestPage3";
-import TestNoMatch from "./TestNoMatch/TestNoMatch";
+import Team from "./Team/Team";
+import Timeoffs from "./Timeoffs/Timeoffs";
+import Positions from "./Positions/Positions";
+import User from "./User/User";
 
 export const routes: RouteObject[] = [
   {
@@ -16,15 +16,15 @@ export const routes: RouteObject[] = [
       //couter use the same path as Home, thats why it doest have a path
       { index: true, element: <Counter /> },
       {
-        path: "/TestPage1",
-        element: <TestPage1 />,
+        path: "/team",
+        element: <Team />,
         // TestPage2 is chiled of TestPage1 and use same path as TestPage1
-        children: [{ index: true, element: <TestPage2 /> }],
+        children: [{ index: true, element: <User /> }],
       },
-      { path: "*", element: <TestNoMatch /> },
+      { path: "*", element: <Positions /> },
     ],
   },
 
   //different page, not a chiled of Home
-  { path: "/TestPage3", element: <TestPage3 /> },
+  { path: "/timeoffs", element: <Timeoffs /> },
 ];
