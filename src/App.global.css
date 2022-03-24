@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Palette+Mosaic&family=Poppins:wght@100&display=swap');
+
+:root {
+  --color-accentblue: #556db0;
+  --color-lightblue: #86a7d6;
+  --color-darkblue01: #312c5c;
+  --color-darkblue02: #4a4c9e;
+  --color-dark: #151326;
+  --color-accentpurple: #805b98;
+  --color-purple: #5c4476;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
