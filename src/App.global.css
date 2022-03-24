@@ -2,10 +2,9 @@
 
 :root {
     --color-primary-gradient: linear-gradient(
-        90deg,
-        #5ED3E1 0%,
-        #7F53AC 59%,
-      );
+        to right,
+        #5ED3E1,
+        #7F53AC 59%);
   --color-aquablue: #5ED3E1;
   --color-purple: #7F53AC;
 }
