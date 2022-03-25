@@ -1,43 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
 import { useAppDispatch, useAppSelector, RootState } from "../../redux/store";
-import { useTheme } from "@mui/material/styles";
+import { Box } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { toggle } from "../../redux/reducer/drawerHeader";
 import logo from "../../theme/assets/gs-logo.png";
-import "./header.css";
+import { THEME_COLORS } from "../../theme/theme-constants";
+import { styles } from "./header-styles";
 
 const HeaderComponent = () => {
   const dispatch = useAppDispatch();
-  const theme = useTheme();
   const open = useAppSelector((state: RootState) => state.drawerHeader.open);
-  const [user, setUser] = useState("Nikolay Petkov");
-  const [role, setRole] = useState("Admin");
 
-  const menuToggleButton = open ? (
-    <ChevronLeftIcon className="sideBarButtonIcon" />
-  ) : (
-    <ChevronRightIcon className="sideBarButtonIcon" />
-  );
+  const menuToggleButton = open ? <ChevronLeftIcon /> : <ChevronRightIcon />;
 
   return (
-    <div className="header">
-      <div className="headerButtonAndLogo">
-        <div className="menuToggleWrapper" onClick={() => dispatch(toggle())}>
+    <Box sx={styles.header}>
+      <Box sx={styles.headerButtonAndLogo}>
+        <Box sx={styles.sideBarButtonIcon} onClick={() => dispatch(toggle())}>
           {menuToggleButton}
-        </div>
-        <img className="logo" src={logo} alt="Generic Soft Logo" />
-      </div>
-      <div className="userDetailWrapper">
-        <div
-          className="userLogoWrapper"
-          style={{
-            background: `url(${logo})`,
-          }}
-        />
-          <p className="userName">{user}</p>
-      </div>
-    </div>
+        </Box>
+        <Box sx={styles.logoWraper}>
+          <img style={styles.logo} src={logo} alt="Generic Soft Logo" />
+        </Box>
+      </Box>
+      <Box>
+        <Box sx={styles.userInfo}>
+          <Box
+            style={{
+              ...styles.userAvatarWraper,
+              background: THEME_COLORS.purple,
+            }}
+          ></Box>
+          <p style={{ marginLeft: "20px" }}>Nikolay Petkov</p>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

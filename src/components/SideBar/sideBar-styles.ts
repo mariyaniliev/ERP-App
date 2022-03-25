@@ -2,12 +2,11 @@ import { styled, Theme, CSSObject } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import { THEME_COLORS } from "../../theme/theme-constants";
 
-const drawerWidth = 200;
+const drawerWidth = 225;
 
 const openedMixin = (theme: Theme): CSSObject => ({
-  color: `${THEME_COLORS.purple}`,
   justifyContent: "space-between",
-  gap: 250,
+  gap: `calc(${theme.spacing(30)} + 1px)`,
   position: "relative",
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -18,7 +17,6 @@ const openedMixin = (theme: Theme): CSSObject => ({
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
-  color: `${THEME_COLORS.purple}`,
   justifyContent: "space-between",
   gap: 250,
   position: "relative",
@@ -37,6 +35,7 @@ export const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
   width: drawerWidth,
+  minHeight: 654,
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
@@ -49,3 +48,20 @@ export const Drawer = styled(MuiDrawer, {
     "& .MuiDrawer-paper": closedMixin(theme),
   }),
 }));
+
+export const styles = {
+  ListItemButton: {
+    minHeight: 48,
+    justifyContent: open ? "initial" : "center",
+    px: 2.5,
+    color: "gray",
+  },
+  ListItemIcon: {
+    minWidth: 0,
+    mr: open ? 3 : "auto",
+    justifyContent: "center",
+  },
+  sidebarLinkActive: {
+    color: THEME_COLORS.purple,
+  },
+};

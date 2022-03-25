@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { RootState, useAppSelector } from "../../redux/store";
 import {
   Box,
@@ -9,29 +9,50 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import MailIcon from "@mui/icons-material/Mail";
-import { THEME_COLORS } from "../../theme/theme-constants";
-import { Drawer } from "./sideBarImports";
+import Group from "@mui/icons-material/Group";
+import WorkOutline from "@mui/icons-material/WorkOutline";
+import PinDrop from "@mui/icons-material/PinDrop";
+import EventNote from "@mui/icons-material/EventNote";
+// import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import Settings from "@mui/icons-material/Settings";
+import Logout from "@mui/icons-material/Logout";
+
+import { Drawer, styles } from "./sideBar-styles";
 
 const SideBar = () => {
   const open = useAppSelector((state: RootState) => state.drawerHeader.open);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const sideBarSectionsTop = [
-    { content: "Team", section: "/team", icon: MailIcon },
-    { content: "User", section: "/user", icon: MailIcon },
-    { content: "Positions", section: "/positions", icon: MailIcon },
-    { content: "Timeoffs", section: "/timeoffs", icon: MailIcon },
+    { content: "Team", section: "/team", icon: Group },
+    {
+      content: "Business Operations",
+      section: "/bo",
+      icon: WorkOutline,
+    },
+    { content: "Office", section: "/office", icon: PinDrop },
+
+    {
+      content: "Accounting",
+      section: "/accounting",
+      icon: EventNote,
+    },
   ] as const;
 
   const sideBarSectionsBottum = [
-    { content: "System", section: "/system", icon: MailIcon },
-    { content: "About", section: "/about", icon: MailIcon },
-    { content: "Log out", section: "/logout", icon: MailIcon },
+    { content: "System", section: "/system", icon: Settings },
+    { content: "Log out", section: "/logout", icon: Logout },
   ] as const;
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      sx={{
+        display: "flex",
+        pt: "3px",
+        borderRight: "1px solid rgba(99, 99, 99, 0.2)",
+      }}
+    >
       <CssBaseline />
       <Drawer variant="permanent" open={open}>
         <List>
@@ -39,18 +60,15 @@ const SideBar = () => {
             <ListItemButton
               key={section.content}
               sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                ...styles.ListItemButton,
+                ...(section.section === pathname && styles.sidebarLinkActive),
               }}
               onClick={() => navigate(section.section)}
             >
               <ListItemIcon
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                  color: `${THEME_COLORS.purple}`,
+                  ...styles.ListItemIcon,
+                  ...(section.section === pathname && styles.sidebarLinkActive),
                 }}
               >
                 {<section.icon />}
@@ -68,18 +86,15 @@ const SideBar = () => {
             <ListItemButton
               key={section.content}
               sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                ...styles.ListItemButton,
+                ...(section.section === pathname && styles.sidebarLinkActive),
               }}
               onClick={() => navigate(section.section)}
             >
               <ListItemIcon
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                  color: `${THEME_COLORS.purple}`,
+                  ...styles.ListItemIcon,
+                  ...(section.section === pathname && styles.sidebarLinkActive),
                 }}
               >
                 {<section.icon />}
