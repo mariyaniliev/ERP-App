@@ -1,4 +1,9 @@
 export const styles = {
+  contentCenter: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   header: {
     position: "relative",
     height: "3.5rem",
@@ -8,17 +13,10 @@ export const styles = {
     justifyContent: "space-between",
     padding: "0px 50px",
     gap: "70rem",
-    boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+    boxShadow: "0px 0px 8px #00000029",
     color: "gray",
   },
-  headerButtonAndLogo: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
   sideBarButtonIcon: {
-    display: "flex",
-    alignItems: "center",
     height: "3.5rem",
     position: "absolute",
     left: "22px",
@@ -27,9 +25,6 @@ export const styles = {
     cursor: "pointer",
   },
   logoWraper: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
     position: "absolute",
     left: "55px",
     width: "5rem",
@@ -39,15 +34,7 @@ export const styles = {
     width: "4rem",
     height: "2rem",
   },
-  userInfo: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
   userAvatarWraper: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
     width: "35px",
     height: "35px",
     borderRadius: "50px ",

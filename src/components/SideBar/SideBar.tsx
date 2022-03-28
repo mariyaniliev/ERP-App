@@ -13,7 +13,6 @@ import Group from "@mui/icons-material/Group";
 import WorkOutline from "@mui/icons-material/WorkOutline";
 import PinDrop from "@mui/icons-material/PinDrop";
 import EventNote from "@mui/icons-material/EventNote";
-// import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 
@@ -40,19 +39,13 @@ const SideBar = () => {
     },
   ] as const;
 
-  const sideBarSectionsBottum = [
+  const sideBarSectionsBottom = [
     { content: "System", section: "/system", icon: Settings },
     { content: "Log out", section: "/logout", icon: Logout },
   ] as const;
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        pt: "3px",
-        borderRight: "1px solid rgba(99, 99, 99, 0.2)",
-      }}
-    >
+    <Box sx={{ display: "flex" }} pt={1}>
       <CssBaseline />
       <Drawer variant="permanent" open={open}>
         <List>
@@ -81,8 +74,8 @@ const SideBar = () => {
           ))}
         </List>
 
-        <List>
-          {sideBarSectionsBottum.map((section, index) => (
+        <List sx={styles.sideBarBottomList}>
+          {sideBarSectionsBottom.map((section, index) => (
             <ListItemButton
               key={section.content}
               sx={{

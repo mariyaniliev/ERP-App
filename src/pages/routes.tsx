@@ -1,6 +1,5 @@
 import * as React from "react";
 import type { RouteObject } from "react-router-dom";
-import Counter from "./Counter/Counter";
 import Home from "./Home/Home";
 import Team from "./Team/Team";
 import Timeoffs from "./Timeoffs/Timeoffs";
@@ -14,7 +13,6 @@ export const routes: RouteObject[] = [
     //children is used to have page in the page
     children: [
       //couter use the same path as Home, thats why it doest have a path
-      { index: true, element: <Counter /> },
       {
         path: "/team",
         element: <Team />,
