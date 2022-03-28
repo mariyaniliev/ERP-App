@@ -74,7 +74,7 @@ const SideBar = () => {
           ))}
         </List>
 
-        <List sx={styles.sideBarBottomList}>
+        <List>
           {sideBarSectionsBottom.map((section, index) => (
             <ListItemButton
               key={section.content}

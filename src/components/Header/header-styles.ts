@@ -12,7 +12,6 @@ export const styles = {
     alignItems: "center",
     justifyContent: "space-between",
     padding: "0px 50px",
-    gap: "70rem",
     boxShadow: "0px 0px 8px #00000029",
     color: "gray",
   },
