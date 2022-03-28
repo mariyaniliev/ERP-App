@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const TestPage3 = () => {
+const Positions = () => {
   return (
     <div>
-      <Link to="/TestPage3">TestPage3</Link>
+      <Link to="/positions">Positions</Link>
     </div>
   );
 };
-export default TestPage3;
+export default Positions;
