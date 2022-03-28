@@ -1,10 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 const UsersSubPage = () => {
   return (
     <div>
-      <Link to="/users">UsersSubPage</Link>
+      <h1>Users Sub Page</h1>
     </div>
   );
 };

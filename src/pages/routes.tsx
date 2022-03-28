@@ -12,19 +12,19 @@ export const routes: RouteObject[] = [
     element: <Home />,
   },
   {
-    path: "/teamSection",
+    path: "/team",
     element: <TeamSection />,
     children: [
       {
-        path: "/teamSection/users",
+        path: "/team/users",
         element: <UsersSubPage />,
       },
       {
-        path: "/teamSection/timeOffs",
+        path: "/team/timeoffs",
         element: <TimeOffsSubPage />,
       },
       {
-        path: "/teamSection/personalInfo",
+        path: "/team/personalInfo",
         element: <PersonalInfoSubPage />,
       },
     ],

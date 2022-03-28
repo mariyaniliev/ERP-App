@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { RootState, useAppSelector, useAppDispatch } from "../../redux/store";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
 import { Tabs, Tab, Box } from "@mui/material";
 import { switchSubpage } from "../../redux/reducer/subpage";
 
@@ -29,6 +29,7 @@ const TeamSection = () => {
           <Tab key={subpage.name} label={subpage.name} />
         ))}
       </Tabs>
+      <Outlet />
     </Box>
   );
 };

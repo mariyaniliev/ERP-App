@@ -1,12 +1,12 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
     <div>
-      HOME
+      <Link to="/team">Team</Link>
       {/* without Outlet component, children property doesnt work */}
-      <Outlet />
+      {/* <Outlet /> */}
     </div>
   );
 };

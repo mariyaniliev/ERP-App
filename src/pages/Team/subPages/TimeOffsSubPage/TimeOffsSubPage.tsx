@@ -1,10 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 const TimeOffsSubPage = () => {
   return (
     <div>
-      <Link to="/timeOffs">TimeOffsSubPage</Link>
+      <h1>TimeOffs Sub Page</h1>
     </div>
   );
 };

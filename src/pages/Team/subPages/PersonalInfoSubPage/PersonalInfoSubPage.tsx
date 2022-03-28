@@ -1,10 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 const PersonalInfoSubPage = () => {
   return (
     <div>
-      <Link to="/personalInfo">PersonalInfoSubPage</Link>
+      <h1>Personal Info Sub Page</h1>
     </div>
   );
 };
