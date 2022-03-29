@@ -1,29 +1,22 @@
 import React, { useEffect } from "react";
-import { RootState, useAppSelector, useAppDispatch } from "../../redux/store";
+import { RootState, useAppSelector } from "../../redux/store";
 import { useNavigate, Outlet } from "react-router-dom";
 import { Box } from "@mui/system";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import InfoIcon from "@mui/icons-material/Info";
-import PeopleIcon from "@mui/icons-material/People";
-import { switchSubpage } from "../../redux/reducer/subpage";
+import { switchSubpageActions } from "../../redux/reducer/subpage";
+import { TeamSectionSubPages } from "../../services/navigation-items-constants";
 import { StyledTabs, StyledTabsList, StyledTab } from "./teamSection-styles";
 
 const TeamSection = () => {
   const { subpage } = useAppSelector((state: RootState) => state.subpage);
-  const dispatch = useAppDispatch();
+  const { switchSubpage } = switchSubpageActions();
   const navigate = useNavigate();
-  const TeamSectionSubPages = [
-    { name: "Users", urlIdParam: "users", icon: PeopleIcon },
-    { name: "Time Offs", urlIdParam: "timeoffs", icon: AccessTimeIcon },
-    { name: "Personal Info", urlIdParam: "personalInfo", icon: InfoIcon },
-  ] as const;
 
   useEffect(() => {
     navigate(TeamSectionSubPages[subpage].urlIdParam);
   }, [subpage]);
 
   const handleChange = (event: React.SyntheticEvent, newSubpage: number) => {
-    dispatch(switchSubpage(newSubpage));
+    switchSubpage(newSubpage);
   };
 
   return (

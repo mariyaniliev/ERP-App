@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { bindActionCreators } from "redux";
 import { SubpageState } from "./state-types";
+import { useAppDispatch } from "../store";
 
 const initialState = {
   subpage: 0,
@@ -15,6 +17,11 @@ export const subpageSlice = createSlice({
   },
 });
 
-export const { switchSubpage } = subpageSlice.actions;
+const switchSubpage = subpageSlice.actions;
+
+export const switchSubpageActions = () => {
+  const dispatch = useAppDispatch();
+  return bindActionCreators(switchSubpage, dispatch);
+};
 
 export default subpageSlice.reducer;
