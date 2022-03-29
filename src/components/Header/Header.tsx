@@ -36,7 +36,12 @@ const HeaderComponent = () => {
               background: THEME_COLORS.purple,
             }}
           ></Box>
-          <Typography component="p" ml={4}>
+          <Typography
+            variant="button"
+            component="span"
+            color={THEME_COLORS.grey03}
+            ml={4}
+          >
             Nikolay Petkov
           </Typography>
         </Box>
