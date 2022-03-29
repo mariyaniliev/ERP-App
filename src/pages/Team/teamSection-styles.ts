@@ -22,12 +22,13 @@ export const StyledTabsList = styled(TabsListUnstyled)({
 });
 
 export const StyledTab = styled(TabUnstyled)({
+  fontFamily: "Open Sans, sans-serif", //does not get fontFamily from the theme provider
   position: "relative",
   height: "47px",
   padding: "0px 50px",
   background: "transparent",
   border: "none",
-  color: "gray",
+  color: `${THEME_COLORS.grey02}`,
   display: "flex",
   justifyContent: "space-between",
   gap: "20px",

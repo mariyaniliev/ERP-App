@@ -16,7 +16,7 @@ const TeamSection = () => {
     { name: "Users", urlIdParam: "users", icon: PeopleIcon },
     { name: "Time Offs", urlIdParam: "timeoffs", icon: AccessTimeIcon },
     { name: "Personal Info", urlIdParam: "personalInfo", icon: InfoIcon },
-  ];
+  ] as const;
 
   useEffect(() => {
     navigate(TeamSectionSubPages[subpage].urlIdParam);
