@@ -1,17 +1,21 @@
 import React, { useEffect } from "react";
 import { RootState, useAppSelector, useAppDispatch } from "../../redux/store";
 import { useNavigate, Outlet } from "react-router-dom";
-import { Tabs, Tab, Box } from "@mui/material";
+import { Box } from "@mui/system";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import InfoIcon from "@mui/icons-material/Info";
+import PeopleIcon from "@mui/icons-material/People";
 import { switchSubpage } from "../../redux/reducer/subpage";
+import { StyledTabs, StyledTabsList, StyledTab } from "./teamSection-styles";
 
 const TeamSection = () => {
   const { subpage } = useAppSelector((state: RootState) => state.subpage);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const TeamSectionSubPages = [
-    { name: "Users", urlIdParam: "users" },
-    { name: "Time Offs", urlIdParam: "timeoffs" },
-    { name: "Personal Info", urlIdParam: "personalInfo" },
+    { name: "Users", urlIdParam: "users", icon: PeopleIcon },
+    { name: "Time Offs", urlIdParam: "timeoffs", icon: AccessTimeIcon },
+    { name: "Personal Info", urlIdParam: "personalInfo", icon: InfoIcon },
   ];
 
   useEffect(() => {
@@ -23,12 +27,17 @@ const TeamSection = () => {
   };
 
   return (
-    <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
-      <Tabs value={subpage} onChange={handleChange} centered>
-        {TeamSectionSubPages.map((subpage) => (
-          <Tab key={subpage.name} label={subpage.name} />
-        ))}
-      </Tabs>
+    <Box sx={{ width: "100%" }}>
+      <StyledTabs value={subpage} onChange={handleChange}>
+        <StyledTabsList>
+          {TeamSectionSubPages.map((subpage) => (
+            <StyledTab key={subpage.name}>
+              {<subpage.icon />}
+              {subpage.name}
+            </StyledTab>
+          ))}
+        </StyledTabsList>
+      </StyledTabs>
       <Outlet />
     </Box>
   );
