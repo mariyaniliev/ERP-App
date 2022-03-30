@@ -1,10 +1,10 @@
 import React from "react";
 
-const PersonalInfoSubPage = () => {
+const PersonalInfo = () => {
   return (
     <div>
       <h1>Personal Info Sub Page</h1>
     </div>
   );
 };
-export default PersonalInfoSubPage;
+export default PersonalInfo;
