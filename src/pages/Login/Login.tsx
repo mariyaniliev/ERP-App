@@ -4,7 +4,7 @@ import { CustomButton } from "./CustomButton/customButton";
 import { CustomInput } from "./CustomInput/customInput";
 import { styles } from "./login-styles";
 
-const Login = () => {
+const Login: React.FC = () => {
   const [userCredentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -14,18 +14,18 @@ const Login = () => {
 
   const { email, password } = userCredentials;
 
-  // const handleLogin = (e) => {
-  //   e.preventDefault();
-  //   console.log("email:", email, "password:", password);
+  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log("email:", email, "password:", password);
 
-  // let error = inputValidation(email, password);
-  // Object.keys(error).length
-  //   ? setErrorMassage(error)
-  //   : dispatch(logInRequest(email, password));
-  // };
+    // let error = inputValidation(email, password);
+    // Object.keys(error).length
+    //   ? setErrorMassage(error)
+    //   : dispatch(logInRequest(email, password));
+  };
 
-  const handleChange = (event) => {
-    const { value, name } = event.target;
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name }: { value: string; name: string } = event.target;
     setCredentials({ ...userCredentials, [name]: value });
   };
 
@@ -36,20 +36,27 @@ const Login = () => {
         width: "100%",
         margin: "8rem 0px",
       }}
-      // onSubmit={handleLogin}
     >
-      <Box sx={{ ...styles.contentCenter, ...styles.formContainer }}>
-        <Typography>Log In</Typography>
-        <Box sx={styles.inputContainer}>
-          <CustomInput placeholder="username" onChange={handleChange} />
-          <CustomInput placeholder="password" onChange={handleChange} />
+      <form onSubmit={handleLogin}>
+        <Box sx={{ ...styles.contentCenter, ...styles.formContainer }}>
+          <Typography>Log In</Typography>
+          <Box sx={styles.inputContainer}>
+            <CustomInput
+              name="email"
+              placeholder="email"
+              onChange={handleChange}
+            />
+            <CustomInput
+              name="password"
+              placeholder="password"
+              onChange={handleChange}
+            />
+          </Box>
+          <Box>
+            <CustomButton type="submit">Log In</CustomButton>
+          </Box>
         </Box>
-        <Box>
-          <CustomButton onClick={() => console.log("click!")}>
-            Log In
-          </CustomButton>
-        </Box>
-      </Box>
+      </form>
     </Box>
   );
 };

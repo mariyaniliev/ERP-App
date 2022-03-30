@@ -19,7 +19,6 @@ export const CustomButtonRoot = styled("button")`
   transition: all 150ms ease;
   cursor: pointer;
   border: none;
-
   &:hover {
     background-color: ${THEME_COLORS.purple};
   }
