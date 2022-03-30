@@ -1,16 +1,16 @@
 import React from "react";
-import { useAppDispatch, useAppSelector, RootState } from "../../redux/store";
+import { useAppSelector, RootState } from "../../redux/store";
 import { Box, Typography } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { toggle } from "../../redux/reducer/drawerHeader";
+import { toggleActions } from "../../redux/reducer/drawerHeader";
 import logo from "../../theme/assets/gs-logo.png";
 import { THEME_COLORS } from "../../theme/theme-constants";
 import { styles } from "./header-styles";
 
 const HeaderComponent = () => {
-  const dispatch = useAppDispatch();
   const open = useAppSelector((state: RootState) => state.drawerHeader.open);
+  const { toggle } = toggleActions();
 
   const menuToggleButton = open ? <ChevronLeftIcon /> : <ChevronRightIcon />;
 
@@ -19,7 +19,7 @@ const HeaderComponent = () => {
       <Box sx={styles.contentCenter}>
         <Box
           sx={{ ...styles.sideBarButtonIcon, ...styles.contentCenter }}
-          onClick={() => dispatch(toggle())}
+          onClick={() => toggle()}
         >
           {menuToggleButton}
         </Box>
