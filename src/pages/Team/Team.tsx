@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { RootState, useAppSelector } from "../../redux/store";
 import { useNavigate, Outlet } from "react-router-dom";
-import { Box } from "@mui/system";
+import { Box } from "@mui/material";
 import { switchSubpageActions } from "../../redux/reducer/subpage";
 import { TeamSectionSubPages } from "../../services/navigation-items-constants";
-import { StyledTabs, StyledTabsList, StyledTab } from "./teamSection-styles";
+import { StyledTabs, StyledTabsList, StyledTab } from "./team-styles";
 
-const TeamSection = () => {
+const Team = () => {
   const { subpage } = useAppSelector((state: RootState) => state.subpage);
   const { switchSubpage } = switchSubpageActions();
   const navigate = useNavigate();
@@ -36,4 +36,4 @@ const TeamSection = () => {
   );
 };
 
-export default TeamSection;
+export default Team;

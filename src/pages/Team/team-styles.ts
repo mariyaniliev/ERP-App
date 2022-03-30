@@ -7,22 +7,18 @@ import {
 import { styled } from "@mui/system";
 import { THEME_COLORS } from "../../theme/theme-constants";
 
-export const StyledTabs = styled(TabsUnstyled)({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "end",
-  padding: "0px 30px",
-  height: "100px",
+const StyledTabs = styled(TabsUnstyled)({
+  padding: "30px 25px 20px 25px",
 });
 
-export const StyledTabsList = styled(TabsListUnstyled)({
+const StyledTabsList = styled(TabsListUnstyled)({
   display: "flex",
   justifyContent: "center",
-  borderBottom: `2px solid rgba(0, 0, 0, 0.1)`,
+  borderBottom: `3px solid rgba(0, 0, 0, 0.1)`,
 });
 
-export const StyledTab = styled(TabUnstyled)({
-  fontFamily: "Open Sans, sans-serif", //does not get fontFamily from the theme provider
+const StyledTab = styled(TabUnstyled)({
+  fontFamily: "Open Sans, sans-serif",
   position: "relative",
   height: "47px",
   padding: "0px 50px",
@@ -56,3 +52,5 @@ export const StyledTab = styled(TabUnstyled)({
     background: `${THEME_COLORS.purple}`,
   },
 });
+
+export { StyledTabs, StyledTabsList, StyledTab };
