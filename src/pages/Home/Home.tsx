@@ -1,13 +1,14 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Box } from "@mui/material";
 
 const Home = () => {
   return (
-    <div>
-      HOME
+    <Box>
+      <Link to="/team">Team</Link>
       {/* without Outlet component, children property doesnt work */}
-      <Outlet />
-    </div>
+      {/* <Outlet /> */}
+    </Box>
   );
 };
 export default Home;
