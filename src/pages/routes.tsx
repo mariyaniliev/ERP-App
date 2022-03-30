@@ -5,6 +5,7 @@ import Team from "./Team/Team";
 import Timeoffs from "./Timeoffs/Timeoffs";
 import Positions from "./Positions/Positions";
 import User from "./User/User";
+import Login from "./Login/Login";
 
 export const routes: RouteObject[] = [
   {
@@ -22,7 +23,7 @@ export const routes: RouteObject[] = [
       { path: "*", element: <Positions /> },
     ],
   },
-
+  { path: "/login", element: <Login /> },
   //different page, not a chiled of Home
   { path: "/timeoffs", element: <Timeoffs /> },
 ];
