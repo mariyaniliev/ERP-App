@@ -16,68 +16,56 @@ import {
 
 import { Drawer, styles } from "./sideBar-styles";
 
+interface MenuListItems {
+  content: string;
+  icon: any;
+  section: string;
+}
+
 const SideBar = () => {
   const open = useAppSelector((state: RootState) => state.drawerHeader.open);
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  const sideBarMenu = (menuList: MenuListItems) => (
+    <List>
+      {menuList.map((menuItem, index) => {
+        const menuItemActive =
+          menuItem.section === pathname || pathname.includes(menuItem.section);
+
+        return (
+          <ListItemButton
+            key={menuItem.content}
+            sx={{
+              ...styles.ListItemButton,
+              ...(menuItemActive && styles.sidebarLinkActive),
+            }}
+            onClick={() => navigate(menuItem.section)}
+          >
+            <ListItemIcon
+              sx={{
+                ...styles.ListItemIcon,
+                ...(menuItemActive && styles.sidebarLinkActive),
+              }}
+            >
+              {<menuItem.icon />}
+            </ListItemIcon>
+            <ListItemText
+              primary={menuItem.content}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
+          </ListItemButton>
+        );
+      })}
+    </List>
+  );
+
   return (
     <Box sx={{ display: "flex" }} pt={1}>
       <CssBaseline />
       <Drawer variant="permanent" open={open}>
-        <List>
-          {sideBarSectionsTop.map((section, index) => (
-            <ListItemButton
-              key={section.content}
-              sx={{
-                ...styles.ListItemButton,
-                ...(section.section === pathname && styles.sidebarLinkActive),
-              }}
-              onClick={() => navigate(section.section)}
-            >
-              <ListItemIcon
-                sx={{
-                  ...styles.ListItemIcon,
-                  ...(section.section === pathname && styles.sidebarLinkActive),
-                }}
-              >
-                {<section.icon />}
-              </ListItemIcon>
-              <ListItemText
-                primary={section.content}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          ))}
-        </List>
-
-        <List>
-          {sideBarSectionsBottom.map((section, index) => (
-            <ListItemButton
-              key={section.content}
-              sx={{
-                ...styles.ListItemButton,
-                ...(section.section === pathname && styles.sidebarLinkActive),
-              }}
-              onClick={() => navigate(section.section)}
-            >
-              <ListItemIcon
-                sx={{
-                  ...styles.ListItemIcon,
-                  ...(section.section === pathname && styles.sidebarLinkActive),
-                }}
-              >
-                {<section.icon />}
-              </ListItemIcon>
-              <ListItemText
-                primary={section.content}
-                sx={{
-                  opacity: open ? 1 : 0,
-                }}
-              />
-            </ListItemButton>
-          ))}
-        </List>
+        {sideBarMenu(sideBarSectionsTop)}
+        {sideBarMenu(sideBarSectionsBottom)}
       </Drawer>
     </Box>
   );
