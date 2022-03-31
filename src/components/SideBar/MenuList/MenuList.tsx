@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { MenuListProps } from "./../sideBar-types";
 import {
   List,
   ListItemButton,
@@ -7,16 +8,6 @@ import {
   ListItemText,
 } from "@mui/material";
 import { styles } from "../sideBar-styles";
-
-interface MenuListItems {
-  content: string;
-  icon: any;
-  section: string;
-}
-interface MenuListProps {
-  menuList: MenuListItems;
-  open: boolean;
-}
 
 const MenuList = (props: MenuListProps) => {
   const { menuList, open } = props;
