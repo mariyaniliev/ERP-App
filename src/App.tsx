@@ -1,6 +1,7 @@
 import React from "react";
 import { useRoutes } from "react-router-dom";
-import { ThemeProvider, Box } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
+import { Box } from "./design-system";
 import { routes } from "./pages/routes";
 import appTheme from "./theme/theme";
 import SideBar from "./components/SideBar/SideBar";
