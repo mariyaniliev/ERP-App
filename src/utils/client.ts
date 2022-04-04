@@ -9,7 +9,7 @@ export const useApiClient = () => {
   const refreshToken = useAppSelector(
     (state: RootState) => state.user.user?.refreshToken
   );
-  const actions = userActions();
+  const { setAccessToken } = userActions();
 
   const apiClient = Axios.create({
     baseURL: "http://localhost:4000",
@@ -23,7 +23,7 @@ export const useApiClient = () => {
     function (successRes) {
       const newAcessToken = get(successRes, "x-access-token", "");
       if (newAcessToken) {
-        actions.setAccessToken(newAcessToken);
+        setAccessToken(newAcessToken);
       }
     },
     function (error) {
