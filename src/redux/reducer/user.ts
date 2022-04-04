@@ -7,7 +7,7 @@ const initialState = {
   user: null,
   error: null,
   isLoading: false,
-} as userState;
+} as unknown as userState;
 
 export const userSlice = createSlice({
   name: "user",
