@@ -1,4 +1,5 @@
 import { AxiosError } from "axios";
+import { User } from "../../types/user";
 
 export type SubpageState = {
   subpage: number;
@@ -9,7 +10,7 @@ export type DrawerHeaderState = {
 };
 //TODO define user types
 export type userState = {
-  user: { accessToken: string; refreshToken: string };
+  user: User;
   isLoading: boolean;
   error: AxiosError | null;
 };
