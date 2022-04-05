@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "jsx": "react",
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "es2015"],
     "composite": true,
     "module": "esnext",
     "moduleResolution": "node",

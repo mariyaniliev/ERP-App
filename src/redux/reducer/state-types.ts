@@ -8,9 +8,9 @@ export type SubpageState = {
 export type DrawerHeaderState = {
   open: boolean;
 };
-//TODO define user types
+
 export type userState = {
-  user: User;
   isLoading: boolean;
   error: AxiosError | null;
+  user: User | null;
 };
