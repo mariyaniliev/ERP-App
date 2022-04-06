@@ -1,7 +1,7 @@
 import Axios from "axios";
+import { get } from "lodash";
 import { useAppSelector, RootState } from "../redux/store";
 import { userActions } from "../redux/reducer/user";
-import { get } from "lodash";
 export const useApiClient = () => {
   const accessToken = useAppSelector(
     (state: RootState) => state.user.user?.accessToken
@@ -11,6 +11,7 @@ export const useApiClient = () => {
   );
   const { setAccessToken } = userActions();
 
+  // TODO define baseUrl in env.development and take it from there
   const apiClient = Axios.create({
     baseURL: "http://localhost:4000",
     headers: {
@@ -21,15 +22,15 @@ export const useApiClient = () => {
 
   apiClient.interceptors.response.use(
     function (successRes) {
-      const newAcessToken = get(successRes, "x-access-token", "");
+      const newAcessToken = get(successRes.headers, "x-access-token", "");
       if (newAcessToken) {
         setAccessToken(newAcessToken);
       }
+      return successRes;
     },
     function (error) {
-      console.log(error);
+      return error;
     }
   );
-
   return apiClient;
 };
