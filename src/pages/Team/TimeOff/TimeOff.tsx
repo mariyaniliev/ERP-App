@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   DateRange,
   DefinedRange,
@@ -12,11 +12,12 @@ import "react-date-range/dist/theme/default.css";
 
 import { sideMenuOptions } from "./sideMenuOptions";
 import { CustomSelect } from "./UnstyledSelect/UnstyledSelect";
+import { timeOffsCalc } from "./timeOffsCalc";
 
 import { StyledOption } from "./UnstyledSelect/unstyledSelect-styles";
 import { styles } from "./timeOff-styles";
 
-const initialState = {
+const initialRange = {
   selection: {
     startDate: new Date(),
     endDate: new Date(),
@@ -28,20 +29,34 @@ const TimeOff: React.FC = () => {
   const sideMenu = sideMenuOptions();
   const staticRanges = [...createStaticRanges(sideMenu)];
 
-  const [state, setState] = useState(initialState);
+  const [range, setRange] = useState(initialRange);
+
+  const [timeOffs, setTimeOffs] = useState(0);
+
   const [open, setOpen] = useState(false);
   const [value, setValue] = React.useState<string | null>("Paid");
 
   const color =
     value === "Paid" ? "green" : value === "Unpaid" ? "red" : "yellow";
 
-  const handleSelect = (ranges: Range) => {
-    setState({ ...state, ...ranges });
+  useEffect(() => {
+    console.log(
+      timeOffsCalc(range.selection.startDate, range.selection.endDate)
+    );
+  }, [range]);
+
+  const handleSelect = (newRange: Range) => {
+    setRange({ ...range, ...newRange });
     !open && setOpen(true);
-    console.log("state:", state, "ranges:", ranges, "rest:", {
-      ...state,
-      ...ranges,
-    });
+
+    // console.log("state:", state, "ranges:", ranges, "rest:", {
+    //   ...state,
+    //   ...ranges,
+    // });
+
+    // console.log(
+    //   timeOffsCalc(range.selection.startDate, range.selection.endDate)
+    // );
   };
 
   const handleClose = () => {
@@ -63,14 +78,14 @@ const TimeOff: React.FC = () => {
             staticRanges={staticRanges}
             inputRanges={[]}
             onChange={handleSelect}
-            ranges={[state.selection]}
+            ranges={[range.selection]}
           />
         </Box>
         {open && (
           <Box>
             <DateRange
               onChange={handleSelect}
-              ranges={[state.selection]}
+              ranges={[range.selection]}
               months={1}
               direction="horizontal"
               editableDateInputs={true}
@@ -85,10 +100,17 @@ const TimeOff: React.FC = () => {
               </Box>{" "}
               <Box>
                 {" "}
-                <Button>
-                  {state.selection.endDate.getDate() -
-                    state.selection.startDate.getDate() +
-                    1}
+                <Button
+                // onClick={() =>
+                //   setTimeOffs(
+                //     timeOffsCalc(
+                //       state.selection.startDate,
+                //       state.selection.endDate
+                //     )
+                //   )
+                // }
+                >
+                  {timeOffs}
                 </Button>
               </Box>
             </Box>
