@@ -1,8 +1,18 @@
 export const styles = {
   contentCenter: {
     display: "flex",
-    justifyContent: "start  ",
+    justifyContent: "start",
     alignItems: "center",
+  },
+  datePickerContainer: {
+    display: "flex",
+  },
+  sideMenuContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: "250px",
   },
   timeOffLegendContainer: {},
   timeOffLegend: {

@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from "react";
-import {
-  DateRange,
-  DefinedRange,
-  createStaticRanges,
-  Range,
-} from "react-date-range";
+import { DateRange, Range } from "react-date-range";
 import { Box, Button } from "@mui/material";
 
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
-
-import { sideMenuOptions } from "./sideMenuOptions";
 import { CustomSelect } from "./UnstyledSelect/UnstyledSelect";
 import { timeOffsCalc } from "./timeOffsCalc";
 
 import { StyledOption } from "./UnstyledSelect/unstyledSelect-styles";
 import { styles } from "./timeOff-styles";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 
 const initialRange = {
   selection: {
@@ -26,9 +19,6 @@ const initialRange = {
 };
 
 const TimeOff: React.FC = () => {
-  const sideMenu = sideMenuOptions();
-  const staticRanges = [...createStaticRanges(sideMenu)];
-
   const [range, setRange] = useState(initialRange);
 
   const [timeOffs, setTimeOffs] = useState(0);
@@ -40,47 +30,55 @@ const TimeOff: React.FC = () => {
     value === "Paid" ? "green" : value === "Unpaid" ? "red" : "yellow";
 
   useEffect(() => {
-    console.log(
+    setTimeOffs(
       timeOffsCalc(range.selection.startDate, range.selection.endDate)
     );
   }, [range]);
 
   const handleSelect = (newRange: Range) => {
     setRange({ ...range, ...newRange });
-    !open && setOpen(true);
-
-    // console.log("state:", state, "ranges:", ranges, "rest:", {
-    //   ...state,
-    //   ...ranges,
-    // });
-
-    // console.log(
-    //   timeOffsCalc(range.selection.startDate, range.selection.endDate)
-    // );
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const isCalendarShown = () => {
+    setOpen(!open);
   };
 
   return (
-    <Box>
-      <Box>
-        <CustomSelect value={value} onChange={setValue}>
-          <StyledOption value={"Paid"}>Paid</StyledOption>
-          <StyledOption value={"Unpaid"}>Unpaid</StyledOption>
-          <StyledOption value={"Sick"}>Sick</StyledOption>
-        </CustomSelect>
+    <Box sx={styles.datePickerContainer}>
+      <Box sx={styles.sideMenuContainer}>
+        <Box>
+          <CustomSelect value={value} onChange={setValue}>
+            <StyledOption value={"Paid"}>Paid</StyledOption>
+            <StyledOption value={"Unpaid"}>Unpaid</StyledOption>
+            <StyledOption value={"Sick"}>Sick</StyledOption>
+          </CustomSelect>
+        </Box>
+        <Box sx={styles.timeOffLegendContainer}>
+          <Box sx={styles.timeOffLegend}>
+            <h2>Paid</h2>
+            <Box
+              component="span"
+              sx={{ ...styles.timeOffLegendSpan, background: "green" }}
+            />{" "}
+          </Box>
+          <Box sx={styles.timeOffLegend}>
+            <h2>Unpaid</h2>
+            <Box
+              component="span"
+              sx={{ ...styles.timeOffLegendSpan, background: "red" }}
+            />{" "}
+          </Box>
+          <Box sx={styles.timeOffLegend}>
+            <h2>Sick</h2>
+            <Box
+              component="span"
+              sx={{ ...styles.timeOffLegendSpan, background: "yellow" }}
+            />{" "}
+          </Box>
+        </Box>
+        <Button onClick={isCalendarShown}>Open Calendar</Button>
       </Box>
       <Box sx={styles.contentCenter}>
-        <Box>
-          <DefinedRange
-            staticRanges={staticRanges}
-            inputRanges={[]}
-            onChange={handleSelect}
-            ranges={[range.selection]}
-          />
-        </Box>
         {open && (
           <Box>
             <DateRange
@@ -95,50 +93,14 @@ const TimeOff: React.FC = () => {
               rangeColors={[color]}
             />
             <Box sx={styles.contentCenter}>
-              <Box>
-                <Button onClick={handleClose}>Close</Button>
-              </Box>{" "}
+              <Box></Box>{" "}
               <Box>
                 {" "}
-                <Button
-                // onClick={() =>
-                //   setTimeOffs(
-                //     timeOffsCalc(
-                //       state.selection.startDate,
-                //       state.selection.endDate
-                //     )
-                //   )
-                // }
-                >
-                  {timeOffs}
-                </Button>
+                <Button>{timeOffs}</Button>
               </Box>
             </Box>
           </Box>
         )}
-      </Box>
-      <Box sx={styles.timeOffLegendContainer}>
-        <Box sx={styles.timeOffLegend}>
-          <h2>Paid</h2>
-          <Box
-            component="span"
-            sx={{ ...styles.timeOffLegendSpan, background: "green" }}
-          />{" "}
-        </Box>
-        <Box sx={styles.timeOffLegend}>
-          <h2>Unpaid</h2>
-          <Box
-            component="span"
-            sx={{ ...styles.timeOffLegendSpan, background: "red" }}
-          />{" "}
-        </Box>
-        <Box sx={styles.timeOffLegend}>
-          <h2>Sick</h2>
-          <Box
-            component="span"
-            sx={{ ...styles.timeOffLegendSpan, background: "yellow" }}
-          />{" "}
-        </Box>
       </Box>
     </Box>
   );

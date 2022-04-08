@@ -1,33 +1,19 @@
 import holidays from "./holidays.json";
 
-export const weekendsCalc = (startDate: Date, endDate: Date) => {
-  let count = 0;
-  let weekends = 0;
-  let curDate = startDate.getDate();
-  const startDay = startDate.getDay();
-  const endDay = endDate.getDay();
-
-  if (startDay === 0) {
-    weekends = 1;
-  } else if (startDay === 6) {
-    weekends = 2;
-  }
-
-  if (endDay === 6) {
-    weekends = weekends + 1;
-  } else if (endDay === 0) {
-    weekends = weekends + 2;
-  }
-
-  while (curDate <= endDate.getDate()) {
-    count++;
-    curDate++;
-  }
-
-  return count - weekends;
-};
-
 export const timeOffsCalc = (startDate: Date, endDate: Date) => {
-  const hd = holidays[2022];
-  const curDay = new Date(startDate);
+  const year = `${new Date().getFullYear()}` as keyof typeof holidays;
+  const hd = holidays[year];
+  let count = 0;
+  let filteredDays: string[] = [];
+  const curDate = new Date(startDate);
+  while (curDate <= endDate) {
+    const dayOfWeek = curDate.getDay();
+    filteredDays = hd.filter(
+      (e) => new Date(e).getTime() === curDate.getTime()
+    );
+    if (dayOfWeek !== 0 && dayOfWeek !== 6)
+      count = count + 1 - filteredDays.length;
+    curDate.setDate(curDate.getDate() + 1);
+  }
+  return count;
 };
