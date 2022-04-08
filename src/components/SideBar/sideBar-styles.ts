@@ -1,6 +1,6 @@
 import { styled, Theme, CSSObject } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
-import { THEME_COLORS } from "../../theme/theme-constants";
+import { THEME_COLORS, THEME_SHADOW } from "../../theme/theme-constants";
 
 const drawerWidth = 240;
 const drawerHeight = "calc(100vh - 64px)";
@@ -38,7 +38,7 @@ export const Drawer = styled(MuiDrawer, {
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
-  boxShadow: `0px 10px 8px ${THEME_COLORS.grey05}`,
+  boxShadow: THEME_SHADOW,
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),

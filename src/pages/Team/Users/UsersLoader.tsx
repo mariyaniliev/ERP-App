@@ -1,11 +1,11 @@
 import React from "react";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
-import { THEME_COLORS } from "./../../../theme/theme-constants";
+import { THEME_SHADOW } from "./../../../theme/theme-constants";
 
 const usersLoaderStyles = {
   borderRadius: "30px",
-  boxShadow: `0px 0px 8px ${THEME_COLORS.grey05}`,
+  boxShadow: THEME_SHADOW,
 };
 
 const UsersLoader = () => (

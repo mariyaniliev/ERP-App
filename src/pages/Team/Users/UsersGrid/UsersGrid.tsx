@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { styles } from "./usersGrid-styles";
+import { useTestPromise } from "../../../../redux/reducer/users";
+import { useAppDispatch } from "../../../../redux/store";
 
 const columns: any[] = [
   {
@@ -28,47 +30,39 @@ const columns: any[] = [
     field: "timeOffs",
     headerName: "Time Offs",
     type: "number",
-    width: 200,
+    width: 120,
     sortable: true,
   },
   {
     field: "birthday",
     birthday: "Date of Birth",
     type: "string",
-    width: 200,
+    width: 150,
     sortable: true,
   },
   {
     field: "startingDate",
     headerName: "Starting Date",
     type: "string",
-    width: 200,
+    width: 150,
     sortable: true,
   },
 ];
 
-const rows = [
-  {
-    id: 1,
-    name: "Edward Snowden",
-    email: "Snowden@",
-    lead: "Ivan Petrov",
-    timeOffs: "20",
-    birthday: "06/07/1994",
-    startingDate: "13/05/2021",
-  },
-  {
-    id: 2,
-    name: "Edward Snowden",
-    email: "Snowden@",
-    lead: "Ivan Petrov",
-    timeOffs: "20",
-    birthday: "07/07/1995",
-    startingDate: "10/05/2021",
-  },
-];
-
 const UsersGrid = () => {
+  // const apiClient = useApiClient();
+  const dispatch = useAppDispatch();
+  const [usersRowsData, setUsersRowsData] = useState([]);
+
+  // const getUsers = async () => {
+  //   const users = await apiClient.get("/users");
+  //   return users;
+  // };
+
+  useEffect(() => {
+    dispatch(useTestPromise());
+  }, []);
+
   return (
     <DataGrid
       pageSize={5}
@@ -76,7 +70,7 @@ const UsersGrid = () => {
       disableColumnMenu={true}
       sx={styles.grid}
       columns={columns}
-      rows={rows}
+      rows={usersRowsData}
     />
   );
 };

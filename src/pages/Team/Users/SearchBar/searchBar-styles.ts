@@ -1,11 +1,11 @@
-import { THEME_COLORS } from "../../../../theme/theme-constants";
+import { THEME_SHADOW } from "../../../../theme/theme-constants";
 
 export const styles = {
   searchBar: {
     width: "100%",
     height: "85px",
     borderRadius: "30px",
-    boxShadow: `0px 0px 8px ${THEME_COLORS.grey05}`,
+    boxShadow: THEME_SHADOW,
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",

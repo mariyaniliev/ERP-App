@@ -14,3 +14,7 @@ export type userState = {
   error: AxiosError | null;
   user: User | null;
 };
+
+export type UsersState = {
+  users: User[];
+};

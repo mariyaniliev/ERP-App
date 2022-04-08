@@ -1,4 +1,8 @@
-import { THEME_COLORS } from "./../../../../theme/theme-constants";
+import {
+  THEME_COLORS,
+  THEME_SHADOW,
+} from "./../../../../theme/theme-constants";
+
 export const styles = {
   grid: {
     fontSize: "14px",
@@ -6,7 +10,7 @@ export const styles = {
     width: "100%",
     height: "600px",
     borderRadius: "30px",
-    boxShadow: `0px 10px 8px ${THEME_COLORS.grey05}`,
+    boxShadow: THEME_SHADOW,
     marginTop: "25px",
   },
 };
