@@ -14,9 +14,8 @@ const Login: React.FC = () => {
 
   const [errorMassage, setErrorMassage] = useState({});
 
-  const { email, password } = userCredentials;
-
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+    const { email, password } = userCredentials;
     event.preventDefault();
     console.log("email:", email, "password:", password);
   };
