@@ -48,7 +48,8 @@ export const styles = {
   header: {
     fontSize: "1.7em",
     color: `${THEME_COLORS.purple}`,
-    py: 5,
+    pt: 5,
+    pb: 3,
   },
   icons: {
     position: "absolute",
