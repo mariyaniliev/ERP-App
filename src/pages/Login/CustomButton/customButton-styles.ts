@@ -2,12 +2,6 @@ import { buttonUnstyledClasses } from "@mui/base/ButtonUnstyled";
 import { styled } from "@mui/system";
 import { THEME_COLORS } from "../../../theme/theme-constants";
 
-const blue = {
-  500: "#007FFF",
-  600: "#0072E5",
-  700: "#0059B2",
-};
-
 export const CustomButtonRoot = styled("button")`
   font-family: IBM Plex Sans, sans-serif;
   font-weight: bold;

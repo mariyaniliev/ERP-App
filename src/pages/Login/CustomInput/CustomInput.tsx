@@ -4,6 +4,17 @@ import { StyledInputElement } from "./customInput-styles";
 
 export const CustomInput = (props: InputUnstyledProps) => {
   return (
-    <InputUnstyled components={{ Input: StyledInputElement }} {...props} />
+    <>
+      <InputUnstyled
+        style={{
+          width: "65%",
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+        }}
+        components={{ Input: StyledInputElement }}
+        {...props}
+      />
+    </>
   );
 };

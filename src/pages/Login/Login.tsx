@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Box, Typography } from "@mui/material";
-import { CustomButton } from "./CustomButton/customButton";
-import { CustomInput } from "./CustomInput/customInput";
-import logo from "../../theme/assets/gs-logo.png";
-import { THEME_COLORS } from "../../theme/theme-constants";
+import { Box } from "@mui/material";
+import { Typography } from "../../design-system";
 import { styles } from "./login-styles";
-
+import { CustomInput } from "../Login/CustomInput/CustomInput";
+import logo from "../../theme/assets/gs-logo.png";
+import leftDraw from "../../theme/assets/draw_left.png";
+import rightDraw from "../../theme/assets/draw_right.png";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
 const Login: React.FC = () => {
   const [userCredentials, setCredentials] = useState({
     email: "",
@@ -26,36 +28,45 @@ const Login: React.FC = () => {
   };
 
   return (
-    <Box
-      sx={{
-        ...styles.contentCenter,
-        width: "100%",
-        margin: "8rem 0px",
-      }}
-    >
-      <form onSubmit={handleLogin}>
-        <Box sx={{ ...styles.contentCenter, ...styles.formContainer }}>
-          <img style={{ height: 60 }} src={logo} alt="Generic Soft Logo" />
-          <Typography variant="h4" color={THEME_COLORS.grey03}>
-            Log In
-          </Typography>
-          <Box sx={styles.inputContainer}>
-            <CustomInput
-              name="email"
-              placeholder="email"
-              onChange={handleChange}
-            />
-            <CustomInput
-              name="password"
-              placeholder="password"
-              onChange={handleChange}
-            />
-          </Box>
-          <Box>
-            <CustomButton type="submit">Log In</CustomButton>
-          </Box>
+    <Box sx={styles.mainContainer}>
+      <Box sx={styles.leftRow}>
+        <Box sx={styles.logoContainer}>
+          <img style={styles.image} src={leftDraw} alt="Generic Soft Logo" />
         </Box>
-      </form>
+      </Box>
+      <Box sx={styles.middleRow}>
+        <Box sx={styles.logoContainer}>
+          <img style={{ height: 60 }} src={logo} alt="Generic Soft Logo" />
+        </Box>
+
+        <Box sx={styles.formContainer}>
+          <Typography sx={styles.header}>Sign in to our platform</Typography>
+          <form
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+            onSubmit={handleLogin}
+          >
+            <Typography sx={styles.helperText}>Your Email</Typography>
+            <CustomInput endAdornment={<MailOutlineIcon sx={styles.icons} />} />
+
+            <Typography sx={styles.helperText}>Your Password</Typography>
+            <CustomInput
+              type="password"
+              endAdornment={<LockOpenIcon sx={styles.icons} />}
+            />
+          </form>
+        </Box>
+        <Box sx={styles.emptySpaceToFill}></Box>
+      </Box>
+      <Box sx={styles.rightRow}>
+        <Box sx={styles.logoContainer}>
+          <img style={styles.image} src={rightDraw} alt="Generic Soft Logo" />
+        </Box>
+      </Box>
     </Box>
   );
 };
