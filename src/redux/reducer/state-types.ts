@@ -15,6 +15,12 @@ export type userState = {
   user: User | null;
 };
 
-export type UsersState = {
-  users: User[];
+export type SearchUsers = {
+  searchQuery: string;
+  lead: string;
+  timeOffs: string;
+  birthday: string;
+  startingDate: string;
+  rows: string;
+  pagination: string;
 };

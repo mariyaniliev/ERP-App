@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { styles } from "./usersGrid-styles";
-import { useTestPromise } from "../../../../redux/reducer/users";
-import { useAppDispatch } from "../../../../redux/store";
+import { useApiClient } from "../../../../utils/client";
+import { useAppSelector, RootState } from "../../../../redux/store";
 
 const columns: any[] = [
   {
@@ -50,23 +50,58 @@ const columns: any[] = [
 ];
 
 const UsersGrid = () => {
-  // const apiClient = useApiClient();
-  const dispatch = useAppDispatch();
+  const apiClient = useApiClient();
   const [usersRowsData, setUsersRowsData] = useState([]);
 
-  // const getUsers = async () => {
-  //   const users = await apiClient.get("/users");
-  //   return users;
-  // };
+  const { searchQuery, timeOffs, rows } = useAppSelector(
+    (state: RootState) => state.users
+  );
+
+  const getUsers = async (signal?: AbortSignal) => {
+    const users = await apiClient.get("/users", { signal });
+    setUsersRowsData(users.data.data);
+  };
+
+  const filterUsersData = async (searchUsersQuery, rows, timeOffs) => {
+    let users = [];
+    if (searchQuery !== "") {
+      users = await apiClient.get(
+        `/users/search?emailOrName=${searchUsersQuery}`
+      );
+    }
+    if (+rows > 0) {
+      users = await apiClient.get(`/users?limit=${rows}`);
+    }
+    if (timeOffs > 0) {
+      users = await apiClient.get(
+        `/users/search?timeOffRemainingDays=${timeOffs}`
+      );
+    }
+    // usersRowsData
+    console.log(usersRowsData);
+    console.log(users.data.data);
+    setUsersRowsData(users?.data.data);
+  };
 
   useEffect(() => {
-    dispatch(useTestPromise());
-  }, []);
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
+    if (usersRowsData.length <= 0) {
+      getUsers(signal);
+    }
+
+    filterUsersData(searchQuery, rows, timeOffs);
+
+    return () => {
+      abortController.abort();
+    };
+  }, [searchQuery, rows, timeOffs]);
 
   return (
     <DataGrid
-      pageSize={5}
-      rowsPerPageOptions={[10]}
+      // pageSize={5}
+      rowsPerPageOptions={[+rows]}
       disableColumnMenu={true}
       sx={styles.grid}
       columns={columns}

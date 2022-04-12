@@ -7,7 +7,7 @@ import {
 } from "../../../../design-system";
 import { styles } from "./searchBar-styles";
 import Input from "../../../../design-system/Input/Input";
-
+import { searchUsersActions } from "../../../../redux/reducer/searchUsers";
 const SearchBar = () => {
   const leadTest = [
     {
@@ -21,31 +21,71 @@ const SearchBar = () => {
   ];
   const paginationTest = [
     {
+      label: "5",
+      value: "5",
+    },
+    {
+      label: "10",
+      value: "10",
+    },
+    {
       label: "20",
       value: "20",
     },
-    {
-      label: "50",
-      value: "50",
-    },
-    {
-      label: "100",
-      value: "100",
-    },
   ];
 
-  const testOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("testOnChange", event.target.value);
+  const {
+    searchUsersByQuery,
+    searchUsersByTimeOffs,
+    searchUsersByBirthday,
+    searchUsersByStartingDate,
+    displayUsersRows,
+  } = searchUsersActions();
+
+  const searchOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    searchUsersByQuery(event.target.value);
+  };
+
+  const timeOffsOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    searchUsersByTimeOffs(event.target.value);
+  };
+
+  const birthdayOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    searchUsersByBirthday(event.target.value);
+  };
+
+  const startingDateOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    searchUsersByStartingDate(event.target.value);
+  };
+
+  const rowsOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    displayUsersRows(event.target.value);
   };
 
   return (
     <Box sx={styles.searchBar}>
-      <SearchInput placeholder="Search or filter..." onChange={testOnChange} />
+      <SearchInput
+        placeholder="Search or filter..."
+        onChange={searchOnChange}
+      />
       <Dropdown placeholder="Lead" list={leadTest} width="130" />
-      <Input placeholder="Time offs" onChange={testOnChange} width="85" />
-      <Input placeholder="Date of birth" onChange={testOnChange} width="120" />
-      <Input placeholder="Starting date" onChange={testOnChange} width="120" />
-      <Dropdown placeholder="Rows" list={paginationTest} width="85" />
+      <Input placeholder="Time offs" width="85" onChange={timeOffsOnChange} />
+      <Input
+        placeholder="Date of birth"
+        width="120"
+        onChange={birthdayOnChange}
+      />
+      <Input
+        placeholder="Starting date"
+        width="120"
+        onChange={startingDateOnChange}
+      />
+      <Dropdown
+        placeholder="Rows"
+        list={paginationTest}
+        width="85"
+        onChange={rowsOnChange}
+      />
       <Pagination
         count={4}
         onChange={(event, page) => console.log(page)}

@@ -8,7 +8,7 @@ import {
 import dreawerHeaderReducer from "./drawerHeader";
 import subpageReducer from "./subpage";
 import userReducer from "./user";
-import usersReducer from "./users";
+import usersReducer from "./searchUsers";
 
 interface RootReducerType {
   drawerHeader: DrawerHeaderState;
