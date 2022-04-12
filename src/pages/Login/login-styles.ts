@@ -41,7 +41,7 @@ export const styles = {
     height: "50%",
     borderRadius: "40px",
     boxShadow: `0px 3px 6px ${THEME_COLORS.grey05}`,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: `${THEME_COLORS.white}`,
     alignItems: "center",
   },
 

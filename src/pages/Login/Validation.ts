@@ -1,13 +1,10 @@
-interface errorsValue {
-  emailError: string;
-  passwordError: string;
-}
+import { ErrorsValue } from "./types";
 
 export const validation = (email: string, password: string) => {
-  const regex = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
-  const errorMassage = {} as errorsValue;
+  const standartEmailRegex = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
+  const errorMassage = {} as ErrorsValue;
   const isEmailNotValid =
-    !regex.test(email) || email.length < 6 || !email.length;
+    !standartEmailRegex.test(email) || email.length < 6 || !email.length;
   const isPasswordNotValid = password.length < 3 || !password.length;
 
   if (isEmailNotValid) {

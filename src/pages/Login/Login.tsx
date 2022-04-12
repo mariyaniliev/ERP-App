@@ -25,6 +25,11 @@ const Login: React.FC = () => {
     email: "",
     password: "",
   });
+
+  const isElementFocused = (element: string) => {
+    return focused[element] ? THEME_COLORS.purple : "";
+  };
+
   const { isLoading } = useAppSelector((state: RootState) => state.user);
   const { loginStart, loginSuccess, loginFail } = userActions();
   const client = useApiClient();
@@ -95,7 +100,7 @@ const Login: React.FC = () => {
             <Typography
               sx={{
                 ...styles.helperText,
-                color: focused.email ? THEME_COLORS.purple : "",
+                color: isElementFocused("email"),
               }}
             >
               Your Email
@@ -111,7 +116,7 @@ const Login: React.FC = () => {
             <Typography
               sx={{
                 ...styles.helperText,
-                color: focused.password ? THEME_COLORS.purple : "",
+                color: isElementFocused("password"),
               }}
             >
               Your Password
@@ -126,7 +131,7 @@ const Login: React.FC = () => {
               endAdornment={<LockOpenIcon sx={styles.icons} />}
             />
             {errorMessage && (
-              <Typography sx={{ mt: 1 }} color="#cc4949">
+              <Typography color={THEME_COLORS.danger} sx={{ mt: 1 }}>
                 {errorMessage}
               </Typography>
             )}

@@ -11,12 +11,15 @@ import "./App.global.css";
 const App = () => {
   const element = useRoutes(routes);
   const location = useLocation();
+
+  const isPageLogin = location.pathname === "/login";
+
   return (
     <ThemeProvider theme={appTheme}>
       <Box>
-        {location.pathname !== "/login" && <Header />}
+        {!isPageLogin && <Header />}
         <Box sx={{ display: "flex" }}>
-          {location.pathname !== "/login" && <SideBar />}
+          {!isPageLogin && <SideBar />}
           {element}
         </Box>
       </Box>

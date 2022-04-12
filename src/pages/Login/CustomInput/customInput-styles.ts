@@ -1,13 +1,13 @@
 import { styled } from "@mui/system";
-
-export const StyledInputElement = styled("input")`
-  width: 100%;
-  color: #979797;
-  box-shadow: 0px 3px 6px #00000029;
-  height: 38px;
-  border: none;
-  outline: none;
-  border-radius: 32px;
-  padding-left: 45px;
-  padding-right: 25px;
-`;
+import { THEME_COLORS } from "../../../theme/theme-constants";
+export const StyledInputElement = styled("input")({
+  width: "100%",
+  color: THEME_COLORS.grey03,
+  boxShadow: `0px 3px 6px ${THEME_COLORS.grey05}`,
+  height: "38px",
+  border: "none",
+  outline: "none",
+  borderRadius: "32px",
+  paddingLeft: "45px",
+  paddingRight: "25px",
+});
