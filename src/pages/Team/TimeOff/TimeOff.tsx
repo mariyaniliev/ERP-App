@@ -46,14 +46,16 @@ const TimeOff: React.FC = () => {
       : "yellow";
 
   useEffect(() => {
-    axios
-      .get(
-        "https://genericsoft-api.herokuapp.com/users/6c9838e8-b70b-44da-8f04-24702cf8a856",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-      .then((res) => setUser(res.data));
+    !user &&
+      axios
+        .get(
+          "https://genericsoft-api.herokuapp.com/users/6c9838e8-b70b-44da-8f04-24702cf8a856",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        .then((res) => setUser(res.data));
+
     setTimeOffs(
       timeOffsCalc(range.selection.startDate, range.selection.endDate)
     );
@@ -87,6 +89,7 @@ const TimeOff: React.FC = () => {
           }
         )
       )
+      .then(() => setRange(initialRange))
       .then(() => setTimeOffs(0));
   };
 
