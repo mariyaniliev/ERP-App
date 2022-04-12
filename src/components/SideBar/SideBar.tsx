@@ -1,6 +1,6 @@
 import * as React from "react";
 import { RootState, useAppSelector } from "../../redux/store";
-import { Box, CssBaseline } from "@mui/material";
+import { Box, CssBaseline } from "../../design-system";
 import MenuList from "./MenuList/MenuList";
 import {
   sideBarSectionsTop,
@@ -22,4 +22,4 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default React.memo(SideBar);
