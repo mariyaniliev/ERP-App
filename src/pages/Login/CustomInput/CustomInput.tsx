@@ -2,16 +2,18 @@ import * as React from "react";
 import { InputUnstyled, InputUnstyledProps } from "@mui/base";
 import { StyledInputElement } from "./customInput-styles";
 
+const inputStyles = {
+  width: "65%",
+  position: "relative",
+  display: "flex",
+  alignItems: "center",
+} as const;
+
 export const CustomInput = (props: InputUnstyledProps) => {
   return (
     <>
       <InputUnstyled
-        style={{
-          width: "65%",
-          position: "relative",
-          display: "flex",
-          alignItems: "center",
-        }}
+        style={inputStyles}
         components={{ Input: StyledInputElement }}
         {...props}
       />
