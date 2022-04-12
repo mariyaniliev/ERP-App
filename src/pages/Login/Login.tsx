@@ -1,22 +1,22 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AxiosResponse } from "axios";
 import { useAppSelector, RootState } from "../../redux/store";
+import { userActions } from "../../redux/reducer/user";
 import { Box, Checkbox } from "@mui/material";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import CustomSubmitButton from "./CustomButton/CustomSubmitButton";
 import { Typography } from "../../design-system";
-import { styles } from "./login-styles";
 import { CustomInput } from "../Login/CustomInput/CustomInput";
 import { THEME_COLORS } from "../../theme/theme-constants";
 import { validation } from "./Validation";
-import { userActions } from "../../redux/reducer/user";
 import { useApiClient } from "../../utils/client";
-import { useNavigate } from "react-router-dom";
-import { AxiosResponse } from "axios";
 import { User } from "types/user";
 import logo from "../../theme/assets/gs-logo.png";
 import leftDraw from "../../theme/assets/draw_left.png";
 import rightDraw from "../../theme/assets/draw_right.png";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
-import CustomSubmitButton from "./CustomButton/CustomSubmitButton";
+import { styles } from "./login-styles";
 
 const Login: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
