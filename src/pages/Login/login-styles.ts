@@ -46,14 +46,14 @@ export const styles = {
   },
 
   header: {
-    fontSize: "1.7em",
+    fontSize: { xs: "1.5em", lg: "1.7em" },
     color: `${THEME_COLORS.purple}`,
     pt: 5,
     pb: 3,
   },
   icons: {
     position: "absolute",
-    left: 15,
+    left: 18,
     fontSize: "18px",
     color: `${THEME_COLORS.purple}`,
   },
@@ -64,6 +64,27 @@ export const styles = {
     marginLeft: 5,
     marginBottom: 1,
     marginTop: 3,
-    color: `${THEME_COLORS.grey03}`,
+  },
+  signInAttributes: {
+    display: "flex",
+    flexDirection: "column",
+    width: "65%",
+    my: 3,
+    height: "100px",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  helpers: {
+    width: "93%",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  checkbox: {
+    "& .MuiSvgIcon-root": { fontSize: 20 },
+  },
+  checkboxHolder: {
+    display: "flex",
+    alignItems: "center",
   },
 };

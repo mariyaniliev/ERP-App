@@ -10,6 +10,7 @@ import { styles } from "./header-styles";
 
 const HeaderComponent = () => {
   const open = useAppSelector((state: RootState) => state.drawerHeader.open);
+  const { name } = useAppSelector((state: RootState) => state.user.user);
   const { toggle } = toggleActions();
   const menuToggleButton = open ? <ChevronLeftIcon /> : <ChevronRightIcon />;
 
@@ -41,7 +42,7 @@ const HeaderComponent = () => {
             color={THEME_COLORS.grey03}
             ml={4}
           >
-            Nikolay Petkov
+            {name}
           </Typography>
         </Box>
       </Box>

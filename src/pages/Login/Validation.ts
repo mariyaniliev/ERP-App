@@ -3,7 +3,7 @@ interface errorsValue {
   passwordError: string;
 }
 
-export const Validation = (email, password) => {
+export const validation = (email: string, password: string) => {
   const regex = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
   const errorMassage = {} as errorsValue;
   const isEmailNotValid =
