@@ -40,6 +40,7 @@ const SearchBar = () => {
     searchUsersByBirthday,
     searchUsersByStartingDate,
     displayUsersRows,
+    displayUsersPagination,
   } = searchUsersActions();
 
   const searchOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,6 +61,13 @@ const SearchBar = () => {
 
   const rowsOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     displayUsersRows(event.target.value);
+  };
+
+  const paginationOnChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    page: number
+  ) => {
+    displayUsersPagination(page);
   };
 
   return (
@@ -86,11 +94,7 @@ const SearchBar = () => {
         width="85"
         onChange={rowsOnChange}
       />
-      <Pagination
-        count={4}
-        onChange={(event, page) => console.log(page)}
-        defaultPage={1}
-      />
+      <Pagination count={4} onChange={paginationOnChange} defaultPage={1} />
     </Box>
   );
 };

@@ -52,7 +52,10 @@ const Login: React.FC = () => {
       })
       .catch((err) => {
         loginFail(err.message);
-        setErrorMessage(err.message);
+        const message = err.message.includes("401")
+          ? "Invalid password or username"
+          : "Something went wrong";
+        setErrorMessage(message);
         return;
       });
 

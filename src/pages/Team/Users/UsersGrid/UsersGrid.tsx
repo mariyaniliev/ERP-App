@@ -8,7 +8,6 @@ const columns: any[] = [
   {
     field: "name",
     headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
     sortable: true,
     width: 200,
   },
@@ -53,16 +52,22 @@ const UsersGrid = () => {
   const apiClient = useApiClient();
   const [usersRowsData, setUsersRowsData] = useState([]);
 
-  const { searchQuery, timeOffs, rows } = useAppSelector(
+  const { searchQuery, timeOffs, rows, birthday, pagination } = useAppSelector(
     (state: RootState) => state.users
   );
-
+  console.log("pagination", pagination);
   const getUsers = async (signal?: AbortSignal) => {
     const users = await apiClient.get("/users", { signal });
     setUsersRowsData(users.data.data);
   };
 
-  const filterUsersData = async (searchUsersQuery, rows, timeOffs) => {
+  const filterUsersData = async (
+    searchUsersQuery,
+    rows,
+    timeOffs,
+    birthday,
+    pagination
+  ) => {
     let users = [];
     if (searchQuery !== "") {
       users = await apiClient.get(
@@ -77,10 +82,13 @@ const UsersGrid = () => {
         `/users/search?timeOffRemainingDays=${timeOffs}`
       );
     }
-    // usersRowsData
-    console.log(usersRowsData);
-    console.log(users.data.data);
-    setUsersRowsData(users?.data.data);
+    if (birthday !== "") {
+      users = await apiClient.get(`/users/search?birthday=${birthday}`);
+    }
+    if (pagination > 0) {
+      users = await apiClient.get(`/users?page=${pagination}&limit=${rows}`);
+    }
+    setUsersRowsData(users.data.data);
   };
 
   useEffect(() => {
@@ -91,17 +99,17 @@ const UsersGrid = () => {
       getUsers(signal);
     }
 
-    filterUsersData(searchQuery, rows, timeOffs);
+    filterUsersData(searchQuery, rows, timeOffs, birthday, pagination);
 
     return () => {
       abortController.abort();
     };
-  }, [searchQuery, rows, timeOffs]);
+  }, [searchQuery, rows, timeOffs, birthday, pagination]);
 
   return (
     <DataGrid
       // pageSize={5}
-      rowsPerPageOptions={[+rows]}
+      // rowsPerPageOptions={[+rows]}
       disableColumnMenu={true}
       sx={styles.grid}
       columns={columns}

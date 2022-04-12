@@ -8,7 +8,7 @@ export const styles = {
     fontSize: "14px",
     color: THEME_COLORS.grey03,
     width: "100%",
-    height: "600px",
+    height: "470px",
     borderRadius: "30px",
     boxShadow: THEME_SHADOW,
     marginTop: "25px",
