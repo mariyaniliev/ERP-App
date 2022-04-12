@@ -1,17 +1,16 @@
 import React from "react";
 import { useAppSelector, RootState } from "../../redux/store";
-import { Box, Typography } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { toggleActions } from "../../redux/reducer/drawerHeader";
 import logo from "../../theme/assets/gs-logo.png";
+import { Box, Typography } from "../../design-system";
 import { THEME_COLORS } from "../../theme/theme-constants";
 import { styles } from "./header-styles";
 
 const HeaderComponent = () => {
   const open = useAppSelector((state: RootState) => state.drawerHeader.open);
   const { toggle } = toggleActions();
-
   const menuToggleButton = open ? <ChevronLeftIcon /> : <ChevronRightIcon />;
 
   return (
@@ -50,4 +49,4 @@ const HeaderComponent = () => {
   );
 };
 
-export default HeaderComponent;
+export default React.memo(HeaderComponent);
