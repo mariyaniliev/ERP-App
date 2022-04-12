@@ -30,7 +30,7 @@ export const useApiClient = () => {
       return successRes;
     },
     function (error) {
-      return error;
+      return Promise.reject(error);
     }
   );
   return apiClient;

@@ -12,4 +12,5 @@ export const THEME_COLORS = {
   grey05: "var(--color-grey05)",
   light: "var(--color-light)",
   white: "var(--color-white)",
+  danger: "var(--color-danger)",
 } as const;
