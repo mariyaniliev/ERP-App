@@ -1,4 +1,4 @@
-enum SearchUsersProps {
+enum searchQueryTypes {
   emailOrName,
   page,
   limit,
@@ -12,7 +12,7 @@ export default {
   users: {
     postUser: (leadId?: string) => `/users/${leadId ? leadId : ""}`,
     searchUsers: (
-      searchBy: SearchUsersProps,
+      searchBy: searchQueryTypes,
       searchTerm: string,
       page = 1,
       limit = 10
