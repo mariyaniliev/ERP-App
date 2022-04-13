@@ -4,7 +4,7 @@ import { DateRange, Range } from "react-date-range";
 import { Box, Button } from "@mui/material";
 
 import { CustomSelect } from "./UnstyledSelect/UnstyledSelect";
-import { timeOffsCalc } from "./timeOffsCalc";
+import { timeOffsCalc } from "../../../utils/timeOffsCalc";
 
 import { User } from "./user-type";
 

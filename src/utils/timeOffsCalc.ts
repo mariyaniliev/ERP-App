@@ -1,4 +1,4 @@
-import holidays from "./holidays.json";
+import holidays from "../pages/Team/TimeOff/holidays.json";
 
 export const timeOffsCalc = (startDate: Date, endDate: Date) => {
   const year = `${new Date().getFullYear()}` as keyof typeof holidays;

@@ -3,7 +3,7 @@ import type { RouteObject } from "react-router-dom";
 import Home from "./Home/Home";
 import TeamSection from "./Team/Team";
 import UsersSubPage from "./Team/Users/Users";
-import TimeOffsSubPage from "./Team/TimeOff/TimeOff";
+import TimeOffsSubPage from "./Team/TimeOff/TimeOffs";
 import PersonalInfoSubPage from "./Team/PersonalInfo/PersonalInfo";
 
 export const routes: RouteObject[] = [
