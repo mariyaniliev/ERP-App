@@ -26,7 +26,7 @@ const columns: any[] = [
     sortable: true,
   },
   {
-    field: "timeOffs",
+    field: "timeOffRemainingDays",
     headerName: "Time Offs",
     type: "number",
     width: 120,
@@ -99,7 +99,9 @@ const UsersGrid = () => {
       getUsers(signal);
     }
 
-    filterUsersData(searchQuery, rows, timeOffs, birthday, pagination);
+    if (usersRowsData.length > 0) {
+      filterUsersData(searchQuery, rows, timeOffs, birthday, pagination);
+    }
 
     return () => {
       abortController.abort();
@@ -114,6 +116,7 @@ const UsersGrid = () => {
       sx={styles.grid}
       columns={columns}
       rows={usersRowsData}
+      hideFooterPagination={true}
     />
   );
 };

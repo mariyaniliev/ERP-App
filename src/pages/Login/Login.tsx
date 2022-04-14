@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AxiosResponse } from "axios";
+import Cookies from "js-cookie";
 import { useAppSelector, RootState } from "../../redux/store";
 import { userActions } from "../../redux/reducer/user";
 import { Box, Checkbox } from "@mui/material";
@@ -12,18 +13,26 @@ import { CustomInput } from "../Login/CustomInput/CustomInput";
 import { THEME_COLORS } from "../../theme/theme-constants";
 import { validation } from "./Validation";
 import { useApiClient } from "../../utils/client";
-import { User } from "types/user";
+import { User } from "../../types/user";
+import api from "../../services/api-endpoints";
+import routes from "../../services/routes";
+import notificationMessages from "../../services/notification-messages";
 import logo from "../../theme/assets/gs-logo.png";
 import leftDraw from "../../theme/assets/draw_left.png";
 import rightDraw from "../../theme/assets/draw_right.png";
 import { styles } from "./login-styles";
 
+const memorizedPassword = Cookies.get("password") || "";
+const memorizedEmail = Cookies.get("email") || "";
+const rememberMe = Cookies.get("rememberMe") === "true" ? true : false;
+
 const Login: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [focused, setFocused] = useState({ email: false, password: false });
-  const [userCredentials, setCredentials] = useState({
-    email: "",
-    password: "",
+  const [userCredentials, setUserCredentials] = useState({
+    email: memorizedEmail,
+    password: memorizedPassword,
+    rememberMe: rememberMe,
   });
 
   const isElementFocused = (element: string) => {
@@ -42,32 +51,43 @@ const Login: React.FC = () => {
       setErrorMessage(Object.values(error)[0]);
       return;
     }
+    if (!userCredentials.rememberMe) {
+      Cookies.remove("email");
+      Cookies.remove("password");
+      Cookies.remove("rememberMe");
+    }
+
     setErrorMessage("");
     loginStart();
 
     const res: AxiosResponse<User> | void = await client
-      .post("/sessions", {
+      .post(api.sessions.postSession, {
         email,
         password,
       })
       .catch((err) => {
         loginFail(err.message);
         const message = err.message.includes("401")
-          ? "Invalid password or username"
-          : "Something went wrong";
+          ? notificationMessages.invalidCredentials
+          : notificationMessages.unknownError;
         setErrorMessage(message);
         return;
       });
 
     if (res) {
+      if (userCredentials.rememberMe) {
+        Cookies.set("email", `${email}`);
+        Cookies.set("password", `${password}`);
+        Cookies.set("rememberMe", `${userCredentials.rememberMe}`);
+      }
       loginSuccess(res.data);
-      navigate("/team/users");
+      navigate(routes.team.users);
     }
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name }: { value: string; name: string } = event.target;
-    setCredentials({ ...userCredentials, [name]: value });
+    setUserCredentials({ ...userCredentials, [name]: value });
   };
 
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -88,7 +108,6 @@ const Login: React.FC = () => {
         <Box sx={styles.logoContainer}>
           <img style={{ height: 60 }} src={logo} alt="Generic Soft Logo" />
         </Box>
-
         <Box sx={styles.formContainer}>
           <Typography sx={styles.header}>Sign in to our platform</Typography>
           <form
@@ -110,12 +129,12 @@ const Login: React.FC = () => {
             </Typography>
             <CustomInput
               name="email"
+              defaultValue={memorizedEmail}
               onFocus={handleFocus}
               onBlur={handleBlur}
               onChange={handleChange}
               endAdornment={<MailOutlineIcon sx={styles.icons} />}
             />
-
             <Typography
               sx={{
                 ...styles.helperText,
@@ -124,9 +143,9 @@ const Login: React.FC = () => {
             >
               Your Password
             </Typography>
-
             <CustomInput
               name="password"
+              defaultValue={memorizedPassword}
               type="password"
               onChange={handleChange}
               onBlur={handleBlur}
@@ -143,9 +162,13 @@ const Login: React.FC = () => {
                 <Box sx={styles.checkboxHolder}>
                   <Checkbox
                     name="rememberMe"
+                    defaultChecked={userCredentials.rememberMe}
                     sx={styles.checkbox}
                     onChange={(e) => {
-                      console.log(e.target.checked);
+                      setUserCredentials({
+                        ...userCredentials,
+                        rememberMe: e.target.checked,
+                      });
                     }}
                   />
                   <Typography>Remember me</Typography>

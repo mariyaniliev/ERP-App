@@ -14,3 +14,9 @@ export interface DropdownProps {
   width?: string;
   onChange?: () => void;
 }
+
+export interface ButtonProps {
+  onClick: (event: React.MouseEvent) => void;
+  width?: string;
+  children: any;
+}

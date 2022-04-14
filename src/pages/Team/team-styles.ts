@@ -8,7 +8,7 @@ import { styled } from "@mui/system";
 import { THEME_COLORS } from "../../theme/theme-constants";
 
 const StyledTabs = styled(TabsUnstyled)({
-  padding: "30px 25px 20px 25px",
+  padding: "30px 25px 0px 25px",
 });
 
 const StyledTabsList = styled(TabsListUnstyled)({
