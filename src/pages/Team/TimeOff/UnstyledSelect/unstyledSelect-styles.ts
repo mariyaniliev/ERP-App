@@ -1,0 +1,114 @@
+import { selectUnstyledClasses } from "@mui/base/SelectUnstyled";
+import OptionUnstyled, {
+  optionUnstyledClasses,
+} from "@mui/base/OptionUnstyled";
+import PopperUnstyled from "@mui/base/PopperUnstyled";
+import { styled } from "@mui/system";
+
+const blue = {
+  100: "#DAECFF",
+  900: "#003A75",
+};
+
+const grey = {
+  100: "#E7EBF0",
+  300: "#CDD2D7",
+  400: "#B2BAC2",
+  900: "#1A2027",
+};
+
+export const StyledButton = styled("button")(
+  () => `
+  font-family: IBM Plex Sans, sans-serif;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+  min-height: calc(1.5em + 22px);
+  min-width: 120px;
+  background: ${"#fff"};
+  border: 1px solid ${grey[300]};
+  border-radius: 0.75em;
+  margin-top: 0.5em;
+  padding: 10px;
+  text-align: left;
+  line-height: 1.5;
+  color: ${grey[900]};
+
+  &:hover {
+    background: ${grey[100]};
+    border-color: ${grey[400]};
+  }
+
+  &.${selectUnstyledClasses.focusVisible} {
+    outline: 3px solid ${blue[100]};
+  }
+
+  &.${selectUnstyledClasses.expanded} {
+    &::after {
+      content: '▴';
+    }
+  }
+
+  &::after {
+    content: '▾';
+    float: right;
+  }
+  `
+);
+
+export const StyledListbox = styled("ul")(
+  () => `
+  font-family: IBM Plex Sans, sans-serif;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+  padding: 5px;
+  margin: 10px 0;
+  min-width: 120px;
+  background: ${"#fff"};
+  border: 1px solid ${grey[300]};
+  border-radius: 0.75em;
+  color: ${grey[900]};
+  overflow: auto;
+  outline: 0px;
+  `
+);
+
+export const StyledOption = styled(OptionUnstyled)(
+  () => `
+  list-style: none;
+  padding: 8px;
+  border-radius: 0.45em;
+  cursor: default;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  &.${optionUnstyledClasses.selected} {
+    background-color: ${blue[100]};
+    color: ${blue[900]};
+  }
+
+  &.${optionUnstyledClasses.highlighted} {
+    background-color: ${grey[100]};
+    color: ${grey[900]};
+  }
+
+  &.${optionUnstyledClasses.highlighted}.${optionUnstyledClasses.selected} {
+    background-color: ${blue[100]};
+    color: ${blue[900]};
+  }
+
+  &.${optionUnstyledClasses.disabled} {
+    color: ${grey[400]};
+  }
+
+  &:hover:not(.${optionUnstyledClasses.disabled}) {
+    background-color: ${grey[100]};
+    color: ${grey[900]};
+  }
+  `
+);
+
+export const StyledPopper = styled(PopperUnstyled)`
+  z-index: 1;
+`;
