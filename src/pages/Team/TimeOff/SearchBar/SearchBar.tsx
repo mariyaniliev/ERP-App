@@ -1,3 +1,4 @@
+import { SelectChangeEvent } from "@mui/material";
 import React from "react";
 import {
   Box,
@@ -6,95 +7,71 @@ import {
   Pagination,
 } from "../../../../design-system";
 import { styles } from "./searchBar-styles";
-import Input from "../../../../design-system/Input/Input";
-import { searchUsersActions } from "../../../../redux/reducer/searchUsers";
+import { Period, TimeOffType } from "./types";
+import { typeOptions, periodOptions, approvedOptions } from "./listOptions";
+
+const approvedJSX = <span>&#10003;</span>;
+const deniedJSX = <span>&#10006;</span>;
 const SearchBar = () => {
-  const leadTest = [
-    {
-      label: "Ivan Ivanov",
-      value: "ivan",
-    },
-    {
-      label: "Dimitar Petrov",
-      value: "dimitar",
-    },
-  ];
-  const paginationTest = [
-    {
-      label: "5",
-      value: "5",
-    },
-    {
-      label: "10",
-      value: "10",
-    },
-    {
-      label: "20",
-      value: "20",
-    },
-  ];
+  const [period, setPeriod] = React.useState<Period>(Period.period);
+  const [type, setType] = React.useState<TimeOffType>(TimeOffType.type);
+  const [approved, setApproved] = React.useState<string | JSX.Element>(
+    "Approved"
+  );
+  const [searchTerm, setSearchTerm] = React.useState("");
 
-  const {
-    searchUsersByQuery,
-    searchUsersByTimeOffs,
-    searchUsersByBirthday,
-    searchUsersByStartingDate,
-    displayUsersRows,
-    displayUsersPagination,
-  } = searchUsersActions();
-
-  const searchOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    searchUsersByQuery(event.target.value);
+  const handleSearch = (event: SelectChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value as string);
   };
 
-  const timeOffsOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    searchUsersByTimeOffs(event.target.value);
+  const handleApproved = (event: SelectChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value as string;
+    if (value === "") {
+      setApproved("Approved");
+      return;
+    }
+    setApproved(value === "true" ? approvedJSX : deniedJSX);
   };
 
-  const birthdayOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    searchUsersByBirthday(event.target.value);
+  const handlePeriod = (event: SelectChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value as string;
+    if (value === "") {
+      setPeriod(Period.period);
+      return;
+    }
+    setPeriod(Period[value as keyof typeof Period]);
   };
 
-  const startingDateOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    searchUsersByStartingDate(event.target.value);
-  };
-
-  const rowsOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    displayUsersRows(event.target.value);
-  };
-
-  const paginationOnChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    page: number
-  ) => {
-    displayUsersPagination(page);
+  const handleType = (event: SelectChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value as string;
+    if (value === "") {
+      setType(TimeOffType.type);
+      return;
+    }
+    setType(TimeOffType[value as keyof typeof TimeOffType]);
   };
 
   return (
     <Box sx={styles.searchBar}>
-      <SearchInput
-        placeholder="Search or filter..."
-        onChange={searchOnChange}
-      />
-      <Dropdown placeholder="Lead" list={leadTest} width="130" />
-      <Input placeholder="Time offs" width="85" onChange={timeOffsOnChange} />
-      <Input
-        placeholder="Date of birth"
-        width="120"
-        onChange={birthdayOnChange}
-      />
-      <Input
-        placeholder="Starting date"
-        width="120"
-        onChange={startingDateOnChange}
-      />
+      <SearchInput placeholder="Search or filter..." onChange={handleSearch} />
       <Dropdown
-        placeholder="Rows"
-        list={paginationTest}
-        width="85"
-        onChange={rowsOnChange}
+        placeholder={period}
+        list={periodOptions}
+        onChange={handlePeriod}
       />
-      <Pagination count={4} onChange={paginationOnChange} defaultPage={1} />
+      <Dropdown placeholder={type} list={typeOptions} onChange={handleType} />
+      <Dropdown
+        placeholder={approved}
+        list={approvedOptions}
+        onChange={handleApproved}
+      />
+      <Pagination
+        count={4}
+        onChange={() => {
+          console.log("searched");
+        }}
+        defaultPage={1}
+      />
     </Box>
   );
 };

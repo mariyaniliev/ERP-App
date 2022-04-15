@@ -9,28 +9,30 @@ import { DropdownProps, ListItem } from "../types";
 
 const Dropdown = (props: DropdownProps) => {
   const { placeholder, list, width, onChange } = props;
+
   const fieldWidth = width ? width : "130";
 
   return (
     <Box sx={{ ...dropdownStyles, width: `${fieldWidth}px` }}>
       <FormControl fullWidth>
         <InputLabel
+          shrink={false}
           sx={{ fontSize: "14px", fontWeight: "600" }}
           id="demo-simple-select-label"
         >
           {placeholder}
         </InputLabel>
+
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           label={placeholder}
           onChange={onChange}
         >
-          <MenuItem value="">&nbsp;</MenuItem>
           {list.map((listItem: ListItem) => {
             return (
               <MenuItem key={listItem.value} value={listItem.value}>
-                {listItem.label}
+                {listItem.renderValue ? listItem.renderValue() : listItem.label}
               </MenuItem>
             );
           })}

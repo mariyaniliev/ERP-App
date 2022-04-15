@@ -1,3 +1,5 @@
+import { SelectChangeEvent } from "@mui/material";
+
 export interface InputProps {
   placeholder?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -6,11 +8,12 @@ export interface InputProps {
 export interface ListItem {
   value: string;
   label: string;
+  renderValue?: () => JSX.Element;
 }
 
 export interface DropdownProps {
-  placeholder: string;
+  placeholder: string | JSX.Element;
   list: ListItem[];
   width?: string;
-  onChange?: () => void;
+  onChange?: (event: SelectChangeEvent<HTMLInputElement>) => void;
 }
