@@ -1,6 +1,6 @@
 import React from "react";
 import ButtonUnstyled from "@mui/base/ButtonUnstyled";
-import { Box } from "@mui/material";
+import { Box } from "../index";
 import { ButtonProps } from "../types";
 import { StyledButtonElement } from "./button-styles";
 

@@ -20,3 +20,23 @@ export interface ButtonProps {
   width?: string;
   children: any;
 }
+
+export interface ModalProps {
+  children: any;
+  open: boolean;
+  BackdropComponent: any;
+  BackdropProps: BackdropProps;
+  modalStyles: {
+    width: string;
+    height: string;
+    position: string;
+    background: string;
+    boxShadow: string;
+    borderRadius: string;
+    overflow: string;
+  };
+}
+
+export interface BackdropProps {
+  onClick: (event: React.MouseEvent) => void;
+}
