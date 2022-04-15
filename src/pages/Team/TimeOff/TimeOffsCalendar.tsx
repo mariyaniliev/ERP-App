@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+/* import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { DateRange, Range } from "react-date-range";
 import { Box, Button } from "@mui/material";
@@ -93,69 +93,11 @@ const TimeOff: React.FC = () => {
       .then(() => setTimeOffs(0));
   };
 
+const TimeOff = () => {
   return (
-    <Box sx={styles.datePickerContainer}>
-      <Box sx={styles.sideMenuContainer}>
-        <Box>{user && user.timeOffRemainingDays} ramaining time off days</Box>
-        <Box>
-          <CustomSelect value={timeOffType} onChange={setTimeOffType}>
-            <StyledOption value={"paid"}>Paid</StyledOption>
-            <StyledOption value={"unpaid"}>Unpaid</StyledOption>
-            <StyledOption value={"sick"}>Sick</StyledOption>
-          </CustomSelect>
-        </Box>
-        <Box sx={styles.timeOffLegendContainer}>
-          <Box sx={styles.timeOffLegend}>
-            <h2>Paid</h2>
-            <Box
-              component="span"
-              sx={{ ...styles.timeOffLegendSpan, background: "green" }}
-            />{" "}
-          </Box>
-          <Box sx={styles.timeOffLegend}>
-            <h2>Unpaid</h2>
-            <Box
-              component="span"
-              sx={{ ...styles.timeOffLegendSpan, background: "red" }}
-            />{" "}
-          </Box>
-          <Box sx={styles.timeOffLegend}>
-            <h2>Sick</h2>
-            <Box
-              component="span"
-              sx={{ ...styles.timeOffLegendSpan, background: "yellow" }}
-            />{" "}
-          </Box>
-        </Box>
-      </Box>
-      <Box sx={styles.contentCenter}>
-        <Box>
-          <DateRange
-            onChange={selectDay}
-            ranges={[range.selection]}
-            months={1}
-            direction="horizontal"
-            editableDateInputs={true}
-            showDateDisplay
-            showMonthAndYearPickers
-            showMonthArrow
-            rangeColors={[color]}
-          />
-          <Box sx={styles.contentCenter}>
-            {" "}
-            {timeOffs && !isChosenDaysAllowed ? (
-              <Box>
-                <Button onClick={requestTimeOff}>
-                  {timeOffs} requested days
-                </Button>
-                <Button onClick={() => setTimeOffs(0)}>Cancel</Button>
-              </Box>
-            ) : null}
-          </Box>
-        </Box>
-      </Box>
-    </Box>
+    <div>
+      <h1>TimeOff Sub Page</h1>
+    </div>
   );
 };
-
-export default TimeOff;
+export default TimeOff; */

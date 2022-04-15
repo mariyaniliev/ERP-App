@@ -1,5 +1,5 @@
 import React from "react";
-import { useRoutes } from "react-router-dom";
+import { useLocation, useRoutes } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
 import { Box } from "./design-system";
 import { routes } from "./pages/routes";
@@ -10,12 +10,16 @@ import "./App.global.css";
 
 const App = () => {
   const element = useRoutes(routes);
+  const location = useLocation();
+
+  const isPageLogin = location.pathname === "/login";
+
   return (
     <ThemeProvider theme={appTheme}>
       <Box>
-        <Header />
+        {!isPageLogin && <Header />}
         <Box sx={{ display: "flex" }}>
-          <SideBar />
+          {!isPageLogin && <SideBar />}
           {element}
         </Box>
       </Box>

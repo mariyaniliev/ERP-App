@@ -5,6 +5,7 @@ import TeamSection from "./Team/Team";
 import UsersSubPage from "./Team/Users/Users";
 import TimeOffsSubPage from "./Team/TimeOff/TimeOffs";
 import PersonalInfoSubPage from "./Team/PersonalInfo/PersonalInfo";
+import Login from "./Login/Login";
 
 export const routes: RouteObject[] = [
   {
@@ -28,5 +29,9 @@ export const routes: RouteObject[] = [
         element: <PersonalInfoSubPage />,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ];

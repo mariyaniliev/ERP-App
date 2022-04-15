@@ -13,7 +13,7 @@ export const useApiClient = () => {
 
   // TODO define baseUrl in env.development and take it from there
   const apiClient = Axios.create({
-    baseURL: "http://localhost:4000",
+    baseURL: "https://genericsoft-api.herokuapp.com",
     headers: {
       Authorization: `Bearer ${accessToken}`,
       "x-refresh": `Bearer ${refreshToken}`,
@@ -29,7 +29,7 @@ export const useApiClient = () => {
       return successRes;
     },
     function (error) {
-      return error;
+      return Promise.reject(error);
     }
   );
   return apiClient;
