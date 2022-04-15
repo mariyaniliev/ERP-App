@@ -1,11 +1,11 @@
-enum searchQueryTypes {
-  emailOrName,
-  page,
-  limit,
-  leadId,
-  birthday,
-  startingDate,
-  timeOffRemainingDays,
+export enum searchQueryTypes {
+  emailOrName = "emailOrName",
+  page = "page",
+  limit = "limit",
+  leadId = "leadId",
+  birthday = "birthday",
+  startingDate = "startingDate",
+  timeOffRemainingDays = "timeOffRemainingDays",
 }
 
 export default {
