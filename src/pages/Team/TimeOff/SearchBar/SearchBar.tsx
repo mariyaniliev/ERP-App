@@ -9,12 +9,16 @@ import {
 import { styles } from "./searchBar-styles";
 import { Period, TimeOffType } from "./types";
 import { useApiClient } from "../../../../utils/client";
-import { typeOptions, periodOptions, approvedOptions } from "./listOptions";
+import {
+  typeOptions,
+  periodOptions,
+  approvedOptions,
+  approvedJSX,
+  deniedJSX,
+} from "./listOptions";
 
-/* import api, { searchQueryTypes } from "../../../../services/api-endpoints"; */
+import api, { searchQueryTypes } from "../../../../services/api-endpoints";
 
-const approvedJSX = <span>&#10003;</span>;
-const deniedJSX = <span>&#10006;</span>;
 const SearchBar = () => {
   const [period, setPeriod] = React.useState<Period>(Period.period);
   const [type, setType] = React.useState<TimeOffType>(TimeOffType.type);
@@ -25,12 +29,12 @@ const SearchBar = () => {
 
   const handleSearch = async (event: SelectChangeEvent<HTMLInputElement>) => {
     const searchTerm = event.target.value as string;
-    return searchTerm;
-    /*     const searchResults = await client.get(
+
+    const { data } = await client.get(
       api.users.searchUsers(searchQueryTypes.emailOrName, searchTerm)
     );
 
-    console.log(searchResults.data); */
+    console.log(data);
   };
 
   const handleApproved = (event: SelectChangeEvent<HTMLInputElement>) => {
@@ -63,6 +67,7 @@ const SearchBar = () => {
   return (
     <Box sx={styles.searchBar}>
       <SearchInput placeholder="Search or filter..." onChange={handleSearch} />
+
       <Dropdown
         placeholder={period}
         list={periodOptions}
@@ -74,6 +79,7 @@ const SearchBar = () => {
         list={approvedOptions}
         onChange={handleApproved}
       />
+
       <Pagination
         count={4}
         onChange={() => {

@@ -1,60 +1,33 @@
-import React from "react";
-import { DataGrid, GridColumns } from "@mui/x-data-grid";
+import React, { useEffect, useState } from "react";
+import { DataGrid } from "@mui/x-data-grid";
 import { styles } from "./timeOffsGrid-styles";
-
-const columns: GridColumns = [
-  {
-    field: "name",
-    headerName: "Full name",
-    sortable: true,
-    width: 150,
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    type: "string",
-    width: 150,
-    sortable: true,
-  },
-  {
-    field: "lead",
-    headerName: "Lead",
-    type: "string",
-    width: 150,
-    sortable: true,
-  },
-  {
-    field: "timeOffs",
-    headerName: "Time Offs",
-    type: "number",
-    width: 150,
-    sortable: true,
-  },
-  {
-    field: "birthday",
-    headerName: "Date of Birth",
-    type: "string",
-    width: 150,
-    sortable: true,
-  },
-  {
-    field: "startingDate",
-    headerName: "Starting Date",
-    type: "string",
-    width: 150,
-    sortable: true,
-  },
-];
+import { useApiClient } from "../../../../utils/client";
+import { columns } from "./TimeOffGridHelpers";
+import { transformData } from "./transformData";
 
 const UsersGrid = () => {
+  const client = useApiClient();
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchTimeOffs = async () => {
+      const { data } = await client.get("/timeoffs");
+      setData(transformData(data.data));
+    };
+    fetchTimeOffs();
+  }, []);
+
   return (
     <DataGrid
       pageSize={5}
-      // rowsPerPageOptions={[+rows]}
+      rowsPerPageOptions={[5, 10, 20]}
       disableColumnMenu={true}
       sx={styles.grid}
       columns={columns}
-      rows={[]}
+      pagination
+      rows={data || []}
+      autoHeight
+      autoPageSize
+      disableSelectionOnClick
     />
   );
 };

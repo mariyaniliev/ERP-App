@@ -1,6 +1,7 @@
+import { Typography } from "@mui/material";
 import React from "react";
-const approvedJSX = <span>&#10003;</span>;
-const deniedJSX = <span>&#10006;</span>;
+export const approvedJSX = <Typography>&#10003;</Typography>;
+export const deniedJSX = <Typography>&#10006;</Typography>;
 export const typeOptions = [
   {
     label: "Paid",

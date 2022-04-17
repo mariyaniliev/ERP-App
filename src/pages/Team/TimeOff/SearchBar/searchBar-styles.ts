@@ -4,7 +4,7 @@ export const styles = {
   searchBar: {
     width: "100%",
     height: "65px",
-    borderRadius: "30px",
+    borderRadius: "32px",
     boxShadow: THEME_SHADOW,
     display: "flex",
     alignItems: "center",
