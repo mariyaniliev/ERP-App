@@ -31,7 +31,7 @@ export const renderCell = (values: GridRenderCellParams) => {
 
 export const renderUser = (values: GridRenderCellParams) => {
   return (
-    <Stack direction="row" spacing={1} alignItems="center">
+    <Stack direction="row" spacing={1} alignItems="center" marginLeft="20px">
       <Avatar
         component={PersonIcon}
         sx={{

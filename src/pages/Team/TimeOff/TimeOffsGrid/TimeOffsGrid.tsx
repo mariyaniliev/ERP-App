@@ -1,33 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { styles } from "./timeOffsGrid-styles";
-import { useApiClient } from "../../../../utils/client";
 import { columns } from "./TimeOffGridHelpers";
-import { transformData } from "./transformData";
+import { TimeOff } from "types/timeoff";
+import TimeOffsLoader from "../TimeOffsLoader";
 
-const UsersGrid = () => {
-  const client = useApiClient();
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const fetchTimeOffs = async () => {
-      const { data } = await client.get("/timeoffs");
-      setData(transformData(data.data));
-    };
-    fetchTimeOffs();
-  }, []);
+type Props = {
+  timeoffs: TimeOff[];
+  isLoading: boolean;
+  limit: number;
+};
+
+const UsersGrid: React.FC<Props> = ({ timeoffs, isLoading, limit }) => {
+  if (isLoading) {
+    return <TimeOffsLoader pageSize={limit} />;
+  }
 
   return (
     <DataGrid
-      pageSize={5}
-      rowsPerPageOptions={[5, 10, 20]}
+      pageSize={limit}
       disableColumnMenu={true}
-      sx={styles.grid}
+      sx={{ ...styles.grid, height: `${limit * 52 + 90}px` }}
       columns={columns}
       pagination
-      rows={data || []}
-      autoHeight
-      autoPageSize
+      rows={timeoffs || []}
       disableSelectionOnClick
+      hideFooterPagination={true}
     />
   );
 };

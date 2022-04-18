@@ -22,6 +22,8 @@ const Dropdown = (props: DropdownProps) => {
             return <Typography>{placeholder}</Typography>;
           }}
         >
+          {isNaN(Number(placeholder)) && <MenuItem value="">All</MenuItem>}
+
           {list.map((listItem: ListItem) => {
             return (
               <MenuItem key={listItem.value} value={listItem.value}>

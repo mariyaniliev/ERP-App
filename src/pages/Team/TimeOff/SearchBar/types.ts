@@ -11,8 +11,3 @@ export enum TimeOffType {
   sickLeave = "Sick leave",
   type = "Type",
 }
-
-export enum Approved {
-  true = "true",
-  false = "false",
-}

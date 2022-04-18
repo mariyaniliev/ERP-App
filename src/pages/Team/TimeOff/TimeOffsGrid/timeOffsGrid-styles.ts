@@ -12,13 +12,18 @@ export const styles = {
     boxShadow: THEME_SHADOW,
     marginTop: "25px",
 
+    pr: "15px",
+
     "& .MuiDataGrid-columnHeaderTitleContainer,.MuiDataGrid-cell": {
+      border: "none",
+      color: THEME_COLORS.grey03,
+      fontSize: "14px",
+      p: 0,
       justifyContent: "start",
     },
     "& .MuiDataGrid-row": {
-      width: "calc(100% - 80px)",
-      margin: "0px 20px",
-
+      marginLeft: "20px",
+      width: "calc(100% - 45px)",
       "&:hover": {
         borderRadius: "30px",
         height: "56px",
@@ -26,10 +31,31 @@ export const styles = {
         background: "#FFFFFF 0% 0% no-repeat padding-box",
       },
     },
-
-    "& .MuiDataGrid-columnHeaders": {
-      paddingLeft: "30px",
+    ".MuiDataGrid-columnHeaders": {
+      border: "none",
     },
+
+    "& .MuiDataGrid-columnHeadersInner": {
+      px: "20px",
+      "& >:first-of-type": {
+        px: "18px",
+      },
+    },
+
+    ".MuiDataGrid-virtualScrollerRenderZone": {
+      "& >:not(:last-child)": {
+        borderBottom: "1px solid rgba(224, 224, 224, 1)",
+      },
+    },
+    ".MuiDataGrid-virtualScroller": {
+      overflow: "hidden",
+    },
+
+    ".MuiDataGrid-footerContainer": {
+      minHeight: "25px",
+      border: "none",
+    },
+
     "& .MuiDataGrid-iconSeparator": {
       display: "none",
     },
