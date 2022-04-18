@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Dropdown, Box, Button } from "../../../../design-system/index";
 import Input from "../../../../design-system/Input/Input";
+import { THEME_INPUTS_SHADOW } from "../../../../theme/theme-constants";
 import { styles } from "./addEmployeeForm-styles";
 
 export const AddEmployeeForm = () => {
@@ -14,37 +15,84 @@ export const AddEmployeeForm = () => {
       value: "dimitar",
     },
   ];
+
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+    fullName: "",
+    roles: "",
+    lead: "",
+    position: "",
+    timeOffs: "",
+  });
+
+  const { email, password, fullName, roles, lead, position, timeOffs } =
+    userData;
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = event.target;
+    setUserData({ ...userData, [name]: value });
+  };
+
   return (
     <Box sx={styles.formContainer}>
-      <Box sx={styles.shadow}>
+      <Box sx={{ ...styles.contentPostion, height: "125px" }}>
         <Input
-          placeholder="Starting date"
-          width="517"
-          onChange={() => console.log("change")}
+          placeholder="Full Name"
+          width="450"
+          boxShadow={THEME_INPUTS_SHADOW}
+          onChange={handleChange}
         />
         <Input
-          placeholder="Starting date"
-          width="517"
-          onChange={() => console.log("change")}
+          placeholder="Email"
+          width="450"
+          boxShadow={THEME_INPUTS_SHADOW}
+          onChange={handleChange}
         />
       </Box>
-      <Box sx={styles.shadow}>
-        <Dropdown placeholder="Lead" list={leadTest} width="246" />
+      <Box
+        sx={{
+          ...styles.contentPostion,
+          flexDirection: "row",
+          width: "450px",
+        }}
+      >
+        <Dropdown
+          placeholder="Roles"
+          list={leadTest}
+          width="200"
+          boxShadow={THEME_INPUTS_SHADOW}
+        />
+        <Dropdown
+          placeholder="Lead"
+          list={leadTest}
+          width="200"
+          boxShadow={THEME_INPUTS_SHADOW}
+        />
       </Box>
-      <Box sx={styles.shadow}>
+      <Box
+        sx={{ ...styles.contentPostion, flexDirection: "row", width: "450px" }}
+      >
+        <Dropdown
+          placeholder="Postion"
+          list={leadTest}
+          width="200"
+          boxShadow={THEME_INPUTS_SHADOW}
+        />
         <Input
-          placeholder="Starting date"
-          width="246"
-          onChange={() => console.log("change")}
+          placeholder="Remaining Time Offs"
+          width="200"
+          boxShadow={THEME_INPUTS_SHADOW}
+          onChange={handleChange}
         />
-        <Dropdown placeholder="Lead" list={leadTest} width="246" />
       </Box>
-      <Box sx={styles.shadow}>
+      <Box>
         {" "}
         <Input
-          placeholder="Starting date"
-          width="517"
-          onChange={() => console.log("change")}
+          placeholder="Password"
+          width="450"
+          boxShadow={THEME_INPUTS_SHADOW}
+          onChange={handleChange}
         />
       </Box>
       <Box>

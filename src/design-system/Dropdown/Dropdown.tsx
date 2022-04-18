@@ -8,11 +8,18 @@ import { dropdownStyles } from "./dropdown-styles";
 import { DropdownProps, ListItem } from "../types";
 
 const Dropdown = (props: DropdownProps) => {
-  const { placeholder, list, width, onChange } = props;
+  const { placeholder, list, width, boxShadow, onChange } = props;
   const fieldWidth = width ? width : "130";
-
+  const dropdownShadow = boxShadow ? `${boxShadow}` : "none";
   return (
-    <Box sx={{ ...dropdownStyles, width: `${fieldWidth}px` }}>
+    <Box
+      sx={{
+        ...dropdownStyles,
+        width: `${fieldWidth}px`,
+        borderRadius: "20px",
+        boxShadow: dropdownShadow,
+      }}
+    >
       <FormControl fullWidth>
         <InputLabel
           sx={{ fontSize: "14px", fontWeight: "600" }}

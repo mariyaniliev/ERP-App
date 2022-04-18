@@ -1,11 +1,15 @@
-import { THEME_SHADOW } from "../../../../theme/theme-constants";
-
 export const styles = {
-  shadow: {
-    boxShadow: THEME_SHADOW,
+  contentPostion: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   formContainer: {
     display: "flex",
     flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: "600px",
+    padding: "40px 0",
   },
 };

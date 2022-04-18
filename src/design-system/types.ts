@@ -2,6 +2,7 @@ export interface InputProps {
   placeholder?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   width?: string;
+  boxShadow?: string;
 }
 export interface ListItem {
   value: string;
@@ -12,7 +13,8 @@ export interface DropdownProps {
   placeholder: string;
   list: ListItem[];
   width?: string;
-  onChange?: () => void;
+  boxShadow?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface ButtonProps {
