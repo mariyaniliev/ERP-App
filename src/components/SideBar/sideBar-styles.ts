@@ -2,7 +2,7 @@ import { styled, Theme, CSSObject } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import { THEME_COLORS } from "../../theme/theme-constants";
 
-const drawerWidth = 240;
+const drawerWidth = 236;
 const drawerHeight = "calc(100vh - 64px)";
 
 const openedMixin = (theme: Theme): CSSObject => ({
