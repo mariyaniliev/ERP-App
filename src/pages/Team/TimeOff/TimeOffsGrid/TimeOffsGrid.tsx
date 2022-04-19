@@ -11,7 +11,6 @@ import { columns } from "./TimeOffGridHelpers";
 import { TimeOff } from "types/timeoff";
 import { useAppSelector, RootState } from "../../../../redux/store";
 import { LinearProgress } from "@mui/material";
-
 import GridActions from "./GridActions";
 type Props = {
   timeoffs: TimeOff[];

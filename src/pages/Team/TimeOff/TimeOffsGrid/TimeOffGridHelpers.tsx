@@ -13,7 +13,6 @@ const renderCell = (values: GridRenderCellParams) => {
     color = "primary.main";
     background = "rgba(247, 245, 250, 1)";
   } else {
-    console.log(values.value);
     color = "#57D9A9";
     background = "rgba(87, 217, 169, 0.2)";
   }
