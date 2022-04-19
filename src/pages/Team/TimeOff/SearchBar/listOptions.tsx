@@ -1,33 +1,33 @@
-import { Typography } from "@mui/material";
+/* import { Typography } from "@mui/material";
 import React from "react";
 export const approvedJSX = <Typography>&#10003;</Typography>;
-export const deniedJSX = <Typography>&#10006;</Typography>;
+export const deniedJSX = <Typography>&#10006;</Typography>; */
 export const typeOptions = [
   {
     label: "Paid",
-    value: "paid",
+    value: "Paid",
   },
   {
     label: "Unpaid",
-    value: "unpaid",
+    value: "Unpaid",
   },
   {
     label: "Sick leave",
-    value: "sickLeave",
+    value: "Sick leave",
   },
 ];
 export const periodOptions = [
   {
     label: "Future",
-    value: "future",
+    value: "Future",
   },
   {
     label: "Today",
-    value: "today",
+    value: "Today",
   },
   {
     label: "Past",
-    value: "past",
+    value: "Past",
   },
 ];
 export const rowsOptions = [
@@ -46,13 +46,13 @@ export const rowsOptions = [
 ];
 export const approvedOptions = [
   {
-    value: "true",
-    label: "",
-    renderValue: () => approvedJSX,
+    value: "True",
+    label: "True",
+    /*  renderValue: () => approvedJSX, */
   },
   {
-    value: "false",
-    label: "",
-    renderValue: () => deniedJSX,
+    value: "False",
+    label: "False",
+    /* renderValue: () => deniedJSX, */
   },
 ];

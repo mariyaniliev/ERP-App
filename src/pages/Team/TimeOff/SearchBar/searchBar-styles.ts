@@ -13,6 +13,7 @@ export const styles = {
   },
   pagination: {
     ".MuiPaginationItem-root": {
+      transition: "all 0.3s ease-in-out",
       fontSize: "14px",
       color: "#707070",
       minWidth: "8px",

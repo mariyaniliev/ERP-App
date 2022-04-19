@@ -1,6 +1,8 @@
 import { TimeOff } from "types/timeoff";
 
 export const transformData = (data: TimeOff[]) => {
+  if (!data) return;
+
   const newData = data.map((item: TimeOff) => {
     item.startDate = String(item.startDate).slice(0, 10);
     item.endDate = String(item.endDate).slice(0, 10);

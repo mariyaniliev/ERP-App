@@ -11,7 +11,6 @@ export const styles = {
     borderRadius: "30px",
     boxShadow: THEME_SHADOW,
     marginTop: "25px",
-
     pr: "15px",
 
     "& .MuiDataGrid-columnHeaderTitleContainer,.MuiDataGrid-cell": {
@@ -24,6 +23,7 @@ export const styles = {
     "& .MuiDataGrid-row": {
       marginLeft: "20px",
       width: "calc(100% - 45px)",
+      transition: "all 0.3s ease-in-out",
       "&:hover": {
         borderRadius: "30px",
         height: "56px",
@@ -70,5 +70,21 @@ export const styles = {
     alignItems: "center",
     width: "86px",
     height: "33px",
+  },
+  actions: {
+    background: THEME_COLORS.purplelight,
+    borderRadius: "16px",
+    height: "33px",
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "end",
+    ".MuiIconButton-root ": {
+      color: THEME_COLORS.grey03,
+      width: "40px",
+      "&:hover": {
+        background: "#dfc9f5",
+        color: THEME_COLORS.purple,
+      },
+    },
   },
 };

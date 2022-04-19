@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import { debounce } from "lodash";
 import {
   PaginationItem,
@@ -14,100 +14,68 @@ import {
   Pagination,
 } from "../../../../design-system";
 
-import { useApiClient } from "../../../../utils/client";
 import {
   typeOptions,
   periodOptions,
   approvedOptions,
   rowsOptions,
-  approvedJSX,
-  deniedJSX,
+  /*   approvedJSX,
+  deniedJSX, */
 } from "./listOptions";
-import { urlCreator } from "./uriCreator.utils";
-import { transformData } from "../TimeOffsGrid/transformData";
-import { Period, TimeOffType } from "./types";
-import { TimeOff } from "types/timeoff";
-import { styles } from "./searchBar-styles";
 
-type Props = {
-  setData: (data: TimeOff[]) => void;
-  setIsLoading: (isLoading: boolean) => void;
-  limit: number;
-  setLimit: (num: number) => void;
-};
-let totalPages = 0;
-const SearchBar: React.FC<Props> = ({
-  setData,
-  setIsLoading,
-  limit,
-  setLimit,
-}) => {
-  const [period, setPeriod] = React.useState<Period>(Period.period);
-  const [type, setType] = React.useState<TimeOffType>(TimeOffType.type);
-  const [searchedName, setSearchedName] = React.useState("");
-  const [page, setPage] = React.useState(1);
-  const [approved, setApproved] = React.useState<string | JSX.Element>(
-    "Approved"
+import { styles } from "./searchBar-styles";
+import { useAppSelector, RootState } from "../../../../redux/store";
+import { searchActions } from "../../../../redux/reducer/search";
+
+const SearchBar: React.FC = () => {
+  const { setQueries } = searchActions();
+  const { searchedQueries } = useAppSelector(
+    (state: RootState) => state.search
   );
-  const client = useApiClient();
+
+  const { period, type, approved, page, limit, totalPages } = searchedQueries;
 
   const handleSearch = async (event: SelectChangeEvent<HTMLInputElement>) => {
-    const searchTerm = event.target.value as string;
-    setSearchedName(searchTerm);
+    const searchedName = event.target.value as string;
+    setQueries({ ...searchedQueries, searchedName });
   };
   const debouncedChangeHandler = useMemo(() => debounce(handleSearch, 500), []);
 
   const handleApproved = (event: SelectChangeEvent<HTMLInputElement>) => {
     const value = event.target.value as string;
     if (value === "") {
-      setApproved("Approved");
+      setQueries({ ...searchedQueries, approved: "Approved" });
       return;
     }
-    setApproved(value === "true" ? approvedJSX : deniedJSX);
+
+    setQueries({
+      ...searchedQueries,
+      approved: value,
+    });
   };
 
   const handlePeriod = (event: SelectChangeEvent<HTMLInputElement>) => {
     const value = event.target.value as string;
     if (value === "") {
-      setPeriod(Period.period);
+      setQueries({ ...searchedQueries, period: "Period" });
       return;
     }
-    setPeriod(Period[value as keyof typeof Period]);
+    setQueries({ ...searchedQueries, period: value });
   };
 
   const handleType = (event: SelectChangeEvent<HTMLInputElement>) => {
     const value = event.target.value as string;
     if (value === "") {
-      setType(TimeOffType.type);
+      setQueries({ ...searchedQueries, type: "Type" });
       return;
     }
-    setType(TimeOffType[value as keyof typeof TimeOffType]);
+    setQueries({ ...searchedQueries, type: value });
   };
 
   const handleRows = (event: SelectChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setLimit(Number(value));
+    setQueries({ ...searchedQueries, limit: Number(value) });
   };
-
-  useEffect(() => {
-    const fetchTimeOffs = async () => {
-      setIsLoading(true);
-      try {
-        const { data } = await client.get(
-          urlCreator(period, type, approved, searchedName, page, limit)
-        );
-        setData(transformData(data.data));
-
-        totalPages = Math.ceil(data.resultsCount / limit);
-
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-        setIsLoading(false);
-      }
-    };
-    fetchTimeOffs();
-  }, [period, type, approved, searchedName, page, limit]);
 
   return (
     <Box sx={styles.searchBar}>
@@ -150,7 +118,7 @@ const SearchBar: React.FC<Props> = ({
           siblingCount={0}
           defaultPage={page}
           onChange={(_value, curPage) => {
-            setPage(curPage);
+            setQueries({ ...searchedQueries, page: curPage });
           }}
           renderItem={(item) => (
             <PaginationItem
