@@ -24,7 +24,7 @@ export interface ButtonProps {
 }
 
 export interface ModalProps {
-  children: any;
+  children: React.ReactNode;
   open: boolean;
   BackdropComponent: any;
   BackdropProps: BackdropProps;

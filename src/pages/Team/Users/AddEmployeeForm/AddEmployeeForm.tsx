@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import { Dropdown, Box, Button } from "../../../../design-system/index";
-import Input from "../../../../design-system/Input/Input";
+import { Dropdown, Box, Button, Input } from "../../../../design-system";
 import { THEME_INPUTS_SHADOW } from "../../../../theme/theme-constants";
 import { styles } from "./addEmployeeForm-styles";
-
-export const AddEmployeeForm = () => {
+const AddEmployeeForm = () => {
   const leadTest = [
     {
+      label: "",
+      value: "",
+    },
+    {
       label: "Ivan Ivanov",
-      value: "ivan",
+      value: "test1",
     },
     {
       label: "Dimitar Petrov",
-      value: "dimitar",
+      value: "test2",
     },
   ];
 
@@ -79,12 +81,6 @@ export const AddEmployeeForm = () => {
           width="200"
           boxShadow={THEME_INPUTS_SHADOW}
         />
-        <Input
-          placeholder="Remaining Time Offs"
-          width="200"
-          boxShadow={THEME_INPUTS_SHADOW}
-          onChange={handleChange}
-        />
       </Box>
       <Box>
         {" "}
@@ -101,3 +97,4 @@ export const AddEmployeeForm = () => {
     </Box>
   );
 };
+export default AddEmployeeForm;

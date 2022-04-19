@@ -30,13 +30,14 @@ const Dropdown = (props: DropdownProps) => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
+          defaultValue="test1"
           label={placeholder}
           onChange={onChange}
         >
           <MenuItem value="">&nbsp;</MenuItem>
           {list.map((listItem: ListItem) => {
             return (
-              <MenuItem key={listItem.value} value={listItem.value}>
+              <MenuItem key={listItem.value} value={listItem.value + ""}>
                 {listItem.label}
               </MenuItem>
             );

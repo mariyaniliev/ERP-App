@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import { AddEmployeeForm } from "../AddEmployeeForm/AddEmployeeForm";
+import AddEmployeeForm from "../AddEmployeeForm/AddEmployeeForm";
 import { Button, Box } from "../../../../design-system/index";
 import { Modal } from "../../../../design-system/Modal/Modal";
-import { Backdrop } from "../../../../design-system/Modal/Backdrop";
+import { Backdrop } from "../../../../design-system/Modal/Backdrop/Backdrop";
 import { styles } from "./addEmployee-styles";
 
 const AddEmployeeBtn = () => {

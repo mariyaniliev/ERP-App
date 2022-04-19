@@ -1,6 +1,6 @@
 import { styled } from "@mui/system";
 import { BackdropUnstyled } from "@mui/base";
-import { THEME_COLORS } from "../../theme/theme-constants";
+import { THEME_COLORS } from "../../../theme/theme-constants";
 
 export const StyledBackdrop = styled(BackdropUnstyled)({
   position: "fixed",
