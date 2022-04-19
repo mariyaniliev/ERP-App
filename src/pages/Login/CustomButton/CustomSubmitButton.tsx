@@ -12,7 +12,7 @@ export default function CustomSubmitButton({
   const progressColor = loadingColor ? loadingColor : guessColor;
   return (
     <Button
-      sx={{ borderRadius: "16px" }}
+      sx={{ borderRadius: "16px", flex: props.flex ? props.flex : "" }}
       type="submit"
       color="primary"
       variant="contained"
