@@ -16,11 +16,10 @@ export const styles = {
       justifyContent: "start",
     },
     "& .MuiDataGrid-row": {
-      width: "1200px",
+      width: "calc(100% - 45px)",
       margin: "0px 20px",
       "&:hover": {
         borderRadius: "30px",
-        width: "1200px",
         height: "56px",
         boxShadow: "0px 3px 6px #00000029",
         background: "#FFFFFF 0% 0% no-repeat padding-box",
@@ -28,6 +27,26 @@ export const styles = {
     },
     "& .MuiDataGrid-columnHeaders": {
       paddingLeft: "20px",
+      border: "none",
+    },
+    "& .MuiDataGrid-virtualScrollerRenderZone": {
+      "& >:not(:last-child)": {
+        borderBottom: "1px solid rgba(224, 224, 224, 1)",
+      },
+    },
+    ".MuiDataGrid-virtualScroller": {
+      overflow: "hidden",
+    },
+    ".MuiDataGrid-footerContainer": {
+      minHeight: "25px",
+      border: "none",
+    },
+
+    "& .MuiDataGrid-iconSeparator": {
+      display: "none",
+    },
+    "& .MuiDataGrid-columnHeader:focus, .MuiDataGrid-cell:focus": {
+      outline: "none",
     },
   },
 };

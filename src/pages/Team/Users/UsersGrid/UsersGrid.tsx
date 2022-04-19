@@ -117,6 +117,7 @@ const UsersGrid = () => {
       columns={columns}
       rows={usersRowsData}
       hideFooterPagination={true}
+      disableSelectionOnClick
     />
   );
 };
