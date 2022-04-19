@@ -39,7 +39,7 @@ const Users = () => {
     return res;
   };
 
-  const { data, error, isFetching } = useQuery(
+  const { data, isFetching } = useQuery(
     ["timeoffs", page, limit, period, approved, type, searchedName],
     () => fetchTimeOffs(page)
   );
