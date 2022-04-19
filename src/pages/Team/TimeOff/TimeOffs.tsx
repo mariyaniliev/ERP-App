@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from "react";
 import { useAppSelector, RootState } from "../../../redux/store";
 import { Box } from "../../../design-system";
-import { urlCreator } from "./SearchBar/uriCreator.utils";
+import { urlCreator } from "./SearchBar/urlCreator";
 import { useApiClient } from "../../../utils/client";
 import { useQuery } from "react-query";
 import { transformData } from "./TimeOffsGrid/transformData";
