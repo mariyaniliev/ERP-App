@@ -8,7 +8,7 @@ export default function CustomSubmitButton({
   loadingColor,
   styles,
   ...props
-}: SubmitButtonProps) {
+}: SubmitButtonProps): JSX.Element {
   const guessColor = props.color === "primary" ? "secondary" : "primary";
   const progressColor = loadingColor ? loadingColor : guessColor;
   return (

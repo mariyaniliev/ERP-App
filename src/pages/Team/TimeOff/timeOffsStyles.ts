@@ -7,6 +7,9 @@ export const styles = {
     display: "flex",
     justifyContent: "center",
   },
+  innerContainer: {
+    width: "calc(100vw - 303px)",
+  },
 
   submitTimeOffButtonHolder: {
     width: "100%",
