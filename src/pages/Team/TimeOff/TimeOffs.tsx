@@ -68,7 +68,7 @@ const Users = () => {
           <Box sx={styles.submitTimeOffButtonHolder}>
             <CustomSubmitButton
               label={"Request time off"}
-              style={styles.submitTimeOff}
+              styles={styles.submitTimeOff}
               startIcon={<PersonAddIcon />}
             />
           </Box>
