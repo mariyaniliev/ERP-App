@@ -19,13 +19,12 @@ import {
   periodOptions,
   approvedOptions,
   rowsOptions,
-  /*   approvedJSX,
-  deniedJSX, */
 } from "./listOptions";
 
 import { styles } from "./searchBar-styles";
 import { useAppSelector, RootState } from "../../../../redux/store";
 import { searchActions } from "../../../../redux/reducer/search";
+import { THEME_COLORS } from "../../../../theme/theme-constants";
 
 const SearchBar: React.FC = () => {
   const { setQueries } = searchActions();
@@ -98,7 +97,7 @@ const SearchBar: React.FC = () => {
       <Stack direction="row" alignItems="center" spacing={2}>
         <Typography
           sx={{
-            color: "#707070",
+            color: THEME_COLORS.grey02,
             display: { xs: "none", md: "none", lg: "flex" },
           }}
         >

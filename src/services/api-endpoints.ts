@@ -1,11 +1,11 @@
 export enum searchQueryTypes {
-  emailOrName = "emailOrName",
-  page = "page",
-  limit = "limit",
-  leadId = "leadId",
-  birthday = "birthday",
-  startingDate = "startingDate",
-  timeOffRemainingDays = "timeOffRemainingDays",
+  EmailOrName = "emailOrName",
+  Page = "page",
+  Limit = "limit",
+  LeadId = "leadId",
+  Birthday = "birthday",
+  StartingDate = "startingDate",
+  TimeOffRemainingDays = "timeOffRemainingDays",
 }
 
 export default {
