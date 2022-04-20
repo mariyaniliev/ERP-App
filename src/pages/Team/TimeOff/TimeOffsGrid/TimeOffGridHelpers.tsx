@@ -1,55 +1,11 @@
 import React from "react";
 import { GridColumns, GridRenderCellParams } from "@mui/x-data-grid";
 import { styles } from "./timeOffsGrid-styles";
-import {
-  Typography,
-  Avatar,
-  Stack,
-  Box,
-  Tooltip,
-  IconButton,
-} from "@mui/material";
+import { Typography, Avatar, Stack } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { THEME_COLORS } from "../../../../theme/theme-constants";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
-import CheckIcon from "@mui/icons-material/Check";
-import ListAltIcon from "@mui/icons-material/ListAlt";
 
-export const renderActionsCell = (
-  params: GridRenderCellParams,
-  rowId: string
-) => {
-  if (rowId === params.id) {
-    return (
-      <Box sx={styles.actions}>
-        <Tooltip title="Approve" placement="bottom">
-          <IconButton size="small">
-            <CheckIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Details" placement="bottom">
-          <IconButton size="small">
-            <ListAltIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Edit" placement="bottom">
-          <IconButton size="small">
-            <ModeEditIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Delete" placement="bottom">
-          <IconButton size="small">
-            <DeleteSweepIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-      </Box>
-    );
-  }
-  return null;
-};
-
-export const renderCell = (values: GridRenderCellParams) => {
+const renderCell = (values: GridRenderCellParams) => {
   let color: string;
   let background: string;
 
@@ -57,7 +13,6 @@ export const renderCell = (values: GridRenderCellParams) => {
     color = "primary.main";
     background = "rgba(247, 245, 250, 1)";
   } else {
-    console.log(values.value);
     color = "#57D9A9";
     background = "rgba(87, 217, 169, 0.2)";
   }
@@ -74,7 +29,7 @@ export const renderCell = (values: GridRenderCellParams) => {
   );
 };
 
-export const renderUser = (values: GridRenderCellParams) => {
+const renderUser = (values: GridRenderCellParams) => {
   return (
     <Stack direction="row" spacing={1} alignItems="center" marginLeft="20px">
       <Avatar

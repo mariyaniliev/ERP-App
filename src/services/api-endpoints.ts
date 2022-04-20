@@ -39,7 +39,7 @@ export default {
     getTimeOffs: "/timeoffs",
     getTimeOff: (id: string) => `/timeoffs/${id}`,
     updateTimeOff: (id: string) => `/timeoffs/${id}`,
-    deleteLead: (id: string) => `/timeoffs/${id}`,
+    deleteTimeOff: (id: string) => `/timeoffs/${id}`,
   },
   celebrations: {
     postCelebration: (userId: string) => `/celebrations/${userId}`,
