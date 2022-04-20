@@ -118,7 +118,7 @@ const GridActions: React.FC<Props> = ({ params, rowId }) => {
         <IconButton
           size="small"
           onClick={handleApproveModalOpen}
-          disabled={approved}
+          disabled={isApproved}
         >
           {isApproveLoading ? (
             <CircularProgress color="primary" size={20} />
