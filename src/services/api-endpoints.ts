@@ -7,7 +7,6 @@ export enum searchQueryTypes {
   StartingDate = "startingDate",
   TimeOffRemainingDays = "timeOffRemainingDays",
 }
-
 export default {
   users: {
     postUser: (leadId?: string) => `/users/${leadId ? leadId : ""}`,
