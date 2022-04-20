@@ -10,7 +10,7 @@ export interface ListItem {
 }
 
 export interface DropdownProps {
-  placeholder: string;
+  placeholder: string | JSX.Element;
   list: ListItem[];
   width?: string;
   boxShadow?: string;

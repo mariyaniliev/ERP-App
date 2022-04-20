@@ -11,7 +11,7 @@ const SearchInput = (props: InputProps) => {
 
   return (
     <FormControl sx={{ ...searchInputStyles.searchBox, inputWidth }}>
-      <SearchIcon />
+      <SearchIcon sx={{ cursor: "auto" }} />
       <InputUnstyled onChange={onChange} placeholder={placeholder} />
     </FormControl>
   );
