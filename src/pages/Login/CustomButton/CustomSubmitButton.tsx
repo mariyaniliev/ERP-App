@@ -6,13 +6,18 @@ export default function CustomSubmitButton({
   label = "Submit",
   loading = false,
   loadingColor,
+  styles,
   ...props
 }: SubmitButtonProps) {
   const guessColor = props.color === "primary" ? "secondary" : "primary";
   const progressColor = loadingColor ? loadingColor : guessColor;
   return (
     <Button
-      sx={{ borderRadius: "16px", flex: props.flex ? props.flex : "" }}
+      sx={{
+        borderRadius: "16px",
+        flex: props.flex ? props.flex : "",
+        ...styles,
+      }}
       type="submit"
       color="primary"
       variant="contained"

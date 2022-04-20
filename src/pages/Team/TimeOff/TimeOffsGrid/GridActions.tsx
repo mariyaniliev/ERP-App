@@ -1,17 +1,20 @@
-import { Box, Tooltip, IconButton } from "@mui/material";
+import React from "react";
+import { GridRenderCellParams } from "@mui/x-data-grid";
+import { Box, Tooltip, IconButton, CircularProgress } from "@mui/material";
+import { AxiosError, AxiosResponse } from "axios";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 import CheckIcon from "@mui/icons-material/Check";
 import ListAltIcon from "@mui/icons-material/ListAlt";
-import { styles } from "./timeOffsGrid-styles";
-import React from "react";
-import { GridRenderCellParams } from "@mui/x-data-grid";
+
 import ConfirmationDialog from "../../../../components/ConfirmationDialog/ConfirmationDialog";
 import { useApiClient } from "../../../../utils/client";
 import { useMutation } from "react-query";
 import queryClient from "../../../../utils/queryCLient";
 import api from "../../../../services/api-endpoints";
 import { useAppSelector, RootState } from "../../../../redux/store";
+import { TimeOff } from "types/timeoff";
+import { styles } from "./timeOffsGrid-styles";
 
 type Props = {
   params: GridRenderCellParams;
@@ -19,7 +22,10 @@ type Props = {
 };
 
 const GridActions: React.FC<Props> = ({ params, rowId }) => {
-  const { name, userId } = params.row;
+  const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
+  const [approveModalOpen, setApproveModalOpen] = React.useState(false);
+  const { name, userId, approved } = params.row;
+  const [isApproved, setIsApproved] = React.useState(approved);
   const { id, roles } = useAppSelector((state: RootState) => state.user.user);
 
   // If the user is not admin nor owner of the time off action buttons are not displayed
@@ -27,30 +33,64 @@ const GridActions: React.FC<Props> = ({ params, rowId }) => {
     return null;
   }
 
-  const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
   const client = useApiClient();
 
-  const { mutate, isLoading, error } = useMutation(
-    (id: string) => {
-      return client.delete(api.timeOffs.deleteTimeOff(id));
+  const {
+    mutate: deleteTimeOffFn,
+    isLoading: isDeleteLoading,
+    error: deleteError,
+  } = useMutation<AxiosResponse<TimeOff>, AxiosError, string>(
+    async (id: string) => {
+      return await client.delete(api.timeOffs.deleteTimeOff(id));
     },
     {
       onSuccess: () => {
-        setDeleteModalOpen(false);
         queryClient.invalidateQueries(["timeoffs"]);
+        setDeleteModalOpen(false);
       },
     }
   );
 
+  const {
+    mutate: approveTimeOffFn,
+    isLoading: isApproveLoading,
+    error: approveError,
+  } = useMutation<AxiosResponse<TimeOff>, AxiosError, string>(
+    async (id: string) => {
+      const res = await client.patch(api.timeOffs.updateTimeOff(id), {
+        approved: true,
+      });
+
+      return res;
+    },
+    {
+      onSuccess: () => {
+        setIsApproved(true);
+        queryClient.invalidateQueries(["timeoffs"]);
+      },
+    }
+  );
+  const handleApproveModalOpen = () => {
+    setApproveModalOpen(true);
+  };
+  const handleApproveModalClose = () => {
+    setApproveModalOpen(false);
+  };
   const handleDeleteModalOpen = () => {
     setDeleteModalOpen(true);
   };
   const handleDeleteModalClose = () => {
     setDeleteModalOpen(false);
   };
-  const deleteHandler = () => {
-    mutate(rowId);
+  const approveHandler = () => {
+    approveTimeOffFn(rowId);
+    setApproveModalOpen(false);
   };
+  const deleteHandler = () => {
+    deleteTimeOffFn(rowId);
+    setDeleteModalOpen(false);
+  };
+
   if (rowId !== params.id) {
     return null;
   }
@@ -58,16 +98,36 @@ const GridActions: React.FC<Props> = ({ params, rowId }) => {
   return (
     <Box sx={styles.actions}>
       <ConfirmationDialog
+        isOpen={approveModalOpen}
+        handleCancel={handleApproveModalClose}
+        handleConfirm={approveHandler}
+        content={`Approve ${name}'s time off request ?`}
+        error={approveError ? approveError.message : ""}
+        confirmButtonLabel={"Approve"}
+      />
+      <ConfirmationDialog
         isOpen={deleteModalOpen}
         handleCancel={handleDeleteModalClose}
         handleConfirm={deleteHandler}
-        isLoading={isLoading}
         content={`Are you sure your want to delete ${name}'s time off`}
-        error={error ? "Something went wrong" : ""}
+        error={deleteError ? "Something went wrong" : ""}
+        confirmButtonLabel={"Delete"}
       />
+
       <Tooltip title="Approve" placement="bottom">
-        <IconButton size="small">
-          <CheckIcon fontSize="small" />
+        <IconButton
+          size="small"
+          onClick={handleApproveModalOpen}
+          disabled={approved}
+        >
+          {isApproveLoading ? (
+            <CircularProgress color="primary" size={20} />
+          ) : (
+            <CheckIcon
+              fontSize="small"
+              color={isApproved ? "success" : "action"}
+            />
+          )}
         </IconButton>
       </Tooltip>
       <Tooltip title="Details" placement="bottom">
@@ -80,11 +140,17 @@ const GridActions: React.FC<Props> = ({ params, rowId }) => {
           <ModeEditIcon fontSize="small" />
         </IconButton>
       </Tooltip>
-      <Tooltip title="Delete" placement="bottom">
-        <IconButton size="small" onClick={handleDeleteModalOpen}>
-          <DeleteSweepIcon fontSize="small" />
-        </IconButton>
-      </Tooltip>
+      {!isApproved && (
+        <Tooltip title="Decline" placement="bottom">
+          <IconButton size="small" onClick={handleDeleteModalOpen}>
+            {isDeleteLoading ? (
+              <CircularProgress size={20} />
+            ) : (
+              <DeleteSweepIcon fontSize="small" />
+            )}
+          </IconButton>
+        </Tooltip>
+      )}
     </Box>
   );
 };

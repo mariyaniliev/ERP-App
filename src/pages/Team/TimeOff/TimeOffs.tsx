@@ -1,13 +1,16 @@
 import React, { Suspense, useEffect } from "react";
+import { useQuery } from "react-query";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { useAppSelector, RootState } from "../../../redux/store";
 import { Box } from "../../../design-system";
 import { urlCreator } from "./SearchBar/urlCreator";
 import { useApiClient } from "../../../utils/client";
-import { useQuery } from "react-query";
 import { transformData } from "./TimeOffsGrid/transformData";
 import { searchActions } from "../../../redux/reducer/search";
 import queryClient from "../../../utils/queryCLient";
+import CustomSubmitButton from "../../Login/CustomButton/CustomSubmitButton";
 import TimeOffsLoader from "./TimeOffsLoader";
+import { styles } from "./timeOffsStyles";
 const SearchBar = React.lazy(() => import("./SearchBar/SearchBar"));
 const TimeOffsGrid = React.lazy(() => import("./TimeOffsGrid/TimeOffsGrid"));
 
@@ -30,7 +33,6 @@ const Users = () => {
       approved,
       searchedName
     );
-
     const res = await client.get(url);
     setQueries({
       ...searchedQueries,
@@ -60,9 +62,16 @@ const Users = () => {
   }, []);
 
   return (
-    <Box px="25px" py={5} width="100%" display="flex" justifyContent="center">
+    <Box sx={styles.container}>
       <Box width="1632px">
         <Suspense fallback={<TimeOffsLoader />}>
+          <Box sx={styles.submitTimeOffButtonHolder}>
+            <CustomSubmitButton
+              label={"Request time off"}
+              styles={styles.submitTimeOff}
+              startIcon={<PersonAddIcon />}
+            />
+          </Box>
           <SearchBar />
           <TimeOffsGrid
             timeoffs={transformData(data?.data.data)}
