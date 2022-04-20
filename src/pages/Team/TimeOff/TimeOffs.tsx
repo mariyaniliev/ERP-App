@@ -63,12 +63,12 @@ const Users = () => {
 
   return (
     <Box sx={styles.container}>
-      <Box width="1632px">
+      <Box width="1200px">
         <Suspense fallback={<TimeOffsLoader />}>
           <Box sx={styles.submitTimeOffButtonHolder}>
             <CustomSubmitButton
               label={"Request time off"}
-              styles={styles.submitTimeOff}
+              style={styles.submitTimeOff}
               startIcon={<PersonAddIcon />}
             />
           </Box>
