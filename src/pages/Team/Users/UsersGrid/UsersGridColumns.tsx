@@ -50,9 +50,9 @@ const renderUser = (values: GridRenderCellParams) => {
 const columns: GridColumns = [
   {
     field: "name",
-    headerName: "Full name",
+    headerName: "Name",
     sortable: true,
-    renderUser,
+    renderCell: renderUser,
     width: 200,
   },
   {
@@ -75,7 +75,7 @@ const columns: GridColumns = [
     field: "timeOffRemainingDays",
     headerName: "Time Offs",
     type: "number",
-    width: 120,
+    width: 200,
     renderCell,
     sortable: true,
   },
@@ -83,7 +83,7 @@ const columns: GridColumns = [
     field: "birthday",
     birthday: "Date of Birth",
     type: "string",
-    width: 150,
+    width: 200,
     renderCell,
     sortable: true,
   },

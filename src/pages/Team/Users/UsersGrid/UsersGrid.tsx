@@ -12,7 +12,7 @@ const UsersGrid = () => {
   const { searchQuery, timeOffs, rows, birthday, pagination } = useAppSelector(
     (state: RootState) => state.users
   );
-  console.log("pagination", pagination);
+
   const getUsers = async (signal?: AbortSignal) => {
     const users = await apiClient.get("/users", { signal });
     setUsersRowsData(users.data.data);

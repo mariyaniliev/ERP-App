@@ -20,8 +20,10 @@ export const styles = {
       p: 0,
     },
     "& .MuiDataGrid-row": {
-      width: "calc(100% - 45px)",
+      // width: "calc(100% - 50px)",
+      width: "92%",
       margin: "0px 20px",
+      padding: "0 10px",
       transition: "all 0.3s ease-in-out",
       "&:hover": {
         borderRadius: "30px",

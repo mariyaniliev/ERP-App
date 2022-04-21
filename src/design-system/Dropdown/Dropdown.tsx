@@ -30,7 +30,6 @@ const Dropdown = (props: DropdownProps) => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          defaultValue="test1"
           label={placeholder}
           onChange={onChange}
         >
