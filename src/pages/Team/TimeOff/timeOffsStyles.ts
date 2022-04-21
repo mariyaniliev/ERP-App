@@ -1,4 +1,5 @@
 import { THEME_COLORS } from "../../../theme/theme-constants";
+
 export const styles = {
   container: {
     px: "25px",

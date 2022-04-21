@@ -1,13 +1,13 @@
 export enum Period {
-  future = "Future",
-  today = "Today",
-  past = "Past",
-  period = "Period",
+  Future = "Future",
+  Today = "Today",
+  Past = "Past",
+  Period = "Period",
 }
 
 export enum TimeOffType {
-  paid = "Paid",
-  unpaid = "Unpaid",
-  sickLeave = "Sick leave",
-  type = "Type",
+  Paid = "Paid",
+  Unpaid = "Unpaid",
+  SickLeave = "Sick leave",
+  Type = "Type",
 }

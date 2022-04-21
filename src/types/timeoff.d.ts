@@ -15,9 +15,9 @@ export type TimeOff = {
 };
 
 export enum TimeOffTypes {
-  paid,
-  unpaid,
-  sick,
-  motherhood,
-  paternity,
+  Paid,
+  Unpaid,
+  Sick,
+  Motherhood,
+  Paternity,
 }

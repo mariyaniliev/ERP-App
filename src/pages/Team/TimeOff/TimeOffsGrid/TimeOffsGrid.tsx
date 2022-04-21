@@ -6,12 +6,14 @@ import {
   GridRenderCellParams,
   MuiEvent,
 } from "@mui/x-data-grid";
+
 import { styles } from "./timeOffsGrid-styles";
 import { columns } from "./TimeOffGridHelpers";
-import { TimeOff } from "types/timeoff";
 import { useAppSelector, RootState } from "../../../../redux/store";
 import { LinearProgress } from "@mui/material";
 import GridActions from "./GridActions";
+import { TimeOff } from "types/timeoff";
+
 type Props = {
   timeoffs: TimeOff[];
   isLoading: boolean;

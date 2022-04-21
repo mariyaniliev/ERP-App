@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect } from "react";
 import { useQuery } from "react-query";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+
 import { useAppSelector, RootState } from "../../../redux/store";
 import { Box } from "../../../design-system";
 import { urlCreator } from "./SearchBar/urlCreator";
@@ -10,7 +11,9 @@ import { searchActions } from "../../../redux/reducer/search";
 import queryClient from "../../../utils/queryCLient";
 import CustomSubmitButton from "../../Login/CustomButton/CustomSubmitButton";
 import TimeOffsLoader from "./TimeOffsLoader";
+
 import { styles } from "./timeOffsStyles";
+
 const SearchBar = React.lazy(() => import("./SearchBar/SearchBar"));
 const TimeOffsGrid = React.lazy(() => import("./TimeOffsGrid/TimeOffsGrid"));
 

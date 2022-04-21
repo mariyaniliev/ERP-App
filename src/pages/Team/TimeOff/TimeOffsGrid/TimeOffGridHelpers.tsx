@@ -1,9 +1,10 @@
 import React from "react";
 import { GridColumns, GridRenderCellParams } from "@mui/x-data-grid";
-import { styles } from "./timeOffsGrid-styles";
 import { Typography, Avatar, Stack } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { THEME_COLORS } from "../../../../theme/theme-constants";
+
+import { styles } from "./timeOffsGrid-styles";
 
 const renderCell = (values: GridRenderCellParams) => {
   let color: string;

@@ -13,19 +13,16 @@ import {
   Dropdown,
   Pagination,
 } from "../../../../design-system";
-
 import {
   typeOptions,
   periodOptions,
   approvedOptions,
   rowsOptions,
-  /*   approvedJSX,
-  deniedJSX, */
 } from "./listOptions";
-
-import { styles } from "./searchBar-styles";
 import { useAppSelector, RootState } from "../../../../redux/store";
 import { searchActions } from "../../../../redux/reducer/search";
+
+import { styles } from "./searchBar-styles";
 
 const SearchBar: React.FC = () => {
   const { setQueries } = searchActions();
