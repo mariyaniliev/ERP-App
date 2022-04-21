@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useQuery } from "react-query";
 import { DataGrid } from "@mui/x-data-grid";
 import { styles } from "./usersGrid-styles";
 import { useApiClient } from "../../../../utils/client";
@@ -50,15 +51,13 @@ const columns: any[] = [
 
 const UsersGrid = () => {
   const apiClient = useApiClient();
-  const [usersRowsData, setUsersRowsData] = useState([]);
 
   const { searchQuery, timeOffs, rows, birthday, pagination } = useAppSelector(
     (state: RootState) => state.users
   );
   console.log("pagination", pagination);
   const getUsers = async (signal?: AbortSignal) => {
-    const users = await apiClient.get("/users", { signal });
-    setUsersRowsData(users.data.data);
+    return apiClient.get("/users", { signal });
   };
 
   const filterUsersData = async (
@@ -68,45 +67,42 @@ const UsersGrid = () => {
     birthday,
     pagination
   ) => {
-    let users = [];
     if (searchQuery !== "") {
-      users = await apiClient.get(
-        `/users/search?emailOrName=${searchUsersQuery}`
-      );
+      return apiClient.get(`/users/search?emailOrName=${searchUsersQuery}`);
     }
     if (+rows > 0) {
-      users = await apiClient.get(`/users?limit=${rows}`);
+      return apiClient.get(`/users?limit=${rows}`);
     }
     if (timeOffs > 0) {
-      users = await apiClient.get(
-        `/users/search?timeOffRemainingDays=${timeOffs}`
-      );
+      return apiClient.get(`/users/search?timeOffRemainingDays=${timeOffs}`);
     }
     if (birthday !== "") {
-      users = await apiClient.get(`/users/search?birthday=${birthday}`);
+      return apiClient.get(`/users/search?birthday=${birthday}`);
     }
     if (pagination > 0) {
-      users = await apiClient.get(`/users?page=${pagination}&limit=${rows}`);
+      return apiClient.get(`/users?page=${pagination}&limit=${rows}`);
     }
-    setUsersRowsData(users.data.data);
+  };
+  const abortController = new AbortController();
+  const signal = abortController.signal;
+  const { data } = useQuery(["users", signal], () => getUsers(signal), {});
+  const { data: filteredData } = useQuery(
+    ["searchQuery", searchQuery, rows, timeOffs, birthday, pagination],
+    () => filterUsersData(searchQuery, rows, timeOffs, birthday, pagination),
+    {
+      // keepPreviousData: true,
+    }
+  );
+
+  const usersRowsData = () => {
+    return filteredData ? filteredData.data.data : data ? data.data.data : [];
   };
 
   useEffect(() => {
-    const abortController = new AbortController();
-    const signal = abortController.signal;
-
-    if (usersRowsData.length <= 0) {
-      getUsers(signal);
-    }
-
-    if (usersRowsData.length > 0) {
-      filterUsersData(searchQuery, rows, timeOffs, birthday, pagination);
-    }
-
     return () => {
       abortController.abort();
     };
-  }, [searchQuery, rows, timeOffs, birthday, pagination]);
+  }, [searchQuery, timeOffs, rows, birthday, pagination]);
 
   return (
     <DataGrid
@@ -115,7 +111,7 @@ const UsersGrid = () => {
       disableColumnMenu={true}
       sx={styles.grid}
       columns={columns}
-      rows={usersRowsData}
+      rows={usersRowsData()}
       hideFooterPagination={true}
     />
   );
