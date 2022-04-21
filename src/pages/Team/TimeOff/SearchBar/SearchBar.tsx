@@ -109,23 +109,25 @@ const SearchBar: React.FC = () => {
           list={rowsOptions}
           onChange={handleRows}
         />
-        <Pagination
-          sx={styles.pagination}
-          shape="rounded"
-          color="secondary"
-          count={totalPages}
-          siblingCount={0}
-          defaultPage={page}
-          onChange={(_value, curPage) => {
-            setQueries({ ...searchedQueries, page: curPage });
-          }}
-          renderItem={(item) => (
-            <PaginationItem
-              components={{ previous: ArrowLeft, next: ArrowRight }}
-              {...item}
-            />
-          )}
-        />
+        {totalPages > 1 && (
+          <Pagination
+            sx={styles.pagination}
+            shape="rounded"
+            color="secondary"
+            count={totalPages}
+            siblingCount={0}
+            defaultPage={page}
+            onChange={(_value, curPage) => {
+              setQueries({ ...searchedQueries, page: curPage });
+            }}
+            renderItem={(item) => (
+              <PaginationItem
+                components={{ previous: ArrowLeft, next: ArrowRight }}
+                {...item}
+              />
+            )}
+          />
+        )}
       </Stack>
     </Box>
   );
