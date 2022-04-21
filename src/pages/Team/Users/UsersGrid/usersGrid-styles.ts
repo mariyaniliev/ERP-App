@@ -14,10 +14,15 @@ export const styles = {
     marginTop: "25px",
     "& .MuiDataGrid-columnHeaderTitleContainer,.MuiDataGrid-cell": {
       justifyContent: "start",
+      border: "none",
+      color: THEME_COLORS.grey03,
+      fontSize: "14px",
+      p: 0,
     },
     "& .MuiDataGrid-row": {
       width: "calc(100% - 45px)",
       margin: "0px 20px",
+      transition: "all 0.3s ease-in-out",
       "&:hover": {
         borderRadius: "30px",
         height: "56px",
@@ -48,5 +53,20 @@ export const styles = {
     "& .MuiDataGrid-columnHeader:focus, .MuiDataGrid-cell:focus": {
       outline: "none",
     },
+
+    "& .MuiDataGrid-columnHeadersInner": {
+      px: "20px",
+      "& >:first-of-type": {
+        px: "18px",
+      },
+    },
+  },
+  cellStyled: {
+    borderRadius: "16px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "86px",
+    height: "33px",
   },
 };

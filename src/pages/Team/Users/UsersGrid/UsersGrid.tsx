@@ -3,50 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { styles } from "./usersGrid-styles";
 import { useApiClient } from "../../../../utils/client";
 import { useAppSelector, RootState } from "../../../../redux/store";
-
-const columns: any[] = [
-  {
-    field: "name",
-    headerName: "Full name",
-    sortable: true,
-    width: 200,
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    type: "string",
-    width: 200,
-    sortable: true,
-  },
-  {
-    field: "lead",
-    headerName: "Lead",
-    type: "string",
-    width: 200,
-    sortable: true,
-  },
-  {
-    field: "timeOffRemainingDays",
-    headerName: "Time Offs",
-    type: "number",
-    width: 120,
-    sortable: true,
-  },
-  {
-    field: "birthday",
-    birthday: "Date of Birth",
-    type: "string",
-    width: 150,
-    sortable: true,
-  },
-  {
-    field: "startingDate",
-    headerName: "Starting Date",
-    type: "string",
-    width: 150,
-    sortable: true,
-  },
-];
+import columns from "./UsersGridColumns";
 
 const UsersGrid = () => {
   const apiClient = useApiClient();
