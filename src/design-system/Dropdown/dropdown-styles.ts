@@ -12,11 +12,11 @@ export const dropdownStyles = {
     border: "none",
   },
   ".MuiSelect-icon": {
-    color: "#C5C5C5",
+    color: THEME_COLORS.grey04,
   },
 
   " .MuiTypography-body1": {
-    color: "#C5C5C5",
+    color: THEME_COLORS.grey04,
     "&:hover": {
       color: THEME_COLORS.purple,
       background: "none",

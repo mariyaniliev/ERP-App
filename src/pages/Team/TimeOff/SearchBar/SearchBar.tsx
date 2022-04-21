@@ -21,6 +21,7 @@ import {
 } from "./listOptions";
 import { useAppSelector, RootState } from "../../../../redux/store";
 import { searchActions } from "../../../../redux/reducer/search";
+import { THEME_COLORS } from "../../../../theme/theme-constants";
 
 import { styles } from "./searchBar-styles";
 
@@ -95,7 +96,7 @@ const SearchBar: React.FC = () => {
       <Stack direction="row" alignItems="center" spacing={2}>
         <Typography
           sx={{
-            color: "#707070",
+            color: THEME_COLORS.grey02,
             display: { xs: "none", md: "none", lg: "flex" },
           }}
         >
@@ -107,23 +108,25 @@ const SearchBar: React.FC = () => {
           list={rowsOptions}
           onChange={handleRows}
         />
-        <Pagination
-          sx={styles.pagination}
-          shape="rounded"
-          color="secondary"
-          count={totalPages}
-          siblingCount={0}
-          defaultPage={page}
-          onChange={(_value, curPage) => {
-            setQueries({ ...searchedQueries, page: curPage });
-          }}
-          renderItem={(item) => (
-            <PaginationItem
-              components={{ previous: ArrowLeft, next: ArrowRight }}
-              {...item}
-            />
-          )}
-        />
+        {totalPages > 1 && (
+          <Pagination
+            sx={styles.pagination}
+            shape="rounded"
+            color="secondary"
+            count={totalPages}
+            siblingCount={0}
+            defaultPage={page}
+            onChange={(_value, curPage) => {
+              setQueries({ ...searchedQueries, page: curPage });
+            }}
+            renderItem={(item) => (
+              <PaginationItem
+                components={{ previous: ArrowLeft, next: ArrowRight }}
+                {...item}
+              />
+            )}
+          />
+        )}
       </Stack>
     </Box>
   );

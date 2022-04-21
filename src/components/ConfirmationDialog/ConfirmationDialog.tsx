@@ -18,6 +18,12 @@ export interface ConfirmationDialogProps {
   cancelButtonLabel?: string;
   error?: string;
 }
+const dialogContentStyles = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  py: 0,
+} as const;
 
 const ConfirmationDialog = ({
   isOpen = false,
@@ -37,14 +43,7 @@ const ConfirmationDialog = ({
     aria-describedby="alert-dialog-description"
   >
     <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
-    <DialogContent
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        py: 0,
-      }}
-    >
+    <DialogContent sx={dialogContentStyles}>
       <DialogContentText
         id="alert-dialog-description"
         sx={{ fontSize: "1.3em", mb: 2 }}

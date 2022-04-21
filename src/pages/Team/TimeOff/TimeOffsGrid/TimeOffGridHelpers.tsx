@@ -6,6 +6,12 @@ import { THEME_COLORS } from "../../../../theme/theme-constants";
 
 import { styles } from "./timeOffsGrid-styles";
 
+const avatarStyles = {
+  width: "30px",
+  height: "30px",
+  background: THEME_COLORS.primaryGradient,
+} as const;
+
 const renderCell = (values: GridRenderCellParams) => {
   let color: string;
   let background: string;
@@ -33,14 +39,7 @@ const renderCell = (values: GridRenderCellParams) => {
 const renderUser = (values: GridRenderCellParams) => {
   return (
     <Stack direction="row" spacing={1} alignItems="center" marginLeft="20px">
-      <Avatar
-        component={PersonIcon}
-        sx={{
-          width: "30px",
-          height: "30px",
-          background: THEME_COLORS.primaryGradient,
-        }}
-      />
+      <Avatar component={PersonIcon} sx={avatarStyles} />
 
       <Typography>{values.value}</Typography>
     </Stack>
