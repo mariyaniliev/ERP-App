@@ -1,9 +1,14 @@
-interface MenuListItems {
+import { SvgIconTypeMap } from "@mui/material";
+import { OverridableComponent } from "@mui/material/OverridableComponent";
+
+interface MenuListItem {
   content: string;
-  icon: any;
+  icon: OverridableComponent<SvgIconTypeMap<Record<string, unknown>, "svg">> & {
+    muiName: string;
+  };
   section: string;
 }
 export interface MenuListProps {
-  menuList: MenuListItems;
+  menuList: MenuListItem[];
   open: boolean;
 }

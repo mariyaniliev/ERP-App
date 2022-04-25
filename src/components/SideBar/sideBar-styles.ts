@@ -2,8 +2,8 @@ import { styled, Theme, CSSObject } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import { THEME_COLORS, THEME_SHADOW } from "../../theme/theme-constants";
 
-const drawerWidth = 240;
-const drawerHeight = "calc(100vh - 64px)";
+const drawerWidth = 236;
+const drawerHeight = "calc(100vh + 64px)";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   justifyContent: "space-between",
@@ -24,10 +24,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: "hidden",
-  width: `calc(${theme.spacing(6)} + 1px)`,
-  [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
+  width: `calc(${theme.spacing(8)} + 1px)`,
 });
 
 export const Drawer = styled(MuiDrawer, {
@@ -52,7 +49,7 @@ export const Drawer = styled(MuiDrawer, {
 export const styles = {
   ListItemButton: {
     minHeight: 48,
-    px: 2.5,
+    px: 2.6,
     color: "gray",
     "&:focus": {
       background: "rgba(0, 0, 0, 0.04)",
@@ -65,5 +62,15 @@ export const styles = {
   },
   sidebarLinkActive: {
     color: THEME_COLORS.purple,
+  },
+  leftMenuHolder: {
+    height: "64px",
+    alignItems: "center",
+    display: "flex",
+    pl: 2.6,
+  },
+  logo: {
+    width: "4rem",
+    height: "2rem",
   },
 };

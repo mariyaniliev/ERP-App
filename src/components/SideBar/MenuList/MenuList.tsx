@@ -1,12 +1,18 @@
 import * as React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { MenuListProps } from "./../sideBar-types";
+
+// * Material Ui
 import {
   List,
   ListItemButton,
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
+
+//* Types
+import { MenuListProps } from "./../sideBar-types";
+
+// * Styles
 import { styles } from "../sideBar-styles";
 
 const MenuList = (props: MenuListProps) => {
@@ -15,12 +21,13 @@ const MenuList = (props: MenuListProps) => {
   const navigate = useNavigate();
 
   return (
-    <List>
-      {menuList.map((menuItem, index) => {
+    <List sx={{ flexGrow: 1, pt: "25px" }}>
+      {menuList.map((menuItem) => {
         const isMenuLinkActive =
           menuItem.section === pathname || pathname.includes(menuItem.section);
         return (
           <ListItemButton
+            disableRipple
             key={menuItem.content}
             sx={{
               ...styles.ListItemButton,
@@ -46,4 +53,5 @@ const MenuList = (props: MenuListProps) => {
     </List>
   );
 };
+
 export default MenuList;

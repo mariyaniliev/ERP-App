@@ -1,24 +1,54 @@
 import * as React from "react";
-import { RootState, useAppSelector } from "../../redux/store";
-import { Box, CssBaseline } from "../../design-system";
-import MenuList from "./MenuList/MenuList";
+
+// * Helpers
 import {
   sideBarSectionsTop,
   sideBarSectionsBottom,
 } from "../../services/navigation-items-constants";
-import { Drawer } from "./sideBar-styles";
+
+// * Redux
+import { useAppSelector, RootState } from "../../redux/store";
+import { toggleActions } from "../../redux/reducer/drawerHeader";
+
+// * Material Ui
+import { Box, IconButton } from "@mui/material";
+import FirstPageIcon from "@mui/icons-material/FirstPage";
+import LastPageIcon from "@mui/icons-material/LastPage";
+
+import logo from "../../theme/assets/gs-logo.png";
+
+// * Components & styles
+import { Drawer, styles } from "./sideBar-styles";
+import MenuList from "./MenuList/MenuList";
 
 const SideBar = () => {
   const open = useAppSelector((state: RootState) => state.drawerHeader.open);
 
+  const { toggle } = toggleActions();
+
+  const menuToggleButton = open ? <FirstPageIcon /> : <LastPageIcon />;
+
   return (
-    <Box sx={{ display: "flex" }} pt={1}>
-      <CssBaseline />
-      <Drawer variant="permanent" open={open}>
-        <MenuList menuList={sideBarSectionsTop} open={open} />
-        <MenuList menuList={sideBarSectionsBottom} open={open} />
-      </Drawer>
-    </Box>
+    <Drawer
+      variant="permanent"
+      open={open}
+      PaperProps={{ style: { position: "fixed", zIndex: 1 } }}
+    >
+      <Box sx={styles.leftMenuHolder}>
+        <IconButton
+          size="large"
+          edge="start"
+          sx={{ mr: 2 }}
+          onClick={toggle}
+          disableRipple
+        >
+          {menuToggleButton}
+        </IconButton>
+        <img alt="GenericSoft Logo" src={logo} style={styles.logo} />
+      </Box>
+      <MenuList menuList={sideBarSectionsTop} open={open} />
+      <MenuList menuList={sideBarSectionsBottom} open={open} />
+    </Drawer>
   );
 };
 

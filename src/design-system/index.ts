@@ -1,4 +1,15 @@
-import { Box, Typography, CssBaseline, Pagination } from "@mui/material";
+import {
+  Box,
+  Typography,
+  CssBaseline,
+  Pagination,
+  IconButton,
+  Avatar,
+  Toolbar,
+  AppBar,
+  useScrollTrigger,
+  Slide,
+} from "@mui/material";
 import SearchInput from "./SearchInput/SearchInput";
 import Dropdown from "./Dropdown/Dropdown";
 import Button from "./Button/Button";
@@ -13,4 +24,10 @@ export {
   Button,
   Pagination,
   Input,
+  AppBar,
+  IconButton,
+  Toolbar,
+  Avatar,
+  useScrollTrigger,
+  Slide,
 };
