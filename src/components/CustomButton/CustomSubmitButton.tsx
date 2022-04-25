@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, CircularProgress } from "@mui/material";
-import { SubmitButtonProps } from "../types";
+import { SubmitButtonProps } from "./customSubmitButton-types";
 
 export default function CustomSubmitButton({
   label = "Submit",

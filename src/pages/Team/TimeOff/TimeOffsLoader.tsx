@@ -1,35 +1,27 @@
 import React from "react";
-import Skeleton from "@mui/material/Skeleton";
-import Stack from "@mui/material/Stack";
-import { THEME_SHADOW } from "../../../theme/theme-constants";
 
-const TimeOffsLoaderStyles = {
-  borderRadius: "30px",
-  boxShadow: THEME_SHADOW,
-  opacity: "0.4",
-};
+// * Material Ui
+import { Skeleton, Stack } from "../../../design-system/index";
 
-const TimeOffsLoader = ({ pageSize }: { pageSize?: number }) => {
-  const height =
-    pageSize === 5
-      ? "343px"
-      : pageSize === 10
-      ? "603px"
-      : pageSize === 20
-      ? "1130px"
-      : "0px";
+//* Styles
+import { styles } from "./timeOffsPage-styles";
 
+const TimeOffsLoader = () => {
   return (
     <Stack>
       <Skeleton
         animation="wave"
         variant="rectangular"
-        style={{
-          ...TimeOffsLoaderStyles,
-          marginTop: "25px",
-        }}
+        sx={{ ...styles.loader, borderRadius: "32px" }}
         width="100%"
-        height={height}
+        height="65px"
+      />
+      <Skeleton
+        animation="wave"
+        variant="rectangular"
+        sx={{ ...styles.loader, mt: "25px" }}
+        width="100%"
+        height="65vh"
       />
     </Stack>
   );

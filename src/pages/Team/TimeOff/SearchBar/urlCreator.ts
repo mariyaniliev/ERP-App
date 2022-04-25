@@ -1,15 +1,15 @@
 export const urlCreator = (
+  status: string,
   page: number,
   limit: number,
   period: string,
   type: string,
-  approved: string,
   searchedName: string
 ) => {
   const periodPredicate = period === "Period" ? "" : period.toLowerCase();
-  const approvedPredicate =
-    approved === "Approved" ? "" : approved.toLowerCase();
+  const approvedPredicate = status === "approved" ? "true" : "false";
   const typePredicate = type === "Type" ? "" : type.split(" ")[0].toLowerCase();
-  const url = `/timeoffs/search?page=${page}&limit=${limit}&emailOrName=${searchedName}&type=${typePredicate}&approved=${approvedPredicate}&period=${periodPredicate}`;
+  const pagePredicate = status !== "approved" ? 1 : page;
+  const url = `/timeoffs/search?page=${pagePredicate}&limit=${limit}&emailOrName=${searchedName}&type=${typePredicate}&approved=${approvedPredicate}&period=${periodPredicate}`;
   return url;
 };

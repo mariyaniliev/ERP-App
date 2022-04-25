@@ -1,29 +1,24 @@
 import React from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import CustomSubmitButton from "../../pages/Login/CustomButton/CustomSubmitButton";
-import { Typography } from "@mui/material";
+
+// * Material Ui
+import {
+  Typography,
+  DialogTitle,
+  DialogContentText,
+  DialogContent,
+  DialogActions,
+  Dialog,
+} from "../../design-system/index";
+
+// * Types
+import { ConfirmationDialogProps } from "./confirmationDialog-types";
+
+// * Components
+import CustomSubmitButton from "../CustomButton/CustomSubmitButton";
+
+// * Styles
+import { dialogContentStyles } from "./confirmationDialog-styles";
 import { THEME_COLORS } from "../../theme/theme-constants";
-export interface ConfirmationDialogProps {
-  isOpen?: boolean;
-  handleConfirm?: () => void;
-  handleCancel?: () => void;
-  title?: string;
-  content?: string;
-  isLoading?: boolean;
-  confirmButtonLabel?: string;
-  cancelButtonLabel?: string;
-  error?: string;
-}
-const dialogContentStyles = {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  py: 0,
-} as const;
 
 const ConfirmationDialog = ({
   isOpen = false,

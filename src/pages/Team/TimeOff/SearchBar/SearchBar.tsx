@@ -1,28 +1,29 @@
 import React, { useMemo } from "react";
-import { debounce } from "lodash";
-import {
-  PaginationItem,
-  SelectChangeEvent,
-  Stack,
-  Typography,
-} from "@mui/material";
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
+import { debounce } from "lodash";
+
+// * Types
+import { SelectChangeEvent } from "@mui/material";
+
 import {
   Box,
   SearchInput,
   Dropdown,
   Pagination,
+  Typography,
+  Stack,
+  PaginationItem,
+  GrowAnimation,
 } from "../../../../design-system";
-import {
-  typeOptions,
-  periodOptions,
-  approvedOptions,
-  rowsOptions,
-} from "./listOptions";
+
+// * List with options for the dropdown
+import { typeOptions, periodOptions, rowsOptions } from "./dropdownOptions";
+
+// * Redux
 import { useAppSelector, RootState } from "../../../../redux/store";
 import { searchActions } from "../../../../redux/reducer/search";
-import { THEME_COLORS } from "../../../../theme/theme-constants";
 
+// * Styles and theme constants
 import { styles } from "./searchBar-styles";
 
 const SearchBar: React.FC = () => {
@@ -31,43 +32,30 @@ const SearchBar: React.FC = () => {
     (state: RootState) => state.search
   );
 
-  const { period, type, approved, page, limit, totalPages } = searchedQueries;
+  const { period, type, page, limit, totalPages } = searchedQueries;
 
   const handleSearch = async (event: SelectChangeEvent<HTMLInputElement>) => {
     const searchedName = event.target.value as string;
     setQueries({ ...searchedQueries, searchedName });
   };
+
   const debouncedChangeHandler = useMemo(() => debounce(handleSearch, 500), []);
 
-  const handleApproved = (event: SelectChangeEvent<HTMLInputElement>) => {
+  const handleSearchFilter = (
+    event: SelectChangeEvent<HTMLInputElement>,
+    label: string
+  ) => {
     const value = event.target.value as string;
+
     if (value === "") {
-      setQueries({ ...searchedQueries, approved: "Approved" });
+      setQueries({ ...searchedQueries, [label.toLowerCase()]: label });
       return;
     }
 
     setQueries({
       ...searchedQueries,
-      approved: value,
+      [label.toLowerCase()]: value,
     });
-  };
-
-  const handlePeriod = (event: SelectChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value as string;
-    if (value === "") {
-      setQueries({ ...searchedQueries, period: "Period" });
-      return;
-    }
-    setQueries({ ...searchedQueries, period: value });
-  };
-
-  const handleType = (event: SelectChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value as string;
-    if (value === "") {
-      setQueries({ ...searchedQueries, type: "Type" });
-      return;
-    }
-    setQueries({ ...searchedQueries, type: value });
   };
 
   const handleRows = (event: SelectChangeEvent<HTMLInputElement>) => {
@@ -81,27 +69,23 @@ const SearchBar: React.FC = () => {
         placeholder="Search or filter..."
         onChange={debouncedChangeHandler}
       />
-
       <Dropdown
         placeholder={period}
         list={periodOptions}
-        onChange={handlePeriod}
+        onChange={(e) => {
+          handleSearchFilter(e, "Period");
+        }}
       />
-      <Dropdown placeholder={type} list={typeOptions} onChange={handleType} />
       <Dropdown
-        placeholder={approved}
-        list={approvedOptions}
-        onChange={handleApproved}
+        placeholder={type}
+        list={typeOptions}
+        onChange={(e) => {
+          handleSearchFilter(e, "Type");
+        }}
       />
+
       <Stack direction="row" alignItems="center" spacing={2}>
-        <Typography
-          sx={{
-            color: THEME_COLORS.grey02,
-            display: { xs: "none", md: "none", lg: "flex" },
-          }}
-        >
-          Show per page
-        </Typography>
+        <Typography sx={styles.rowsTitle}>Show per page</Typography>
         <Dropdown
           width="55"
           placeholder={String(limit)}
@@ -109,23 +93,25 @@ const SearchBar: React.FC = () => {
           onChange={handleRows}
         />
         {totalPages > 1 && (
-          <Pagination
-            sx={styles.pagination}
-            shape="rounded"
-            color="secondary"
-            count={totalPages}
-            siblingCount={0}
-            defaultPage={page}
-            onChange={(_value, curPage) => {
-              setQueries({ ...searchedQueries, page: curPage });
-            }}
-            renderItem={(item) => (
-              <PaginationItem
-                components={{ previous: ArrowLeft, next: ArrowRight }}
-                {...item}
-              />
-            )}
-          />
+          <GrowAnimation>
+            <Pagination
+              sx={styles.pagination}
+              shape="rounded"
+              color="secondary"
+              count={totalPages}
+              siblingCount={0}
+              defaultPage={page}
+              onChange={(_value, curPage) => {
+                setQueries({ ...searchedQueries, page: curPage });
+              }}
+              renderItem={(item) => (
+                <PaginationItem
+                  components={{ previous: ArrowLeft, next: ArrowRight }}
+                  {...item}
+                />
+              )}
+            />
+          </GrowAnimation>
         )}
       </Stack>
     </Box>

@@ -7,9 +7,9 @@ import { userActions } from "../../redux/reducer/user";
 import { Box, Checkbox } from "@mui/material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
-import CustomSubmitButton from "./CustomButton/CustomSubmitButton";
+import CustomSubmitButton from "../../components/CustomButton/CustomSubmitButton";
 import { Typography } from "../../design-system";
-import { CustomInput } from "../Login/CustomInput/CustomInput";
+import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { THEME_COLORS } from "../../theme/theme-constants";
 import { validation } from "./Validation";
 import { useApiClient } from "../../utils/client";
@@ -18,15 +18,12 @@ import api from "../../services/api-endpoints";
 import routes from "../../services/routes";
 import notificationMessages from "../../services/notification-messages";
 import logo from "../../theme/assets/gs-logo.png";
-import leftDraw from "../../theme/assets/draw_left.png";
-import rightDraw from "../../theme/assets/draw_right.png";
 import { styles } from "./login-styles";
 
 const memorizedPassword = Cookies.get("password") || "";
 const memorizedEmail = Cookies.get("email") || "";
 const rememberMe = Cookies.get("rememberMe") === "true" ? true : false;
-
-const Login: React.FC = () => {
+const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [focused, setFocused] = useState({ email: false, password: false });
   const [userCredentials, setUserCredentials] = useState({
@@ -96,101 +93,89 @@ const Login: React.FC = () => {
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     setFocused({ ...focused, [event.target.name]: false });
   };
-
   return (
-    <Box sx={styles.mainContainer}>
-      <Box sx={styles.leftRow}>
-        <Box sx={styles.logoContainer}>
-          <img style={styles.image} src={leftDraw} alt="Drawing" />
-        </Box>
+    <Box sx={styles.middleRow}>
+      <Box sx={styles.logoContainer}>
+        <img style={{ height: 60 }} src={logo} alt="Generic Soft Logo" />
       </Box>
-      <Box sx={styles.middleRow}>
-        <Box sx={styles.logoContainer}>
-          <img style={{ height: 60 }} src={logo} alt="Generic Soft Logo" />
-        </Box>
-        <Box sx={styles.formContainer}>
-          <Typography sx={styles.header}>Sign in to our platform</Typography>
-          <form
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+      <Box sx={styles.formContainer}>
+        <Typography sx={styles.header}>Sign in to our platform</Typography>
+        <form
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+          onSubmit={handleLogin}
+        >
+          <Typography
+            sx={{
+              ...styles.helperText,
+              color: isElementFocused("email"),
             }}
-            onSubmit={handleLogin}
           >
-            <Typography
-              sx={{
-                ...styles.helperText,
-                color: isElementFocused("email"),
-              }}
-            >
-              Your Email
+            Your Email
+          </Typography>
+          <CustomInput
+            name="email"
+            defaultValue={memorizedEmail}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            endAdornment={<MailOutlineIcon sx={styles.icons} />}
+          />
+          <Typography
+            sx={{
+              ...styles.helperText,
+              color: isElementFocused("password"),
+            }}
+          >
+            Your Password
+          </Typography>
+          <CustomInput
+            name="password"
+            defaultValue={memorizedPassword}
+            type="password"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
+            endAdornment={<LockOpenIcon sx={styles.icons} />}
+          />
+          {errorMessage && (
+            <Typography color={THEME_COLORS.danger} sx={{ mt: 1 }}>
+              {errorMessage}
             </Typography>
-            <CustomInput
-              name="email"
-              defaultValue={memorizedEmail}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              endAdornment={<MailOutlineIcon sx={styles.icons} />}
-            />
-            <Typography
-              sx={{
-                ...styles.helperText,
-                color: isElementFocused("password"),
-              }}
-            >
-              Your Password
-            </Typography>
-            <CustomInput
-              name="password"
-              defaultValue={memorizedPassword}
-              type="password"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              onFocus={handleFocus}
-              endAdornment={<LockOpenIcon sx={styles.icons} />}
-            />
-            {errorMessage && (
-              <Typography color={THEME_COLORS.danger} sx={{ mt: 1 }}>
-                {errorMessage}
-              </Typography>
-            )}
-            <Box sx={styles.signInAttributes}>
-              <Box sx={styles.helpers}>
-                <Box sx={styles.checkboxHolder}>
-                  <Checkbox
-                    name="rememberMe"
-                    defaultChecked={userCredentials.rememberMe}
-                    sx={styles.checkbox}
-                    onChange={(e) => {
-                      setUserCredentials({
-                        ...userCredentials,
-                        rememberMe: e.target.checked,
-                      });
-                    }}
-                  />
-                  <Typography>Remember me</Typography>
-                </Box>
-                <Typography>Forgot me?</Typography>
+          )}
+          <Box sx={styles.signInAttributes}>
+            <Box sx={styles.helpers}>
+              <Box sx={styles.checkboxHolder}>
+                <Checkbox
+                  name="rememberMe"
+                  defaultChecked={userCredentials.rememberMe}
+                  sx={styles.checkbox}
+                  onChange={(e) => {
+                    setUserCredentials({
+                      ...userCredentials,
+                      rememberMe: e.target.checked,
+                    });
+                  }}
+                />
+                <Typography>Remember me</Typography>
               </Box>
-              <CustomSubmitButton
-                loading={isLoading}
-                label="Sign in"
-                type="submit"
-              />
+              <Typography>Forgot me?</Typography>
             </Box>
-          </form>
-        </Box>
-        <Box sx={styles.emptySpaceToFill}></Box>
+            <CustomSubmitButton
+              loading={isLoading}
+              label="Sign in"
+              type="submit"
+            />
+          </Box>
+        </form>
       </Box>
-      <Box sx={styles.rightRow}>
-        <Box sx={styles.logoContainer}>
-          <img style={styles.image} src={rightDraw} alt="Drawing" />
-        </Box>
-      </Box>
+      <Box sx={styles.emptySpaceToFill}></Box>
     </Box>
   );
 };
-export default Login;
+
+export default LoginForm;

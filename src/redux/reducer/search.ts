@@ -7,9 +7,8 @@ const initialState = {
   searchedQueries: {
     period: "Period",
     type: "Type",
-    approved: "Approved",
     searchedName: "",
-    limit: 10,
+    limit: 7,
     page: 1,
     totalPages: 0,
   },

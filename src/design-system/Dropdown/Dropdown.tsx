@@ -1,11 +1,9 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+
+import { MenuItem, FormControl, Select, Box, Typography } from "@mui/material";
+
 import { dropdownStyles } from "./dropdown-styles";
 import { DropdownProps, ListItem } from "../types";
-import { Typography } from "@mui/material";
 
 const Dropdown = (props: DropdownProps) => {
   const { placeholder, list, width = "116", onChange } = props;

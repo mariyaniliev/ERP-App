@@ -1,4 +1,4 @@
-import { THEME_SHADOW } from "../../../../theme/theme-constants";
+import { THEME_COLORS, THEME_SHADOW } from "../../../../theme/theme-constants";
 
 export const styles = {
   searchBar: {
@@ -38,5 +38,9 @@ export const styles = {
         color: "primary.main",
       },
     },
+  },
+  rowsTitle: {
+    color: THEME_COLORS.grey02,
+    display: { xs: "none", md: "none", lg: "flex" },
   },
 } as const;

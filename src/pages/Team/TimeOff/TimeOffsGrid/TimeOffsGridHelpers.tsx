@@ -1,32 +1,43 @@
 import React from "react";
+
+// * Material Ui
 import { GridColumns, GridRenderCellParams } from "@mui/x-data-grid";
-import { Typography, Avatar, Stack } from "@mui/material";
+import { Typography, Avatar, Stack } from "../../../../design-system/index";
 import PersonIcon from "@mui/icons-material/Person";
-import { THEME_COLORS } from "../../../../theme/theme-constants";
 
-import { styles } from "./timeOffsGrid-styles";
-
-const avatarStyles = {
-  width: "30px",
-  height: "30px",
-  background: THEME_COLORS.primaryGradient,
-} as const;
+//* Styles
+import { timeOffsApprovedGridStyles } from "./timeOffsApprovedGrid-styles";
 
 const renderCell = (values: GridRenderCellParams) => {
   let color: string;
   let background: string;
 
+  // * Here we define the color and the background for the field based on the time off type
   if (values.field !== "type") {
     color = "primary.main";
     background = "rgba(247, 245, 250, 1)";
   } else {
-    color = "#57D9A9";
-    background = "rgba(87, 217, 169, 0.2)";
+    const type = values.row.type;
+    switch (type) {
+      case "paid":
+        color = "#57D9A9";
+        background = "rgba(87, 217, 169, 0.2)";
+        break;
+      case "unpaid":
+        color = "#61C3D9";
+        background = "rgba(97, 195, 217, 0.2)";
+        break;
+      case "sick":
+        color = "#D9B04C";
+        background = "rgba(217, 176, 76, 0.2)";
+        break;
+      default:
+    }
   }
   return (
     <Typography
       sx={{
-        ...styles.cellStyled,
+        ...timeOffsApprovedGridStyles.cellStyled,
         background,
         color,
       }}
@@ -39,8 +50,7 @@ const renderCell = (values: GridRenderCellParams) => {
 const renderUser = (values: GridRenderCellParams) => {
   return (
     <Stack direction="row" spacing={1} alignItems="center" marginLeft="20px">
-      <Avatar component={PersonIcon} sx={avatarStyles} />
-
+      <Avatar component={PersonIcon} sx={timeOffsApprovedGridStyles.avatar} />
       <Typography>{values.value}</Typography>
     </Stack>
   );
@@ -87,6 +97,6 @@ export const columns: GridColumns = [
     field: "actions",
     width: 150,
     sortable: true,
-    flex: 1,
+    flex: 1.5,
   },
 ];

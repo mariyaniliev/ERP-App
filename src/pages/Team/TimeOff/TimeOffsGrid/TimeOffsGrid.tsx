@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+
+// * Material Ui
+import { LinearProgress } from "../../../../design-system/index";
 import {
   DataGrid,
   GridColumns,
@@ -7,19 +10,30 @@ import {
   MuiEvent,
 } from "@mui/x-data-grid";
 
-import { styles } from "./timeOffsGrid-styles";
-import { columns } from "./TimeOffGridHelpers";
+// * Helpers
+import { columns } from "./TimeOffsGridHelpers";
+
+// * Types
+import { TimeOffsGridProps } from "./timeOffsGrid-types";
+
+// * Redux
 import { useAppSelector, RootState } from "../../../../redux/store";
-import { LinearProgress } from "@mui/material";
-import GridActions from "./GridActions";
-import { TimeOff } from "types/timeoff";
 
-type Props = {
-  timeoffs: TimeOff[];
-  isLoading: boolean;
-};
+// * Components
+import TimeOffsApprovedGridActions from "./TimeOffsApprovedGridActions";
+import TimeOffsPendingGridActions from "./TimeOffsPendingGridActions";
 
-const UsersGrid: React.FC<Props> = ({ timeoffs, isLoading }) => {
+//* Styles
+import { timeOffsPendingGridStyles } from "../TimeOffsGrid/timeOffsPendingGrid-styles";
+
+const TimeOffsApprovedGrid: React.FC<TimeOffsGridProps> = ({
+  timeoffs = [],
+  isLoading,
+  styles,
+  isPendingSectionEmpty,
+  gridType,
+  displayGrid = "",
+}) => {
   const [selectedColumnList, setSelectedColumnList] = useState(columns);
 
   const { limit } = useAppSelector(
@@ -34,15 +48,19 @@ const UsersGrid: React.FC<Props> = ({ timeoffs, isLoading }) => {
         if (item.field === "actions") {
           return {
             ...item,
-            renderCell: (params: GridRenderCellParams): React.ReactNode => (
-              <GridActions params={params} rowId={rowId} />
-            ),
+            renderCell: (params: GridRenderCellParams): React.ReactNode =>
+              gridType === "approved" ? (
+                <TimeOffsApprovedGridActions params={params} rowId={rowId} />
+              ) : (
+                <TimeOffsPendingGridActions params={params} rowId={rowId} />
+              ),
           };
         }
         return { ...item };
       });
     });
   };
+
   const onMouseLeaveRow = () => {
     setSelectedColumnList((current: GridColumns) => {
       return current.map((item: GridEnrichedColDef) => {
@@ -54,26 +72,40 @@ const UsersGrid: React.FC<Props> = ({ timeoffs, isLoading }) => {
     });
   };
 
+  const calculateHeightAccumulator =
+    timeoffs.length === 0 ? 10 : timeoffs.length;
+
+  // * Approved table and pending table needs different additional heights to align with the applied CSS.
+  const additionalHeight =
+    !isPendingSectionEmpty && gridType === "approved" ? 65 : 90;
+
+  const appliedStyles =
+    isPendingSectionEmpty && gridType === "approved"
+      ? timeOffsPendingGridStyles
+      : styles;
+
   return (
-    <>
-      <DataGrid
-        componentsProps={{
-          loadingOverlay: LinearProgress,
-          row: {
-            onMouseEnter: onMouseEnterRow,
-            onMouseLeave: onMouseLeaveRow,
-          },
-        }}
-        loading={isLoading}
-        pageSize={limit}
-        disableColumnMenu={true}
-        sx={{ ...styles.grid, height: `${limit * 52 + 90}px` }}
-        columns={selectedColumnList}
-        rows={timeoffs || []}
-        disableSelectionOnClick
-        hideFooterPagination={true}
-      />
-    </>
+    <DataGrid
+      componentsProps={{
+        loadingOverlay: LinearProgress,
+        row: {
+          onMouseEnter: onMouseEnterRow,
+          onMouseLeave: onMouseLeaveRow,
+        },
+      }}
+      loading={isLoading}
+      pageSize={limit}
+      disableColumnMenu={true}
+      sx={{
+        ...appliedStyles.grid,
+        height: `${calculateHeightAccumulator * 52 + additionalHeight}px`,
+        display: displayGrid,
+      }}
+      columns={selectedColumnList}
+      rows={timeoffs || []}
+      disableSelectionOnClick
+      hideFooterPagination={true}
+    />
   );
 };
-export default UsersGrid;
+export default TimeOffsApprovedGrid;

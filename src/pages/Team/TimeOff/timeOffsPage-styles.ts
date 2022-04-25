@@ -1,4 +1,4 @@
-import { THEME_COLORS } from "../../../theme/theme-constants";
+import { THEME_COLORS, THEME_SHADOW } from "../../../theme/theme-constants";
 
 export const styles = {
   container: {
@@ -25,4 +25,5 @@ export const styles = {
     fontSize: "14px",
     color: THEME_COLORS.white,
   },
+  loader: { borderRadius: "30px", boxShadow: THEME_SHADOW, opacity: "0.4" },
 } as const;
