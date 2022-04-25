@@ -14,6 +14,7 @@ import {
   DialogContent,
   DialogActions,
   Dialog,
+  TextField,
 } from "@mui/material";
 import SearchInput from "./SearchInput/SearchInput";
 import Dropdown from "./Dropdown/Dropdown";
@@ -37,4 +38,5 @@ export {
   DialogContent,
   DialogActions,
   Dialog,
+  TextField,
 };

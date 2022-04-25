@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 // * Material Ui
@@ -17,16 +17,21 @@ import { useAppSelector, RootState } from "../../../redux/store";
 
 // * Styles
 import { styles } from "./timeOffsPage-styles";
+
 import { timeOffsApprovedGridStyles } from "./TimeOffsGrid/timeOffsApprovedGrid-styles";
 import { timeOffsPendingGridStyles } from "./TimeOffsGrid/timeOffsPendingGrid-styles";
+import leftDraw from "../../../theme/assets/timeoff_draw_left.png";
+import rightDraw from "../../../theme/assets/timeoff_draw_right.png";
 
 // * Components
 import CustomSubmitButton from "../../../components/CustomButton/CustomSubmitButton";
 import TimeOffsLoader from "./TimeOffsLoader";
+import CommonFormModal from "../../../components/CommonFormModal/CommonFormModal";
 const SearchBar = React.lazy(() => import("./SearchBar/SearchBar"));
 const TimeOffsGrid = React.lazy(() => import("./TimeOffsGrid/TimeOffsGrid"));
 
 const TimeOffsPage = () => {
+  const [modalOpen, setModalOpen] = useState(false);
   const { setQueries } = searchActions();
   const { searchedQueries } = useAppSelector(
     (state: RootState) => state.search
@@ -80,11 +85,30 @@ const TimeOffsPage = () => {
     };
   }, []);
 
+  const handleOpen = () => {
+    setModalOpen(true);
+  };
+  const handleClose = () => {
+    setModalOpen(false);
+  };
+
   const isPendingSectionEmpty = pendingTimeOffs?.data.data.length === 0;
+
   const displayGrid = isPendingSectionEmpty ? "none" : "";
 
   return (
     <Box sx={styles.container}>
+      <CommonFormModal
+        leftPic={leftDraw}
+        isOpen={modalOpen}
+        rightPic={rightDraw}
+        closeModal={handleClose}
+      >
+        <h1 style={{ zIndex: 3, color: "red" }}>
+          Place here timeoffs calendar
+        </h1>
+      </CommonFormModal>
+
       <Box sx={styles.innerContainer}>
         <Box sx={styles.submitTimeOffButtonHolder}>
           <GrowAnimation>
@@ -92,6 +116,7 @@ const TimeOffsPage = () => {
               label={"Request time off"}
               styles={styles.submitTimeOff}
               startIcon={<PersonAddIcon />}
+              onClick={handleOpen}
             />
           </GrowAnimation>
         </Box>

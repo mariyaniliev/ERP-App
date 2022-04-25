@@ -35,6 +35,7 @@ export const Drawer = styled(MuiDrawer, {
 })(({ theme, open }) => ({
   width: drawerWidth,
   height: drawerHeight,
+  zIndex: 1,
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",

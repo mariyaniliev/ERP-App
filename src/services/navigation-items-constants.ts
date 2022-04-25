@@ -22,15 +22,15 @@ export const sideBarSectionsTop = [
     section: "/accounting",
     icon: EventNote,
   },
-] as const;
+];
 
 export const sideBarSectionsBottom = [
   { content: "System", section: "/system", icon: Settings },
   { content: "Log out", section: "/logout", icon: Logout },
-] as const;
+];
 
 export const TeamSectionSubPages = [
   { name: "Users", urlIdParam: "users", icon: PeopleIcon },
   { name: "Time Offs", urlIdParam: "timeoffs", icon: AccessTimeIcon },
   { name: "Personal Info", urlIdParam: "personalInfo", icon: InfoIcon },
-] as const;
+];

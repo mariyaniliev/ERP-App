@@ -1,9 +1,9 @@
-interface MenuListItems {
+interface MenuListItem {
   content: string;
   icon: any;
   section: string;
 }
 export interface MenuListProps {
-  menuList: MenuListItems;
+  menuList: MenuListItem[];
   open: boolean;
 }

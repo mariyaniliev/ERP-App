@@ -16,7 +16,7 @@ const MenuList = (props: MenuListProps) => {
 
   return (
     <List>
-      {menuList.map((menuItem, index) => {
+      {menuList.map((menuItem) => {
         const isMenuLinkActive =
           menuItem.section === pathname || pathname.includes(menuItem.section);
         return (
