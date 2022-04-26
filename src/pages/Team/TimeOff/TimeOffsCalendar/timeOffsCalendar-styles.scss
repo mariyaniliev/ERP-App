@@ -1,0 +1,18 @@
+.rdrCalendarWrapper {
+  border-radius: 32px;
+  padding: 24px 34px;
+  span,
+  div {
+    color: #a1a1a1;
+  }
+
+  .rdrPprevButton i {
+    border-color: transparent #7f53ac transparent transparent;
+  }
+  .rdrNextButton i {
+    border-color: transparent transparent transparent #7f53ac;
+  }
+  .rdrNextPrevButton {
+    background-color: #f7f5fa;
+  }
+}

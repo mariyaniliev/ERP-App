@@ -14,3 +14,14 @@ export type userState = {
   error: AxiosError | null;
   user: User | null;
 };
+
+export type SearchState = {
+  searchedQueries: {
+    period: string;
+    type: string;
+    searchedName: string;
+    limit: number;
+    page: number;
+    totalPages: number;
+  };
+};

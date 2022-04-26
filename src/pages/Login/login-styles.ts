@@ -1,26 +1,14 @@
 import { THEME_COLORS } from "../../theme/theme-constants";
 
 export const styles = {
-  mainContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "stretch",
-    alignItems: "center",
-    height: "100vh",
-    backgroundColor: "#FAFAFA",
-    width: "100%",
-    overflow: "hidden",
-  },
-
   middleRow: {
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
     height: "100%",
+    width: "100vw",
     flex: 1.2,
   },
-  leftRow: { flex: 1, mt: 30, display: { xs: "none", md: "flex" } },
-  rightRow: { flex: 1, mb: 10, display: { xs: "none", md: "flex" } },
 
   logoContainer: {
     width: "100%",
