@@ -1,14 +1,19 @@
 import React from "react";
-import { Box } from "@mui/material";
+
+// * Material Ui
+import { Box } from "../../design-system";
+
+// * Types
+import { CommonFormProps } from "./commonForm-types";
+
+// * Styles
 import { styles } from "./commonForm-styles";
 
-type Props = {
-  children: React.ReactNode;
-  leftPic: string;
-  rightPic: string;
-};
-
-const CommonForm: React.FC<Props> = ({ children, leftPic, rightPic }) => {
+const CommonForm: React.FC<CommonFormProps> = ({
+  children,
+  leftPic,
+  rightPic,
+}) => {
   return (
     <Box>
       <Box sx={styles.mainContainer}>

@@ -21,6 +21,7 @@ export type User = {
   updatedAt: Date;
   accessToken?: string;
   refreshToken?: string;
+  timeOffRemainingDays: number;
 };
 
 export enum AuthorityTypes {

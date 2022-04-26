@@ -10,7 +10,7 @@ export const styles = {
   mainContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "stretch",
+    justifyContent: "center",
     alignItems: "center",
     height: "100vh",
     width: "100%",

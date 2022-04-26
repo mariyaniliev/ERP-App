@@ -27,6 +27,7 @@ import rightDraw from "../../../theme/assets/timeoff_draw_right.png";
 import CustomSubmitButton from "../../../components/CustomButton/CustomSubmitButton";
 import TimeOffsLoader from "./TimeOffsLoader";
 import CommonFormModal from "../../../components/CommonFormModal/CommonFormModal";
+import TimeOffsCalendar from "./TimeOffsCalendar";
 const SearchBar = React.lazy(() => import("./SearchBar/SearchBar"));
 const TimeOffsGrid = React.lazy(() => import("./TimeOffsGrid/TimeOffsGrid"));
 
@@ -104,9 +105,7 @@ const TimeOffsPage = () => {
         rightPic={rightDraw}
         closeModal={handleClose}
       >
-        <h1 style={{ zIndex: 3, color: "red" }}>
-          Place here timeoffs calendar
-        </h1>
+        <TimeOffsCalendar />
       </CommonFormModal>
 
       <Box sx={styles.innerContainer}>
