@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-
 import { DateRange, Range } from "react-date-range";
 
+// * Material Ui
+import { Box } from "../../../design-system";
+
+// * Styles
+import { THEME_COLORS } from "../../../theme/theme-constants";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { Box } from "@mui/material";
-
 import "./timeOffsCalendar-styles.scss";
 
 const initialRange = {
@@ -19,12 +21,9 @@ const initialRange = {
 const TimeOff: React.FC = () => {
   const [range, setRange] = useState(initialRange);
 
-  const color = "rgba(127, 83, 172, 0.5)";
-
   const selectDay = (newRange: Range) => {
     setRange({ ...range, ...newRange });
   };
-  console.log(range.selection);
 
   return (
     <Box sx={{ zIndex: 2 }}>
@@ -36,7 +35,7 @@ const TimeOff: React.FC = () => {
         showDateDisplay={false}
         showMonthAndYearPickers={false}
         showMonthArrow={true}
-        rangeColors={[color]}
+        rangeColors={[THEME_COLORS.purple]}
         className="timeOffCalendar"
       />
     </Box>
