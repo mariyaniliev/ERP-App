@@ -1,4 +1,7 @@
-import { THEME_COLORS, THEME_SHADOW } from "../../../../theme/theme-constants";
+import {
+  THEME_COLORS,
+  THEME_SHADOW,
+} from "../../../../../theme/theme-constants";
 export const timeOffsPendingGridStyles = {
   grid: {
     fontSize: "14px",
@@ -80,7 +83,7 @@ export const timeOffsPendingGridStyles = {
       color: THEME_COLORS.grey03,
       width: "45px",
       "&:hover": {
-        background: "#dfc9f5",
+        background: THEME_COLORS.purple02,
         color: THEME_COLORS.purple,
       },
     },

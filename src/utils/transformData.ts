@@ -1,5 +1,6 @@
 import { TimeOff } from "types/timeoff";
 
+// Tansforms time offs incoming data to match the datagrid columns requirements
 export const transformData = (data: TimeOff[]) => {
   if (!data) return;
 

@@ -1,10 +1,11 @@
 import React, { useMemo } from "react";
-import { ArrowLeft, ArrowRight } from "@mui/icons-material";
 import { debounce } from "lodash";
 
-// * Types
-import { SelectChangeEvent } from "@mui/material";
+import { useAppSelector, RootState } from "../../../../redux/store";
+import { searchActions } from "../../../../redux/reducer/search";
 
+import { ArrowLeft, ArrowRight } from "@mui/icons-material";
+import { SelectChangeEvent } from "@mui/material";
 import {
   Box,
   SearchInput,
@@ -16,14 +17,8 @@ import {
   GrowAnimation,
 } from "../../../../design-system";
 
-// * List with options for the dropdown
 import { typeOptions, periodOptions, rowsOptions } from "./dropdownOptions";
 
-// * Redux
-import { useAppSelector, RootState } from "../../../../redux/store";
-import { searchActions } from "../../../../redux/reducer/search";
-
-// * Styles and theme constants
 import { styles } from "./searchBar-styles";
 
 const SearchBar: React.FC = () => {

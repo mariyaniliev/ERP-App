@@ -1,4 +1,7 @@
-import { THEME_COLORS, THEME_SHADOW } from "../../../../theme/theme-constants";
+import {
+  THEME_COLORS,
+  THEME_SHADOW,
+} from "../../../../../theme/theme-constants";
 
 export const timeOffsApprovedGridStyles = {
   grid: {
@@ -70,7 +73,7 @@ export const timeOffsApprovedGridStyles = {
       width: "40px",
       "&:hover": {
         borderRadius: "16px",
-        background: "#dfc9f5",
+        background: THEME_COLORS.purple02,
         color: THEME_COLORS.purple,
       },
     },

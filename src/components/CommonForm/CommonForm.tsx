@@ -1,12 +1,9 @@
 import React from "react";
 
-// * Material Ui
 import { Box } from "../../design-system";
 
-// * Types
 import { CommonFormProps } from "./commonForm-types";
 
-// * Styles
 import { styles } from "./commonForm-styles";
 
 const CommonForm: React.FC<CommonFormProps> = ({

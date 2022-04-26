@@ -11,7 +11,7 @@ import CustomSubmitButton from "../../components/CustomButton/CustomSubmitButton
 import { Typography } from "../../design-system";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { THEME_COLORS } from "../../theme/theme-constants";
-import { validation } from "./Validation";
+import { validation } from "../../utils/LoginValidation";
 import { useApiClient } from "../../utils/client";
 import { User } from "../../types/user";
 import api from "../../services/api-endpoints";

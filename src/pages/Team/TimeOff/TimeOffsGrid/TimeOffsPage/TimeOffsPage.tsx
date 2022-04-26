@@ -1,38 +1,34 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
-// * Material Ui
-import { Box, GrowAnimation } from "../../../design-system";
+import { useAppSelector, RootState } from "../../../../../redux/store";
+
+import { Box, GrowAnimation } from "../../../../../design-system";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
-// * Helpers
-import { urlCreator } from "./SearchBar/urlCreator";
-import { useApiClient } from "../../../utils/client";
-import { transformData } from "./TimeOffsGrid/transformData";
-import { searchActions } from "../../../redux/reducer/search";
-import queryClient from "../../../utils/queryCLient";
+import { urlCreator } from "../../../../../utils/urlCreator";
+import { useApiClient } from "../../../../../utils/client";
+import { transformData } from "../../../../../utils/transformData";
+import { searchActions } from "../../../../../redux/reducer/search";
+import queryClient from "../../../../../utils/queryCLient";
 
-// * Redux
-import { useAppSelector, RootState } from "../../../redux/store";
-
-// * Styles
-import { styles } from "./timeOffsPage-styles";
-
-import { timeOffsApprovedGridStyles } from "./TimeOffsGrid/timeOffsApprovedGrid-styles";
-import { timeOffsPendingGridStyles } from "./TimeOffsGrid/timeOffsPendingGrid-styles";
-import leftDraw from "../../../theme/assets/timeoff_draw_left.png";
-import rightDraw from "../../../theme/assets/timeoff_draw_right.png";
-
-// * Components
-import CustomSubmitButton from "../../../components/CustomButton/CustomSubmitButton";
+import CustomSubmitButton from "../../../../../components/CustomButton/CustomSubmitButton";
 import TimeOffsLoader from "./TimeOffsLoader";
-import CommonFormModal from "../../../components/CommonFormModal/CommonFormModal";
-import TimeOffsCalendar from "./TimeOffsCalendar";
-const SearchBar = React.lazy(() => import("./SearchBar/SearchBar"));
-const TimeOffsGrid = React.lazy(() => import("./TimeOffsGrid/TimeOffsGrid"));
+import CommonFormModal from "../../../../../components/CommonFormModal/CommonFormModal";
+import TimeOffsCalendar from "../../TimeOffsCalendar/TimeOffsCalendar";
+const SearchBar = React.lazy(() => import("../../SearchBar/SearchBar"));
+const TimeOffsGrid = React.lazy(
+  () => import("../TimeOffsGridCommon/TimeOffsGrid")
+);
+
+import { styles } from "./timeOffsPage-styles";
+import { timeOffsApprovedGridStyles } from "../TimeOffsApprovedGrid/timeOffsApprovedGrid-styles";
+import { timeOffsPendingGridStyles } from "../TimeOffsPendingGrid/timeOffsPendingGrid-styles";
+import leftDraw from "../../../../../theme/assets/timeoff_draw_left.png";
+import rightDraw from "../../../../../theme/assets/timeoff_draw_right.png";
 
 const TimeOffsPage = () => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { setQueries } = searchActions();
   const { searchedQueries } = useAppSelector(
     (state: RootState) => state.search
@@ -87,10 +83,10 @@ const TimeOffsPage = () => {
   }, []);
 
   const handleOpen = () => {
-    setModalOpen(true);
+    setIsModalOpen(true);
   };
   const handleClose = () => {
-    setModalOpen(false);
+    setIsModalOpen(false);
   };
 
   const isPendingSectionEmpty = pendingTimeOffs?.data.data.length === 0;
@@ -101,7 +97,7 @@ const TimeOffsPage = () => {
     <Box sx={styles.container}>
       <CommonFormModal
         leftPic={leftDraw}
-        isOpen={modalOpen}
+        isOpen={isModalOpen}
         rightPic={rightDraw}
         closeModal={handleClose}
       >

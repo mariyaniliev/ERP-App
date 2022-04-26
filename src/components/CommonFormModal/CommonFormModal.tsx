@@ -1,13 +1,10 @@
 import React from "react";
 import ReactDom from "react-dom";
 
-// * Material Ui
 import { Box } from "../../design-system";
 
-// * Types
 import { CommonFormModalProps } from "./commonFormModal-types";
 
-// * Styles
 import { styles } from "./commonFormModal-styles";
 
 const CommonFormModal: React.FC<CommonFormModalProps> = ({

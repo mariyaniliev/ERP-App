@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
-// * Material Ui
-import { LinearProgress } from "../../../../design-system/index";
+import { useAppSelector, RootState } from "../../../../../redux/store";
+
+import { LinearProgress } from "../../../../../design-system/index";
 import {
   DataGrid,
   GridColumns,
@@ -10,21 +11,14 @@ import {
   MuiEvent,
 } from "@mui/x-data-grid";
 
-// * Helpers
 import { columns } from "./TimeOffsGridHelpers";
 
-// * Types
 import { TimeOffsGridProps } from "./timeOffsGrid-types";
 
-// * Redux
-import { useAppSelector, RootState } from "../../../../redux/store";
+import TimeOffsApprovedGridActions from "../TimeOffsApprovedGrid/TimeOffsApprovedGridActions";
+import TimeOffsPendingGridActions from "../TimeOffsPendingGrid/TimeOffsPendingGridActions";
 
-// * Components
-import TimeOffsApprovedGridActions from "./TimeOffsApprovedGridActions";
-import TimeOffsPendingGridActions from "./TimeOffsPendingGridActions";
-
-//* Styles
-import { timeOffsPendingGridStyles } from "../TimeOffsGrid/timeOffsPendingGrid-styles";
+import { timeOffsPendingGridStyles } from "../../TimeOffsGrid/TimeOffsPendingGrid/timeOffsPendingGrid-styles";
 
 const TimeOffsApprovedGrid: React.FC<TimeOffsGridProps> = ({
   timeoffs = [],

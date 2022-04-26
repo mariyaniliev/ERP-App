@@ -15,13 +15,13 @@ export const styles = {
     ".MuiPaginationItem-root": {
       transition: "all 0.3s ease-in-out",
       fontSize: "14px",
-      color: "#707070",
+      color: THEME_COLORS.grey02,
       minWidth: "8px",
       height: "19px",
       margin: 0,
     },
     ".MuiPaginationItem-previousNext": {
-      color: "#C5C5C5",
+      color: THEME_COLORS.grey04,
     },
     ".MuiSvgIcon-root": {
       margin: "0 -10px",

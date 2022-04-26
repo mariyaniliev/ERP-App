@@ -3,7 +3,7 @@ import type { RouteObject } from "react-router-dom";
 import Home from "./Home/Home";
 import TeamSection from "./Team/Team";
 import UsersSubPage from "./Team/Users/Users";
-import TimeOffsSubPage from "./Team/TimeOff/TimeOffsPage";
+import TimeOffsSubPage from "./Team/TimeOff/TimeOffsGrid/TimeOffsPage/TimeOffsPage";
 import PersonalInfoSubPage from "./Team/PersonalInfo/PersonalInfo";
 import Login from "./Login/LoginPage";
 

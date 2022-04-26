@@ -1,12 +1,10 @@
 import React from "react";
 
-// * Material Ui
 import { GridColumns, GridRenderCellParams } from "@mui/x-data-grid";
-import { Typography, Avatar, Stack } from "../../../../design-system/index";
+import { Typography, Avatar, Stack } from "../../../../../design-system/index";
 import PersonIcon from "@mui/icons-material/Person";
 
-//* Styles
-import { timeOffsApprovedGridStyles } from "./timeOffsApprovedGrid-styles";
+import { timeOffsApprovedGridStyles } from "../TimeOffsApprovedGrid/timeOffsApprovedGrid-styles";
 
 const renderCell = (values: GridRenderCellParams) => {
   let color: string;

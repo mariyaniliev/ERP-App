@@ -2,7 +2,8 @@ import React from "react";
 import { useMutation } from "react-query";
 import { AxiosError, AxiosResponse } from "axios";
 
-// * Material UI
+import { useAppSelector, RootState } from "../../../../../redux/store";
+
 import { GridRenderCellParams } from "@mui/x-data-grid";
 import { Box, Tooltip, IconButton, CircularProgress } from "@mui/material";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
@@ -11,21 +12,14 @@ import CheckIcon from "@mui/icons-material/Check";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import DownloadIcon from "@mui/icons-material/Download";
 
-// * Redux
-import { useAppSelector, RootState } from "../../../../redux/store";
-
-//* Types
 import { TimeOff } from "types/timeoff";
 
-//* Helpers
-import { useApiClient } from "../../../../utils/client";
-import queryClient from "../../../../utils/queryCLient";
-import api from "../../../../services/api-endpoints";
+import { useApiClient } from "../../../../../utils/client";
+import queryClient from "../../../../../utils/queryCLient";
+import api from "../../../../../services/api-endpoints";
 
-// * Components
-import ConfirmationDialog from "../../../../components/ConfirmationDialog/ConfirmationDialog";
+import ConfirmationDialog from "../../../../../components/ConfirmationDialog/ConfirmationDialog";
 
-// * Styles
 import { timeOffsApprovedGridStyles } from "./timeOffsApprovedGrid-styles";
 
 type Props = {
@@ -40,8 +34,8 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
   if (!roles.includes("Admin") && id !== userId) {
     return null;
   }
-  const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
-  const [approveModalOpen, setApproveModalOpen] = React.useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
+  const [isApprovedModalOpen, setIsApprovedModalOpen] = React.useState(false);
   const [isApproved, setIsApproved] = React.useState(approved);
 
   const client = useApiClient();
@@ -57,7 +51,7 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["pendingTimeOffs"]);
-        setDeleteModalOpen(false);
+        setIsDeleteModalOpen(false);
       },
     }
   );
@@ -84,20 +78,20 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
   );
 
   const handleApproveModalOpen = (isOpen: boolean) => {
-    setApproveModalOpen(isOpen);
+    setIsApprovedModalOpen(isOpen);
   };
 
   const handleDeleteModalOpen = (isOpen: boolean) => {
-    setDeleteModalOpen(isOpen);
+    setIsDeleteModalOpen(isOpen);
   };
 
   const approveHandler = () => {
     approveTimeOffFn(rowId);
-    setApproveModalOpen(false);
+    setIsApprovedModalOpen(false);
   };
   const deleteHandler = () => {
     deleteTimeOffFn(rowId);
-    setDeleteModalOpen(false);
+    setIsDeleteModalOpen(false);
   };
 
   if (rowId !== params.id) {
@@ -108,7 +102,7 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
     <Box width="100%" display="flex" justifyContent="end">
       <Box sx={timeOffsApprovedGridStyles.actions}>
         <ConfirmationDialog
-          isOpen={approveModalOpen}
+          isOpen={isApprovedModalOpen}
           handleCancel={() => {
             handleApproveModalOpen(false);
           }}
@@ -118,7 +112,7 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
           confirmButtonLabel={"Approve"}
         />
         <ConfirmationDialog
-          isOpen={deleteModalOpen}
+          isOpen={isDeleteModalOpen}
           handleCancel={() => {
             handleDeleteModalOpen(false);
           }}

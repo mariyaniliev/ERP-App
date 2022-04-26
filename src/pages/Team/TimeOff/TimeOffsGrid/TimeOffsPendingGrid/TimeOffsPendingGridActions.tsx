@@ -2,27 +2,21 @@ import React from "react";
 import { useMutation } from "react-query";
 import { AxiosError, AxiosResponse } from "axios";
 
-// * Material UI
+import { useAppSelector, RootState } from "../../../../../redux/store";
+
 import { GridRenderCellParams } from "@mui/x-data-grid";
 import { Box, Tooltip, IconButton, CircularProgress } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
 
-// * Redux
-import { useAppSelector, RootState } from "../../../../redux/store";
-
-//* Types
 import { TimeOff } from "types/timeoff";
 
-//* Helpers
-import { useApiClient } from "../../../../utils/client";
-import queryClient from "../../../../utils/queryCLient";
-import api from "../../../../services/api-endpoints";
+import { useApiClient } from "../../../../../utils/client";
+import queryClient from "../../../../../utils/queryCLient";
+import api from "../../../../../services/api-endpoints";
 
-// * Components
-import ConfirmationDialog from "../../../../components/ConfirmationDialog/ConfirmationDialog";
+import ConfirmationDialog from "../../../../../components/ConfirmationDialog/ConfirmationDialog";
 
-// * Styles
 import { timeOffsPendingGridStyles } from "./timeOffsPendingGrid-styles";
 
 type Props = {

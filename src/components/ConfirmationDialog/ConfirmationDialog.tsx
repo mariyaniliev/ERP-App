@@ -1,6 +1,5 @@
 import React from "react";
 
-// * Material Ui
 import {
   Typography,
   DialogTitle,
@@ -10,13 +9,10 @@ import {
   Dialog,
 } from "../../design-system/index";
 
-// * Types
 import { ConfirmationDialogProps } from "./confirmationDialog-types";
 
-// * Components
 import CustomSubmitButton from "../CustomButton/CustomSubmitButton";
 
-// * Styles
 import { dialogContentStyles } from "./confirmationDialog-styles";
 import { THEME_COLORS } from "../../theme/theme-constants";
 
