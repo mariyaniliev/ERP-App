@@ -16,16 +16,17 @@ import CustomSubmitButton from "../../../../../components/CustomButton/CustomSub
 import TimeOffsLoader from "./TimeOffsLoader";
 import CommonFormModal from "../../../../../components/CommonFormModal/CommonFormModal";
 import TimeOffsCalendar from "../../TimeOffsCalendar/TimeOffsCalendar";
-const SearchBar = React.lazy(() => import("../../SearchBar/SearchBar"));
-const TimeOffsGrid = React.lazy(
-  () => import("../TimeOffsGridCommon/TimeOffsGrid")
-);
 
 import { styles } from "./timeOffsPage-styles";
 import { timeOffsApprovedGridStyles } from "../TimeOffsApprovedGrid/timeOffsApprovedGrid-styles";
 import { timeOffsPendingGridStyles } from "../TimeOffsPendingGrid/timeOffsPendingGrid-styles";
 import leftDraw from "../../../../../theme/assets/timeoff_draw_left.png";
 import rightDraw from "../../../../../theme/assets/timeoff_draw_right.png";
+
+const SearchBar = React.lazy(() => import("../../SearchBar/SearchBar"));
+const TimeOffsGrid = React.lazy(
+  () => import("../TimeOffsGridCommon/TimeOffsGrid")
+);
 
 const TimeOffsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

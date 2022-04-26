@@ -1,9 +1,7 @@
 import React from "react";
 
-// * Material Ui
 import { Skeleton, Stack } from "../../../../../design-system";
 
-//* Styles
 import { styles } from "./timeOffsPage-styles";
 
 const TimeOffsLoader = () => {

@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { DateRange, Range } from "react-date-range";
 
-// * Material Ui
 import { Box } from "../../../../design-system";
 
-// * Helpers
 import { calculateTimeOffDays } from "../../../../utils/timeOffsCalc";
 
-// * Styles
 import { THEME_COLORS } from "../../../../theme/theme-constants";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";

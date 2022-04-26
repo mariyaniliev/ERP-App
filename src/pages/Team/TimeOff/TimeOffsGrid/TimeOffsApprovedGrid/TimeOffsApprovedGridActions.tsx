@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation } from "react-query";
 import { AxiosError, AxiosResponse } from "axios";
 
@@ -34,9 +34,9 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
   if (!roles.includes("Admin") && id !== userId) {
     return null;
   }
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
-  const [isApprovedModalOpen, setIsApprovedModalOpen] = React.useState(false);
-  const [isApproved, setIsApproved] = React.useState(approved);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isApprovedModalOpen, setIsApprovedModalOpen] = useState(false);
+  const [isApproved, setIsApproved] = useState(approved);
 
   const client = useApiClient();
   // * Extracting delete handler from react query
