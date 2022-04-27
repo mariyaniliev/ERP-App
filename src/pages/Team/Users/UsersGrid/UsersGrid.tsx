@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useQuery } from "react-query";
 import { DataGrid } from "@mui/x-data-grid";
 import { styles } from "./usersGrid-styles";
@@ -83,26 +83,17 @@ const UsersGrid = () => {
       return apiClient.get(`/users?page=${pagination}&limit=${rows}`);
     }
   };
-  const abortController = new AbortController();
-  const signal = abortController.signal;
-  const { data } = useQuery(["users", signal], () => getUsers(signal), {});
-  const { data: filteredData } = useQuery(
+
+  const { data } = useQuery("users", () => getUsers(), {});
+
+  const { data: filteredData, isFetching: isFilteredDataFetching } = useQuery(
     ["searchQuery", searchQuery, rows, timeOffs, birthday, pagination],
-    () => filterUsersData(searchQuery, rows, timeOffs, birthday, pagination),
-    {
-      // keepPreviousData: true,
-    }
+    () => filterUsersData(searchQuery, rows, timeOffs, birthday, pagination)
   );
 
   const usersRowsData = () => {
     return filteredData ? filteredData.data.data : data ? data.data.data : [];
   };
-
-  useEffect(() => {
-    return () => {
-      abortController.abort();
-    };
-  }, [searchQuery, timeOffs, rows, birthday, pagination]);
 
   return (
     <DataGrid
@@ -113,6 +104,7 @@ const UsersGrid = () => {
       columns={columns}
       rows={usersRowsData()}
       hideFooterPagination={true}
+      loading={isFilteredDataFetching}
     />
   );
 };

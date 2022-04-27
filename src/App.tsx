@@ -1,5 +1,6 @@
 import React from "react";
-
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { useLocation, useRoutes } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
 import { Box } from "./design-system";
@@ -10,6 +11,9 @@ import Header from "./components/Header/Header";
 import "./App.global.css";
 
 const App = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { staleTime: 25000, keepPreviousData: true } },
+  });
   const element = useRoutes(routes);
   const location = useLocation();
 
@@ -17,13 +21,16 @@ const App = () => {
 
   return (
     <ThemeProvider theme={appTheme}>
-      <Box>
-        {!isPageLogin && <Header />}
-        <Box sx={{ display: "flex" }}>
-          {!isPageLogin && <SideBar />}
-          {element}
+      <QueryClientProvider client={queryClient}>
+        <Box>
+          {!isPageLogin && <Header />}
+          <Box sx={{ display: "flex" }}>
+            {!isPageLogin && <SideBar />}
+            {element}
+          </Box>
         </Box>
-      </Box>
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+      </QueryClientProvider>
     </ThemeProvider>
   );
 };
