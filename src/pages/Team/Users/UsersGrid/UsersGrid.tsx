@@ -56,8 +56,8 @@ const UsersGrid = () => {
     (state: RootState) => state.users
   );
   console.log("pagination", pagination);
-  const getUsers = async (signal?: AbortSignal) => {
-    return apiClient.get("/users", { signal });
+  const getUsers = async () => {
+    return apiClient.get("/users");
   };
 
   const filterUsersData = async (
