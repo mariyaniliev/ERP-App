@@ -6,6 +6,7 @@ export const THEME_COLORS = {
   aquaBlue: "var(--color-aquablue)",
   purple: "var(--color-purple)",
   purple02: "var(--color-purple02)",
+  purple03: "var(--color-purple03)",
   purplelight: "var(--color-purplelight)",
   grey01: "var(--color-grey01)",
   grey02: "var(--color-grey02)",

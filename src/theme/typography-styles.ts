@@ -12,8 +12,14 @@ export default {
     fontSize: "12px",
     color: "#979797",
   },
+
   body2: {
     fontWeight: "normal",
     fontSize: "10px",
+  },
+  subtitle1: {
+    fontWeight: "normal",
+    fontSize: "14px",
+    color: "#A1A1A1",
   },
 } as const;

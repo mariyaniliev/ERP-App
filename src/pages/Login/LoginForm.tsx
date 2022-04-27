@@ -102,7 +102,7 @@ const LoginForm = () => {
         <Typography sx={styles.header}>Sign in to our platform</Typography>
         <form
           style={{
-            width: "100%",
+            width: "65%",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",

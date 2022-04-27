@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { DateRange, Range } from "react-date-range";
 
-import { Box, Stack, Dropdown, Typography } from "../../../../design-system";
+import {
+  Box,
+  Stack,
+  Typography,
+  FormDropdown,
+} from "../../../../design-system";
+import { SelectChangeEvent } from "@mui/material";
 import SubdirectoryArrowLeftIcon from "@mui/icons-material/SubdirectoryArrowLeft";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import BarChartIcon from "@mui/icons-material/BarChart";
-import { SelectChangeEvent } from "@mui/material";
 
 import { calculateTimeOffDays } from "../../../../utils/timeOffsCalc";
 import { typeOptions } from "../SearchBar/dropdownOptions";
 
 import DisplayDate from "./DisplayDate";
 import CustomSubmitButton from "../../../../components/CustomButton/CustomSubmitButton";
+import Input from "../../../../design-system/Input/Input";
 
 import { THEME_COLORS } from "../../../../theme/theme-constants";
 import { styles } from "./timeOffsCalendarHolder-styles";
@@ -21,7 +28,7 @@ import "./timeOffsCalendar-styles.scss";
 
 const LAST_DAY_OF_MONTH_MIN = 28;
 
-const tomorrowDay = new Date(new Date().setDate(new Date().getDate() + 1));
+const tomorrowDay = new Date(new Date().setDate(new Date().getDate() + 4));
 
 const initialRange = {
   selection: {
@@ -31,7 +38,7 @@ const initialRange = {
   },
 };
 
-const TimeOff: React.FC = () => {
+const TimeOffsCalendar: React.FC = () => {
   const [timeOffType, setTimeOffType] = useState("");
   const [timeOffDays, setTimeOffDays] = useState(0);
   const [selectedDays, setSelectedDays] = useState(initialRange);
@@ -91,16 +98,28 @@ const TimeOff: React.FC = () => {
     <Box sx={styles.container}>
       <Stack gap={4}>
         <Stack direction="column" gap={1}>
-          <Stack direction="row" sx={styles.typeSelect}>
-            <BarChartIcon color="primary" />
-            <Typography>Type</Typography>
+          <Stack direction="row" gap={7}>
+            <Stack sx={{ flex: 1 }} gap={1}>
+              <Stack direction="row" sx={styles.typeSelect} gap={1}>
+                <PersonOutlineOutlinedIcon color="primary" />
+                <Typography variant="subtitle1">Full Name</Typography>
+              </Stack>
+              <Input placeholder="Ivan Kraev" disabled={true} />
+            </Stack>
+            <Stack sx={{ flex: 1 }} gap={1}>
+              <Stack direction="row" sx={styles.typeSelect} gap={1}>
+                <BarChartIcon color="primary" />
+                <Typography variant="subtitle1">Type</Typography>
+              </Stack>
+              <FormDropdown
+                placeholder={timeOffType}
+                width={"auto"}
+                list={typeOptions}
+                noDefault={true}
+                onChange={handleChangeType}
+              />
+            </Stack>
           </Stack>
-          <Dropdown
-            placeholder={timeOffType}
-            list={typeOptions}
-            noDefault={true}
-            onChange={handleChangeType}
-          />
         </Stack>
         <Stack direction="row" gap={7}>
           <DateRange
@@ -112,7 +131,7 @@ const TimeOff: React.FC = () => {
             showDateDisplay={false}
             showMonthAndYearPickers={false}
             showMonthArrow={true}
-            rangeColors={[THEME_COLORS.purple]}
+            rangeColors={[THEME_COLORS.purple03]}
             className="timeOffCalendar"
           />
           <Stack direction="column" gap={1}>
@@ -139,4 +158,4 @@ const TimeOff: React.FC = () => {
   );
 };
 
-export default TimeOff;
+export default TimeOffsCalendar;

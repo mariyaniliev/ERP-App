@@ -2,7 +2,7 @@ import React from "react";
 import {
   Box,
   SearchInput,
-  Dropdown,
+  SearchBarDropdown,
   Pagination,
 } from "../../../../design-system";
 import { styles } from "./searchBar-styles";
@@ -41,11 +41,11 @@ const SearchBar = () => {
   return (
     <Box sx={styles.searchBar}>
       <SearchInput placeholder="Search or filter..." onChange={testOnChange} />
-      <Dropdown placeholder="Lead" list={leadTest} width="130" />
+      <SearchBarDropdown placeholder="Lead" list={leadTest} width="130" />
       <Input placeholder="Time offs" onChange={testOnChange} width="85" />
       <Input placeholder="Date of birth" onChange={testOnChange} width="120" />
       <Input placeholder="Starting date" onChange={testOnChange} width="120" />
-      <Dropdown placeholder="Rows" list={paginationTest} width="85" />
+      <SearchBarDropdown placeholder="Rows" list={paginationTest} width="85" />
       <Pagination
         count={4}
         onChange={(event, page) => console.log(page)}

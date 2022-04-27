@@ -11,6 +11,38 @@
     padding: 0;
   }
 
+  .rdrStartEdge {
+    background: #7f53ac;
+    border-radius: 16px;
+    transform-style: preserve-3d;
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      width: 20%;
+      height: 26px;
+      background: rgba(127, 83, 172, 0.5);
+      transform: translateZ(-1px);
+    }
+  }
+
+  .rdrEndEdge {
+    background: #7f53ac;
+    border-radius: 16px;
+    transform-style: preserve-3d;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 20%;
+      height: 26px;
+      background: rgba(127, 83, 172, 0.5);
+      transform: translateZ(-1px);
+    }
+  }
+
   .rdrMonthName {
     display: none;
   }

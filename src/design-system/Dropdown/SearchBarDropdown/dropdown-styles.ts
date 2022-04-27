@@ -1,4 +1,4 @@
-import { THEME_COLORS } from "../../theme/theme-constants";
+import { THEME_COLORS } from "../../../theme/theme-constants";
 
 export const dropdownStyles = {
   display: { xs: "none", md: "flex" },

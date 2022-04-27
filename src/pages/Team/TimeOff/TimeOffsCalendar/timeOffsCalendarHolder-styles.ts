@@ -3,14 +3,14 @@ import { THEME_COLORS } from "../../../../theme/theme-constants";
 export const styles = {
   container: {
     zIndex: 2,
-    px: 15,
-    py: 10,
+    px: "180px",
+    py: "90px",
     bgcolor: THEME_COLORS.white,
     borderRadius: "32px",
   },
   typeSelect: {
     alignItems: "center",
-    ml: 2,
+    ml: 3,
   },
   submitButtonHolder: {
     justifyContent: "center",
