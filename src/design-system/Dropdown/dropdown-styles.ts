@@ -7,10 +7,6 @@ export const dropdownStyles = {
     borderRadius: "16px",
     border: "none !important",
     background: THEME_COLORS.light,
-    fontSize: "14px",
-    "&:hover": {
-      color: THEME_COLORS.purple,
-    },
   },
   ".MuiOutlinedInput-notchedOutline": {
     border: "none",
@@ -24,8 +20,5 @@ export const dropdownStyles = {
       color: THEME_COLORS.purple,
       background: "none",
     },
-  },
-  ".Mui-focused": {
-    color: `${THEME_COLORS.purple} !important`,
   },
 };

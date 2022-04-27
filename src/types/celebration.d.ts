@@ -12,7 +12,7 @@ export type Celebration = {
 };
 
 export enum OccasionTypes {
-  birthday,
-  nameday,
+  Birthday,
+  Nameday,
   Other,
 }

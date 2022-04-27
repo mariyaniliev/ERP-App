@@ -5,7 +5,7 @@ import { Store } from "redux";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import rootReducer from ".";
 
-const blacklistPaths = [];
+const blacklistPaths = ["users", "search"];
 
 const persistConfig = {
   key: "root",

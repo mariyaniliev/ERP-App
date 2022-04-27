@@ -1,3 +1,5 @@
+import { SelectChangeEvent } from "@mui/material";
+
 export interface InputProps {
   placeholder?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -7,6 +9,7 @@ export interface InputProps {
 export interface ListItem {
   value: string;
   label: string;
+  renderValue?: () => JSX.Element;
 }
 
 export interface DropdownProps {
@@ -41,4 +44,5 @@ export interface ModalProps {
 
 export interface BackdropProps {
   onClick: (event: React.MouseEvent) => void;
+  onChange?: (event: SelectChangeEvent<HTMLInputElement>) => void;
 }

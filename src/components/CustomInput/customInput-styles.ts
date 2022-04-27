@@ -1,5 +1,5 @@
 import { styled } from "@mui/system";
-import { THEME_COLORS } from "../../../theme/theme-constants";
+import { THEME_COLORS } from "../../theme/theme-constants";
 export const StyledInputElement = styled("input")({
   width: "100%",
   color: THEME_COLORS.grey03,

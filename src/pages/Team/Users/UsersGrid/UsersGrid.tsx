@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { styles } from "./usersGrid-styles";
-import { useApiClient } from "../../../../utils/client";
 import { useAppSelector, RootState } from "../../../../redux/store";
 import columns from "./UsersGridColumns";
+import { useApiClient } from "../../../../utils/client";
+import { styles } from "./usersGrid-styles";
 
 const UsersGrid = () => {
   const apiClient = useApiClient();
   const [usersRowsData, setUsersRowsData] = useState([]);
-
+  const accumulatedHeight =
+    usersRowsData.length === 0 ? 10 : usersRowsData.length;
   const { searchQuery, timeOffs, rows, birthday, pagination } = useAppSelector(
     (state: RootState) => state.users
   );
+  console.log("searchQuery", searchQuery);
 
-  const getUsers = async (signal?: AbortSignal) => {
-    const users = await apiClient.get("/users", { signal });
+  const getUsers = async () => {
+    const users = await apiClient.get("/users");
     setUsersRowsData(users.data.data);
   };
 
@@ -45,7 +47,7 @@ const UsersGrid = () => {
     if (pagination > 0) {
       users = await apiClient.get(`/users?page=${pagination}&limit=${rows}`);
     }
-    setUsersRowsData(users.data.data);
+    setUsersRowsData(users?.data.data);
   };
 
   useEffect(() => {
@@ -53,7 +55,7 @@ const UsersGrid = () => {
     const signal = abortController.signal;
 
     if (usersRowsData.length <= 0) {
-      getUsers(signal);
+      getUsers();
     }
 
     if (usersRowsData.length > 0) {
@@ -70,7 +72,10 @@ const UsersGrid = () => {
       // pageSize={5}
       // rowsPerPageOptions={[+rows]}
       disableColumnMenu={true}
-      sx={styles.grid}
+      sx={{
+        ...styles.grid,
+        height: `${accumulatedHeight * 52 + 90}px`,
+      }}
       columns={columns}
       rows={usersRowsData}
       hideFooterPagination={true}

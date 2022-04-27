@@ -1,43 +1,31 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+
+import { MenuItem, FormControl, Select, Box, Typography } from "@mui/material";
+
 import { dropdownStyles } from "./dropdown-styles";
 import { DropdownProps, ListItem } from "../types";
 
 const Dropdown = (props: DropdownProps) => {
-  const { placeholder, list, width, boxShadow, onChange } = props;
-  const fieldWidth = width ? width : "130";
-  const dropdownShadow = boxShadow ? `${boxShadow}` : "none";
+  const { placeholder, list, width = "116", onChange } = props;
+
   return (
-    <Box
-      sx={{
-        ...dropdownStyles,
-        width: `${fieldWidth}px`,
-        borderRadius: "20px",
-        boxShadow: dropdownShadow,
-      }}
-    >
+    <Box sx={{ ...dropdownStyles, width: `${width}px` }}>
       <FormControl fullWidth>
-        <InputLabel
-          sx={{ fontSize: "14px", fontWeight: "600" }}
-          id="demo-simple-select-label"
-        >
-          {placeholder}
-        </InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          label={placeholder}
           onChange={onChange}
+          value={placeholder as unknown as HTMLInputElement}
+          renderValue={() => {
+            return <Typography>{placeholder}</Typography>;
+          }}
         >
-          <MenuItem value="">&nbsp;</MenuItem>
+          {isNaN(Number(placeholder)) && <MenuItem value="">All</MenuItem>}
+
           {list.map((listItem: ListItem) => {
             return (
-              <MenuItem key={listItem.value} value={listItem.value + ""}>
-                {listItem.label}
+              <MenuItem key={listItem.value} value={listItem.value}>
+                {listItem.renderValue ? listItem.renderValue() : listItem.label}
               </MenuItem>
             );
           })}

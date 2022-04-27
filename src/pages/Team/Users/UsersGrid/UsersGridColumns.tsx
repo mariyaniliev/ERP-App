@@ -18,11 +18,14 @@ const renderCell = (values: GridRenderCellParams) => {
 
   if (values.field === "email") {
     color = "primary.main";
-    background = "rgba(247, 245, 250, 1)";
-    width = "200px";
-  } else {
+    width = "180px";
+  } else if (values.field === "birthday" || values.field === "startingDate") {
     color = "primary.main";
     background = "rgba(247, 245, 250, 1)";
+    width = "100px";
+  } else {
+    color = "primary.main";
+    width = "100px";
   }
   return (
     <Typography
@@ -54,6 +57,7 @@ const columns: GridColumns = [
     sortable: true,
     renderCell: renderUser,
     width: 200,
+    flex: 1,
   },
   {
     field: "email",
@@ -62,6 +66,7 @@ const columns: GridColumns = [
     width: 200,
     renderCell,
     sortable: true,
+    flex: 1,
   },
   {
     field: "lead",
@@ -70,22 +75,25 @@ const columns: GridColumns = [
     width: 200,
     renderCell,
     sortable: true,
+    flex: 1,
   },
   {
     field: "timeOffRemainingDays",
     headerName: "Time Offs",
     type: "number",
-    width: 200,
+    width: 150,
     renderCell,
     sortable: true,
+    flex: 1,
   },
   {
     field: "birthday",
-    birthday: "Date of Birth",
+    headerName: "Date of Birth",
     type: "string",
     width: 200,
     renderCell,
     sortable: true,
+    flex: 1,
   },
   {
     field: "startingDate",
@@ -93,6 +101,7 @@ const columns: GridColumns = [
     type: "string",
     width: 150,
     sortable: true,
+    flex: 1.5,
   },
 ];
 

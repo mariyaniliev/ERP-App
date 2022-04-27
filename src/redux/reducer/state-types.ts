@@ -24,3 +24,14 @@ export type SearchUsers = {
   rows: string;
   pagination: string;
 };
+
+export type SearchState = {
+  searchedQueries: {
+    period: string;
+    type: string;
+    searchedName: string;
+    limit: number;
+    page: number;
+    totalPages: number;
+  };
+};

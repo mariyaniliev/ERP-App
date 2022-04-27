@@ -11,7 +11,7 @@ export const styles = {
     height: "470px",
     borderRadius: "30px",
     boxShadow: THEME_SHADOW,
-    marginTop: "25px",
+    margin: "25px 0",
     "& .MuiDataGrid-columnHeaderTitleContainer,.MuiDataGrid-cell": {
       justifyContent: "start",
       border: "none",
@@ -20,7 +20,6 @@ export const styles = {
       p: 0,
     },
     "& .MuiDataGrid-row": {
-      // width: "calc(100% - 50px)",
       width: "92%",
       margin: "0px 20px",
       padding: "0 10px",
