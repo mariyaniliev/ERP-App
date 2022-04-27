@@ -16,4 +16,5 @@ export interface DropdownProps {
   list: ListItem[];
   width?: string;
   onChange?: (event: SelectChangeEvent<HTMLInputElement>) => void;
+  noDefault?: boolean;
 }

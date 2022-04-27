@@ -86,6 +86,7 @@ const SearchBar: React.FC = () => {
           placeholder={String(limit)}
           list={rowsOptions}
           onChange={handleRows}
+          noDefault={true}
         />
         {totalPages > 1 && (
           <GrowAnimation>

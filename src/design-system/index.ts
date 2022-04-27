@@ -21,6 +21,9 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  MenuItem,
+  FormControl,
+  Select,
 } from "@mui/material";
 import SearchInput from "./SearchInput/SearchInput";
 import Dropdown from "./Dropdown/Dropdown";
@@ -51,4 +54,7 @@ export {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  MenuItem,
+  FormControl,
+  Select,
 };
