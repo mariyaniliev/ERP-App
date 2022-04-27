@@ -3,18 +3,21 @@ import {
   SubpageState,
   DrawerHeaderState,
   userState,
-  UsersState,
+  SearchUsers,
+  SearchState,
 } from "./state-types";
 import dreawerHeaderReducer from "./drawerHeader";
 import subpageReducer from "./subpage";
 import userReducer from "./user";
 import usersReducer from "./searchUsers";
+import searchSlice from "./search";
 
 interface RootReducerType {
   drawerHeader: DrawerHeaderState;
   subpage: SubpageState;
   user: userState;
-  users: UsersState;
+  users: SearchUsers;
+  search: SearchState;
 }
 
 const rootReducer = combineReducers<RootReducerType>({
@@ -22,6 +25,7 @@ const rootReducer = combineReducers<RootReducerType>({
   subpage: subpageReducer,
   user: userReducer,
   users: usersReducer,
+  search: searchSlice,
 });
 
 export default rootReducer;

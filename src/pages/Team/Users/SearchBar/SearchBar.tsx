@@ -1,13 +1,14 @@
 import React from "react";
+import { searchUsersActions } from "../../../../redux/reducer/searchUsers";
 import {
   Box,
   SearchInput,
   Dropdown,
   Pagination,
 } from "../../../../design-system";
-import { styles } from "./searchBar-styles";
 import Input from "../../../../design-system/Input/Input";
-import { searchUsersActions } from "../../../../redux/reducer/searchUsers";
+import { styles } from "./searchBar-styles";
+
 const SearchBar = () => {
   const leadTest = [
     {

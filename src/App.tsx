@@ -9,7 +9,6 @@ import appTheme from "./theme/theme";
 import SideBar from "./components/SideBar/SideBar";
 import Header from "./components/Header/Header";
 import "./App.global.css";
-
 const App = () => {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { staleTime: 25000, keepPreviousData: true } },

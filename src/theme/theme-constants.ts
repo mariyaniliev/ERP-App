@@ -6,6 +6,8 @@ export const THEME_COLORS = {
   primaryGradient: "var(--color-primary-gradient)",
   aquaBlue: "var(--color-aquablue)",
   purple: "var(--color-purple)",
+  purple02: "var(--color-purple02)",
+  purplelight: "var(--color-purplelight)",
   grey01: "var(--color-grey01)",
   grey02: "var(--color-grey02)",
   grey03: "var(--color-grey03)",

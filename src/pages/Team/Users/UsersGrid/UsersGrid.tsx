@@ -1,53 +1,10 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { DataGrid } from "@mui/x-data-grid";
-import { styles } from "./usersGrid-styles";
-import { useApiClient } from "../../../../utils/client";
 import { useAppSelector, RootState } from "../../../../redux/store";
-
-const columns: any[] = [
-  {
-    field: "name",
-    headerName: "Full name",
-    sortable: true,
-    width: 200,
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    type: "string",
-    width: 200,
-    sortable: true,
-  },
-  {
-    field: "lead",
-    headerName: "Lead",
-    type: "string",
-    width: 200,
-    sortable: true,
-  },
-  {
-    field: "timeOffRemainingDays",
-    headerName: "Time Offs",
-    type: "number",
-    width: 120,
-    sortable: true,
-  },
-  {
-    field: "birthday",
-    birthday: "Date of Birth",
-    type: "string",
-    width: 150,
-    sortable: true,
-  },
-  {
-    field: "startingDate",
-    headerName: "Starting Date",
-    type: "string",
-    width: 150,
-    sortable: true,
-  },
-];
+import columns from "./UsersGridColumns";
+import { useApiClient } from "../../../../utils/client";
+import { styles } from "./usersGrid-styles";
 
 const UsersGrid = () => {
   const apiClient = useApiClient();
@@ -59,6 +16,18 @@ const UsersGrid = () => {
   const getUsers = async () => {
     return apiClient.get("/users");
   };
+  // const [usersRowsData, setUsersRowsData] = useState([]);
+  // const accumulatedHeight =
+  //   usersRowsData.length === 0 ? 10 : usersRowsData.length;
+  // const { searchQuery, timeOffs, rows, birthday, pagination } = useAppSelector(
+  //   (state: RootState) => state.users
+  // );
+  // console.log("searchQuery", searchQuery);
+
+  // const getUsers = async () => {
+  //   const users = await apiClient.get("/users");
+  //   setUsersRowsData(users.data.data);
+  // };
 
   const filterUsersData = async (
     searchUsersQuery,
@@ -82,14 +51,18 @@ const UsersGrid = () => {
     if (pagination > 0) {
       return apiClient.get(`/users?page=${pagination}&limit=${rows}`);
     }
+    // setUsersRowsData(users?.data.data);
   };
 
-  const { data } = useQuery("users", () => getUsers(), {});
+  const { data } = useQuery("users", () => getUsers());
 
   const { data: filteredData, isFetching: isFilteredDataFetching } = useQuery(
     ["searchQuery", searchQuery, rows, timeOffs, birthday, pagination],
     () => filterUsersData(searchQuery, rows, timeOffs, birthday, pagination)
   );
+  // if (usersRowsData.length <= 0) {
+  //   getUsers();
+  // }
 
   const usersRowsData = () => {
     return filteredData ? filteredData.data.data : data ? data.data.data : [];
@@ -100,11 +73,15 @@ const UsersGrid = () => {
       // pageSize={5}
       // rowsPerPageOptions={[+rows]}
       disableColumnMenu={true}
-      sx={styles.grid}
+      sx={{
+        ...styles.grid,
+        // height: `${accumulatedHeight * 52 + 90}px`,
+      }}
       columns={columns}
       rows={usersRowsData()}
       hideFooterPagination={true}
       loading={isFilteredDataFetching}
+      // disableSelectionOnClick
     />
   );
 };
