@@ -9,11 +9,10 @@ export interface InputProps {
 export interface ListItem {
   value: string;
   label: string;
-  renderValue?: () => JSX.Element;
 }
 
 export interface DropdownProps {
-  placeholder: string | JSX.Element;
+  placeholder: string;
   list: ListItem[];
   width?: string;
   onChange?: (event: SelectChangeEvent<HTMLInputElement>) => void;

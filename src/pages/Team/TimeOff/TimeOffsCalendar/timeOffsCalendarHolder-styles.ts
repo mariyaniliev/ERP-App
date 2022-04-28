@@ -27,6 +27,8 @@ export const styles = {
   displayDate: {
     px: 5.4,
     py: 1.3,
+    width: "120px",
+    height: "100px",
     bgcolor: "#61C3D9",
     borderRadius: "16px",
     justifyContent: "space-between",

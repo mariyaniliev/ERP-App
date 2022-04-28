@@ -1,3 +1,5 @@
+import { TimeOff } from "../../../../types/timeoff";
+
 export type DisplayDateProps = {
   icon: React.ReactNode;
   dateInfo: {
@@ -6,4 +8,8 @@ export type DisplayDateProps = {
     day: string;
   };
   header: string;
+};
+
+export type CalendarProps = {
+  info?: TimeOff;
 };

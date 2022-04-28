@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { DateRange, Range } from "react-date-range";
 
+import { SelectChangeEvent } from "@mui/material";
 import {
   Box,
   Stack,
   Typography,
   FormDropdown,
 } from "../../../../design-system";
-import { SelectChangeEvent } from "@mui/material";
 import SubdirectoryArrowLeftIcon from "@mui/icons-material/SubdirectoryArrowLeft";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
@@ -15,6 +15,8 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 
 import { calculateTimeOffDays } from "../../../../utils/timeOffsCalc";
 import { typeOptions } from "../SearchBar/dropdownOptions";
+
+import { CalendarProps } from "./timeOffsCalendar-types";
 
 import DisplayDate from "./DisplayDate";
 import CustomSubmitButton from "../../../../components/CustomButton/CustomSubmitButton";
@@ -28,18 +30,22 @@ import "./timeOffsCalendar-styles.scss";
 
 const LAST_DAY_OF_MONTH_MIN = 28;
 
-const tomorrowDay = new Date(new Date().setDate(new Date().getDate() + 4));
+const tomorrowDay = new Date(new Date().setDate(new Date().getDate() + 1));
 
-const initialRange = {
-  selection: {
-    startDate: tomorrowDay,
-    endDate: tomorrowDay,
-    key: "selection",
-  },
-};
+const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
+  const initialRange = {
+    selection: {
+      startDate: info ? new Date(info.startDate) : tomorrowDay,
+      endDate: info ? new Date(info.endDate) : tomorrowDay,
+      key: "selection",
+    },
+  };
 
-const TimeOffsCalendar: React.FC = () => {
-  const [timeOffType, setTimeOffType] = useState("");
+  const initialType = info
+    ? String(info.type).charAt(0).toUpperCase() + String(info.type).slice(1)
+    : "";
+
+  const [timeOffType, setTimeOffType] = useState(initialType);
   const [timeOffDays, setTimeOffDays] = useState(0);
   const [selectedDays, setSelectedDays] = useState(initialRange);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -50,10 +56,14 @@ const TimeOffsCalendar: React.FC = () => {
   const lastDate = selectedDays.selection.endDate.getDate();
 
   useEffect(() => {
-    const calculateDays = async () => {
+    const calculateDays = () => {
       const { startDate, endDate } = selectedDays.selection;
-      const count = await calculateTimeOffDays(startDate, endDate);
-      setTimeOffDays(count);
+      if (startDate < tomorrowDay) {
+        return;
+      }
+      calculateTimeOffDays(startDate, endDate).then((res) =>
+        setTimeOffDays(res)
+      );
     };
 
     calculateDays();
@@ -93,6 +103,10 @@ const TimeOffsCalendar: React.FC = () => {
     lastSelectedDate === null || lastSelectedDate >= LAST_DAY_OF_MONTH_MIN
       ? 2
       : 1;
+
+  const buttonLabel = info
+    ? `Update request for ${timeOffDays} days leave`
+    : `Apply for ${timeOffDays} days leave`;
 
   return (
     <Box sx={styles.container}>
@@ -149,8 +163,9 @@ const TimeOffsCalendar: React.FC = () => {
         </Stack>
         <Box sx={styles.submitButtonHolder}>
           <CustomSubmitButton
-            label={`Apply for ${timeOffDays} days leave`}
+            label={buttonLabel}
             styles={styles.submitButton}
+            disabled={timeOffDays === 0}
           />
         </Box>
       </Stack>
