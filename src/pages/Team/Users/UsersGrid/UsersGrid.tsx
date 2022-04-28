@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useAppSelector, RootState } from "../../../../redux/store";
-import columns from "./UsersGridColumns";
+import columns from "./UsersGridColumns/UsersGridColumns";
 import { useApiClient } from "../../../../utils/client";
 import { styles } from "./usersGrid-styles";
 
@@ -13,10 +13,9 @@ const UsersGrid = () => {
   const { searchQuery, timeOffs, rows, birthday, pagination } = useAppSelector(
     (state: RootState) => state.users
   );
-  console.log("searchQuery", searchQuery);
 
-  const getUsers = async () => {
-    const users = await apiClient.get("/users");
+  const getUsers = async (signal: AbortSignal) => {
+    const users = await apiClient.get("/users", { signal });
     setUsersRowsData(users.data.data);
   };
 
@@ -55,7 +54,7 @@ const UsersGrid = () => {
     const signal = abortController.signal;
 
     if (usersRowsData.length <= 0) {
-      getUsers();
+      getUsers(signal);
     }
 
     if (usersRowsData.length > 0) {
@@ -69,8 +68,6 @@ const UsersGrid = () => {
 
   return (
     <DataGrid
-      // pageSize={5}
-      // rowsPerPageOptions={[+rows]}
       disableColumnMenu={true}
       sx={{
         ...styles.grid,

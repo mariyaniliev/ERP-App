@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useMemo } from "react";
+import { debounce } from "lodash";
+import { useAppSelector, RootState } from "../../../../redux/store";
 import { searchUsersActions } from "../../../../redux/reducer/searchUsers";
 import {
   Box,
   SearchInput,
   Dropdown,
   Pagination,
+  Typography,
+  Stack,
 } from "../../../../design-system";
 import Input from "../../../../design-system/Input/Input";
+import { rowsOptions } from "../../../../pages/Team/TimeOff/SearchBar/dropdownOptions";
 import { styles } from "./searchBar-styles";
 
 const SearchBar = () => {
+  // Hardcoded data for lead will be removed in the branch for fetching users with react query
   const leadTest = [
     {
       label: "Ivan Ivanov",
@@ -20,20 +26,8 @@ const SearchBar = () => {
       value: "dimitar",
     },
   ];
-  const paginationTest = [
-    {
-      label: "5",
-      value: "5",
-    },
-    {
-      label: "10",
-      value: "10",
-    },
-    {
-      label: "20",
-      value: "20",
-    },
-  ];
+
+  const { rows } = useAppSelector((state: RootState) => state.users);
 
   const {
     searchUsersByQuery,
@@ -71,11 +65,16 @@ const SearchBar = () => {
     displayUsersPagination(page);
   };
 
+  const debouncedChangeHandler = useMemo(
+    () => debounce(searchOnChange, 500),
+    []
+  );
+
   return (
     <Box sx={styles.searchBar}>
       <SearchInput
         placeholder="Search or filter..."
-        onChange={searchOnChange}
+        onChange={debouncedChangeHandler}
       />
       <Dropdown placeholder="Lead" list={leadTest} width="130" />
       <Input placeholder="Time offs" width="85" onChange={timeOffsOnChange} />
@@ -89,12 +88,15 @@ const SearchBar = () => {
         width="120"
         onChange={startingDateOnChange}
       />
-      <Dropdown
-        placeholder="Rows"
-        list={paginationTest}
-        width="85"
-        onChange={rowsOnChange}
-      />
+      <Stack direction="row" alignItems="center" spacing={2}>
+        <Typography>Show per page</Typography>
+        <Dropdown
+          list={rowsOptions}
+          placeholder={String(rows)}
+          width="55"
+          onChange={rowsOnChange}
+        />
+      </Stack>
       <Pagination count={4} onChange={paginationOnChange} defaultPage={1} />
     </Box>
   );

@@ -21,7 +21,7 @@ export type SearchUsers = {
   timeOffs: string;
   birthday: string;
   startingDate: string;
-  rows: string;
+  rows: number;
   pagination: string;
 };
 

@@ -8,7 +8,7 @@ const initialState = {
   timeOffs: "",
   birthday: "",
   startingDate: "",
-  rows: "",
+  rows: 10,
   pagination: "",
 } as SearchUsers;
 

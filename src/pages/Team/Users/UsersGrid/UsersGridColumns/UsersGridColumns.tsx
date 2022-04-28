@@ -2,8 +2,8 @@ import React from "react";
 import { GridColumns, GridRenderCellParams } from "@mui/x-data-grid";
 import { Typography, Avatar, Stack } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
-import { THEME_COLORS } from "../../../../theme/theme-constants";
-import { styles } from "./usersGrid-styles";
+import { THEME_COLORS } from "../../../../../theme/theme-constants";
+import { styles } from "../usersGrid-styles";
 
 const avatarStyles = {
   width: "30px",
@@ -41,13 +41,21 @@ const renderCell = (values: GridRenderCellParams) => {
   );
 };
 
+const profileInfo = (name: string) => (
+  <Stack direction="row" spacing={1} alignItems="center" marginLeft="20px">
+    <Avatar component={PersonIcon} sx={avatarStyles} />
+    <Typography>{name}</Typography>
+  </Stack>
+);
+
 const renderUser = (values: GridRenderCellParams) => {
-  return (
-    <Stack direction="row" spacing={1} alignItems="center" marginLeft="20px">
-      <Avatar component={PersonIcon} sx={avatarStyles} />
-      <Typography>{values.value}</Typography>
-    </Stack>
-  );
+  return profileInfo(values.value);
+};
+
+const renderLead = (values: GridRenderCellParams) => {
+  if (values.row.lead) {
+    return profileInfo(values.row.lead?.leadInfo.name);
+  }
 };
 
 const columns: GridColumns = [
@@ -63,17 +71,17 @@ const columns: GridColumns = [
     field: "email",
     headerName: "Email",
     type: "string",
-    width: 200,
+    width: 220,
     renderCell,
     sortable: true,
     flex: 1,
   },
   {
-    field: "lead",
+    field: "leadInfo",
     headerName: "Lead",
     type: "string",
-    width: 200,
-    renderCell,
+    width: 220,
+    renderCell: renderLead,
     sortable: true,
     flex: 1,
   },
@@ -99,6 +107,7 @@ const columns: GridColumns = [
     field: "startingDate",
     headerName: "Starting Date",
     type: "string",
+    renderCell,
     width: 150,
     sortable: true,
     flex: 1.5,
