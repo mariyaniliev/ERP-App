@@ -58,7 +58,10 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
   useEffect(() => {
     const calculateDays = () => {
       const { startDate, endDate } = selectedDays.selection;
-      if (startDate < tomorrowDay && info) {
+
+      const today = new Date();
+
+      if (startDate < today) {
         return;
       }
       calculateTimeOffDays(startDate, endDate).then((res) =>
