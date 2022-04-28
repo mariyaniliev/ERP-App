@@ -11,7 +11,6 @@ export const useApiClient = () => {
     (state: RootState) => state.user.user?.refreshToken
   );
   const { setAccessToken } = userActions();
-  const abortController = new AbortController();
 
   // TODO define baseUrl in env.development and take it from there
   const apiClient = Axios.create({
@@ -25,12 +24,11 @@ export const useApiClient = () => {
   apiClient.interceptors.response.use(
     function (successRes) {
       const newAcessToken = get(successRes.headers, "x-access-token", "");
-      const signal = abortController.signal;
 
       if (newAcessToken) {
         setAccessToken(newAcessToken);
       }
-      return { ...successRes, signal };
+      return successRes;
     },
     function (error) {
       return Promise.reject(error);
