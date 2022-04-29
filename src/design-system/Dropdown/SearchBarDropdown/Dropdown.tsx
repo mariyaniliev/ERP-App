@@ -8,8 +8,9 @@ import {
   Typography,
 } from "../../../design-system";
 
-import { dropdownStyles } from "./dropdown-styles";
 import { DropdownProps, ListItem } from "../../types";
+
+import { dropdownStyles } from "./dropdown-styles";
 
 const Dropdown = (props: DropdownProps) => {
   const {

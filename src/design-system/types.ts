@@ -19,6 +19,7 @@ export interface DropdownProps {
   width?: string;
   boxShadow?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  noDefault?: boolean;
 }
 
 export interface ButtonProps {
