@@ -1,12 +1,25 @@
 import * as React from "react";
 
-import { MenuItem, FormControl, Select, Box, Typography } from "@mui/material";
+import {
+  MenuItem,
+  FormControl,
+  Select,
+  Box,
+  Typography,
+} from "../../../design-system";
+
+import { DropdownProps, ListItem } from "../../types";
 
 import { dropdownStyles } from "./dropdown-styles";
-import { DropdownProps, ListItem } from "../types";
 
 const Dropdown = (props: DropdownProps) => {
-  const { placeholder, list, width = "116", onChange } = props;
+  const {
+    placeholder,
+    list,
+    width = "120",
+    onChange,
+    noDefault = false,
+  } = props;
 
   return (
     <Box sx={{ ...dropdownStyles, width: `${width}px` }}>
@@ -20,12 +33,12 @@ const Dropdown = (props: DropdownProps) => {
             return <Typography>{placeholder}</Typography>;
           }}
         >
-          {isNaN(Number(placeholder)) && <MenuItem value="">All</MenuItem>}
+          {!noDefault && <MenuItem value="">All</MenuItem>}
 
           {list.map((listItem: ListItem) => {
             return (
               <MenuItem key={listItem.value} value={listItem.value}>
-                {listItem.renderValue ? listItem.renderValue() : listItem.label}
+                {listItem.label}
               </MenuItem>
             );
           })}

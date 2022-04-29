@@ -1,4 +1,4 @@
-import { ErrorsValue } from "./types";
+import { ErrorsValue } from "../pages/Login/types";
 
 export const validation = (email: string, password: string) => {
   const standartEmailRegex = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;

@@ -5,7 +5,7 @@ import { InputUnstyled, InputUnstyledProps } from "@mui/base";
 import { StyledInputElement } from "./customInput-styles";
 
 const inputStyles = {
-  width: "65%",
+  width: "100%",
   position: "relative",
   display: "flex",
   alignItems: "center",

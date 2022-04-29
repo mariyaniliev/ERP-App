@@ -49,7 +49,7 @@ export const styles = {
   image: { width: "70%", height: "auto" },
   helperText: {
     textAlign: "left",
-    width: "65%",
+    width: "100%",
     marginLeft: 5,
     marginBottom: 1,
     marginTop: 3,
@@ -57,7 +57,7 @@ export const styles = {
   signInAttributes: {
     display: "flex",
     flexDirection: "column",
-    width: "65%",
+    width: "100%",
     my: 3,
     height: "100px",
     justifyContent: "space-between",

@@ -5,7 +5,7 @@ import { searchUsersActions } from "../../../../redux/reducer/searchUsers";
 import {
   Box,
   SearchInput,
-  Dropdown,
+  SearchBarDropdown,
   Pagination,
   Typography,
   Stack,
@@ -76,7 +76,7 @@ const SearchBar = () => {
         placeholder="Search or filter..."
         onChange={debouncedChangeHandler}
       />
-      <Dropdown placeholder="Lead" list={leadTest} width="130" />
+      <SearchBarDropdown placeholder="Lead" list={leadTest} width="130" />
       <Input placeholder="Time offs" width="85" onChange={timeOffsOnChange} />
       <Input
         placeholder="Date of birth"
@@ -90,7 +90,7 @@ const SearchBar = () => {
       />
       <Stack direction="row" alignItems="center" spacing={2}>
         <Typography>Show per page</Typography>
-        <Dropdown
+        <SearchBarDropdown
           list={rowsOptions}
           placeholder={String(rows)}
           width="55"
