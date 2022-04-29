@@ -9,7 +9,7 @@ import { SelectChangeEvent } from "@mui/material";
 import {
   Box,
   SearchInput,
-  Dropdown,
+  SearchBarDropdown,
   Pagination,
   Typography,
   Stack,
@@ -64,14 +64,14 @@ const SearchBar: React.FC = () => {
         placeholder="Search or filter..."
         onChange={debouncedChangeHandler}
       />
-      <Dropdown
+      <SearchBarDropdown
         placeholder={period}
         list={periodOptions}
         onChange={(e) => {
           handleSearchFilter(e, "Period");
         }}
       />
-      <Dropdown
+      <SearchBarDropdown
         placeholder={type}
         list={typeOptions}
         onChange={(e) => {
@@ -81,11 +81,12 @@ const SearchBar: React.FC = () => {
 
       <Stack direction="row" alignItems="center" spacing={2}>
         <Typography sx={styles.rowsTitle}>Show per page</Typography>
-        <Dropdown
+        <SearchBarDropdown
           width="55"
           placeholder={String(limit)}
           list={rowsOptions}
           onChange={handleRows}
+          noDefault={true}
         />
         {totalPages > 1 && (
           <GrowAnimation>

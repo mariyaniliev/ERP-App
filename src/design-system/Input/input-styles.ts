@@ -3,15 +3,14 @@ import { THEME_COLORS } from "../../theme/theme-constants";
 
 export const StyledInputElement = styled("input")({
   width: "100%",
-  height: "50px",
+  height: "48px",
   fontSize: "14px",
-  fontWeight: "600",
+  color: THEME_COLORS.grey04,
   fontFamily: "Open Sans, sans-serif",
-  color: THEME_COLORS.grey03,
-  background: THEME_COLORS.light,
   border: "none",
-  borderRadius: "15px",
-  padding: "6px 10px",
+  borderRadius: "16px",
+  boxShadow: `0px 3px 6px ${THEME_COLORS.grey05}`,
+  padding: "14px 23px",
   "&:hover": {
     color: THEME_COLORS.purple,
   },

@@ -18,8 +18,16 @@ export const styles = {
     position: "relative",
   },
 
-  leftRow: { flex: 1, mt: 30, display: { xs: "none", md: "flex" } },
-  rightRow: { flex: 1, mb: 10, display: { xs: "none", md: "flex" } },
+  leftRow: {
+    flex: 1,
+    mt: "20%",
+    display: { xs: "none", md: "none", lg: "flex" },
+  },
+  rightRow: {
+    flex: 1,
+    mb: "20%",
+    display: { xs: "none", md: "none", lg: "flex" },
+  },
 
   logoContainer: {
     width: "100%",

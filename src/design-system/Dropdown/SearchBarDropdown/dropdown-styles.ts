@@ -1,4 +1,4 @@
-import { THEME_COLORS } from "../../theme/theme-constants";
+import { THEME_COLORS } from "../../../theme/theme-constants";
 
 export const dropdownStyles = {
   display: { xs: "none", md: "flex" },
@@ -14,7 +14,6 @@ export const dropdownStyles = {
   ".MuiSelect-icon": {
     color: THEME_COLORS.grey04,
   },
-
   " .MuiTypography-body1": {
     color: THEME_COLORS.grey04,
     "&:hover": {

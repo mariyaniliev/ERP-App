@@ -1,11 +1,13 @@
 export const THEME_FONT_FAMILY = "'Poppins', cursive";
 export const THEME_SHADOW = "0px 0px 8px var(--color-grey05)";
+export const THEME_INPUTS_SHADOW = "0px 4px 8px var(--color-grey05)";
 
 export const THEME_COLORS = {
   primaryGradient: "var(--color-primary-gradient)",
   aquaBlue: "var(--color-aquablue)",
   purple: "var(--color-purple)",
   purple02: "var(--color-purple02)",
+  purple03: "var(--color-purple03)",
   purplelight: "var(--color-purplelight)",
   grey01: "var(--color-grey01)",
   grey02: "var(--color-grey02)",

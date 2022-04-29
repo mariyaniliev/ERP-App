@@ -22,9 +22,13 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  MenuItem,
+  FormControl,
+  Select,
 } from "@mui/material";
 import SearchInput from "./SearchInput/SearchInput";
-import Dropdown from "./Dropdown/Dropdown";
+import SearchBarDropdown from "./Dropdown/SearchBarDropdown/Dropdown";
+import FormDropdown from "./Dropdown/FormDropdown/Dropdown";
 import GrowAnimation from "./GrowAnimation/GrowAnimation";
 export {
   Box,
@@ -33,7 +37,8 @@ export {
   CssBaseline,
   SearchInput,
   GrowAnimation,
-  Dropdown,
+  SearchBarDropdown,
+  FormDropdown,
   Pagination,
   Stack,
   PaginationItem,
@@ -53,4 +58,7 @@ export {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  MenuItem,
+  FormControl,
+  Select,
 };

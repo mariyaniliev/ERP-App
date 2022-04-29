@@ -2,6 +2,7 @@ import Axios from "axios";
 import { get } from "lodash";
 import { useAppSelector, RootState } from "../redux/store";
 import { userActions } from "../redux/reducer/user";
+
 export const useApiClient = () => {
   const accessToken = useAppSelector(
     (state: RootState) => state.user.user?.accessToken
@@ -23,6 +24,7 @@ export const useApiClient = () => {
   apiClient.interceptors.response.use(
     function (successRes) {
       const newAcessToken = get(successRes.headers, "x-access-token", "");
+
       if (newAcessToken) {
         setAccessToken(newAcessToken);
       }

@@ -1,4 +1,4 @@
-import { THEME_COLORS } from "../../theme/theme-constants";
+import { THEME_SHADOW } from "../../theme/theme-constants";
 
 export const styles = {
   contentCenter: {
@@ -14,7 +14,7 @@ export const styles = {
     alignItems: "center",
     justifyContent: "space-between",
     padding: "0px 50px",
-    boxShadow: `0px 0px 8px ${THEME_COLORS.grey05}`,
+    boxShadow: THEME_SHADOW,
     color: "gray",
   },
   sideBarButtonIcon: {

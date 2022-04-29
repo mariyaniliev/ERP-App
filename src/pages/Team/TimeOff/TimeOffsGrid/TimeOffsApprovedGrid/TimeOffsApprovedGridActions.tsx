@@ -9,7 +9,6 @@ import { GridRenderCellParams } from "@mui/x-data-grid";
 import { Box, Tooltip, IconButton, CircularProgress } from "@mui/material";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
-import CheckIcon from "@mui/icons-material/Check";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import DownloadIcon from "@mui/icons-material/Download";
 
@@ -20,8 +19,12 @@ import queryClient from "../../../../../utils/queryCLient";
 import api from "../../../../../services/api-endpoints";
 
 import ConfirmationDialog from "../../../../../components/ConfirmationDialog/ConfirmationDialog";
+import CommonFormModal from "../../../../../components/CommonFormModal/CommonFormModal";
+import TimeOffsCalendar from "../../TimeOffsCalendar/TimeOffsCalendar";
 
 import { timeOffsApprovedGridStyles } from "./timeOffsApprovedGrid-styles";
+import leftDraw from "../../../../../theme/assets/timeoff_draw_left.png";
+import rightDraw from "../../../../../theme/assets/timeoff_draw_right.png";
 
 type Props = {
   params: GridRenderCellParams;
@@ -31,11 +34,13 @@ type Props = {
 const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
   const { id, roles } = useAppSelector((state: RootState) => state.user.user);
   const { name, userId, approved } = params.row;
+
   // * If the user is not admin nor owner of the time off action buttons are not displayed
   if (!roles.includes("Admin") && id !== userId) {
     return null;
   }
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isApprovedModalOpen, setIsApprovedModalOpen] = useState(false);
   const [isApproved, setIsApproved] = useState(approved);
 
@@ -78,14 +83,6 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
     }
   );
 
-  const handleApproveModalOpen = (isOpen: boolean) => {
-    setIsApprovedModalOpen(isOpen);
-  };
-
-  const handleDeleteModalOpen = (isOpen: boolean) => {
-    setIsDeleteModalOpen(isOpen);
-  };
-
   const approveHandler = () => {
     approveTimeOffFn(rowId);
     setIsApprovedModalOpen(false);
@@ -101,11 +98,21 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
 
   return (
     <Box width="100%" display="flex" justifyContent="end">
+      <CommonFormModal
+        leftPic={leftDraw}
+        isOpen={isEditModalOpen}
+        rightPic={rightDraw}
+        closeModal={() => {
+          setIsEditModalOpen(false);
+        }}
+      >
+        <TimeOffsCalendar info={params.row} />
+      </CommonFormModal>
       <Box sx={timeOffsApprovedGridStyles.actions}>
         <ConfirmationDialog
           isOpen={isApprovedModalOpen}
           handleCancel={() => {
-            handleApproveModalOpen(false);
+            setIsApprovedModalOpen(false);
           }}
           handleConfirm={approveHandler}
           content={`Approve ${name}'s time off request ?`}
@@ -115,7 +122,7 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
         <ConfirmationDialog
           isOpen={isDeleteModalOpen}
           handleCancel={() => {
-            handleDeleteModalOpen(false);
+            setIsDeleteModalOpen(false);
           }}
           handleConfirm={deleteHandler}
           content={`Are you sure your want to delete ${name}'s time off`}
@@ -129,31 +136,18 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
             </IconButton>
           </Link>
         </Tooltip>
-        <Tooltip title="Approve" placement="bottom">
-          <IconButton
-            size="small"
-            onClick={() => {
-              handleApproveModalOpen(true);
-            }}
-            disabled={isApproved}
-          >
-            {isApproveLoading ? (
-              <CircularProgress color="primary" size={20} />
-            ) : (
-              <CheckIcon
-                fontSize="small"
-                color={isApproved ? "success" : "action"}
-              />
-            )}
-          </IconButton>
-        </Tooltip>
         <Tooltip title="Document" placement="bottom">
           <IconButton size="small">
             <ListAltIcon fontSize="small" />
           </IconButton>
         </Tooltip>
         <Tooltip title="Edit" placement="bottom">
-          <IconButton size="small">
+          <IconButton
+            size="small"
+            onClick={() => {
+              setIsEditModalOpen(true);
+            }}
+          >
             <ModeEditIcon fontSize="small" />
           </IconButton>
         </Tooltip>
@@ -162,7 +156,7 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
           <IconButton
             size="small"
             onClick={() => {
-              handleDeleteModalOpen(true);
+              setIsDeleteModalOpen(true);
             }}
           >
             {isDeleteLoading ? (
