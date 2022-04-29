@@ -1,4 +1,4 @@
-import { SelectChangeEvent } from "@mui/material";
+import { CSSObject, SelectChangeEvent } from "@mui/material";
 
 export interface InputProps {
   placeholder?: string;
@@ -31,15 +31,7 @@ export interface ModalProps {
   open: boolean;
   BackdropComponent: any;
   BackdropProps: BackdropProps;
-  modalStyles: {
-    width: string;
-    height: string;
-    position: string;
-    background: string;
-    boxShadow: string;
-    borderRadius: string;
-    overflow: string;
-  };
+  modalStyles: CSSObject;
 }
 
 export interface BackdropProps {

@@ -1,15 +1,8 @@
 import React from "react";
 import { GridColumns, GridRenderCellParams } from "@mui/x-data-grid";
-import { Typography, Avatar, Stack } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
-import { THEME_COLORS } from "../../../../../theme/theme-constants";
+import { Typography } from "@mui/material";
+import ProfileInfo from "../../../../../components/ProfileInfo/ProfileInfo";
 import { styles } from "../usersGrid-styles";
-
-const avatarStyles = {
-  width: "30px",
-  height: "30px",
-  background: THEME_COLORS.primaryGradient,
-} as const;
 
 const renderCell = (values: GridRenderCellParams) => {
   let color: string;
@@ -41,20 +34,13 @@ const renderCell = (values: GridRenderCellParams) => {
   );
 };
 
-const profileInfo = (name: string) => (
-  <Stack direction="row" spacing={1} alignItems="center" marginLeft="20px">
-    <Avatar component={PersonIcon} sx={avatarStyles} />
-    <Typography>{name}</Typography>
-  </Stack>
-);
-
 const renderUser = (values: GridRenderCellParams) => {
-  return profileInfo(values.value);
+  return <ProfileInfo name={values.value} />;
 };
 
 const renderLead = (values: GridRenderCellParams) => {
   if (values.row.lead) {
-    return profileInfo(values.row.lead?.leadInfo.name);
+    return <ProfileInfo name={values.row.lead?.leadInfo.name} />;
   }
 };
 
@@ -110,7 +96,7 @@ const columns: GridColumns = [
     renderCell,
     width: 150,
     sortable: true,
-    flex: 1.5,
+    flex: 1,
   },
 ];
 
