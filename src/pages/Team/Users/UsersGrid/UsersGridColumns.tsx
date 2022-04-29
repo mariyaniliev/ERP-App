@@ -27,6 +27,7 @@ const renderCell = (values: GridRenderCellParams) => {
     color = "primary.main";
     width = "100px";
   }
+
   return (
     <Typography
       sx={{
@@ -73,7 +74,7 @@ const columns: GridColumns = [
     headerName: "Lead",
     type: "string",
     width: 200,
-    renderCell,
+    // renderCell,
     sortable: true,
     flex: 1,
   },
