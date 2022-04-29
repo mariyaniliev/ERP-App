@@ -5,10 +5,14 @@ import { Box } from "@mui/material";
 import { InputProps } from "../types";
 
 const Input = (props: InputProps) => {
-  const { placeholder, onChange, width, disabled = false } = props;
+  const { placeholder, onChange, width, disabled = false, boxShadow } = props;
+
   const inputWidth = width ? `${width}px` : "auto";
+  const inputShadow = boxShadow ? `${boxShadow}` : "none";
   return (
-    <Box sx={{ width: inputWidth }}>
+    <Box
+      sx={{ width: inputWidth, borderRadius: "20px", boxShadow: inputShadow }}
+    >
       <InputUnstyled
         disabled={disabled}
         components={{ Input: StyledInputElement }}

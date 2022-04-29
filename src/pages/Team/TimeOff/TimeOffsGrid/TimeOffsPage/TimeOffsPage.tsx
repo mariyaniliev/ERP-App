@@ -8,7 +8,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 import { urlCreator } from "../../../../../utils/urlCreator";
 import { useApiClient } from "../../../../../utils/client";
-import { transformData } from "../../../../../utils/transformData";
+import { transformTimeOffData } from "../../../../../utils/transformData";
 import { searchActions } from "../../../../../redux/reducer/search";
 import queryClient from "../../../../../utils/queryCLient";
 
@@ -125,14 +125,14 @@ const TimeOffsPage = () => {
             <TimeOffsGrid
               gridType={"pending"}
               displayGrid={displayGrid}
-              timeoffs={transformData(pendingTimeOffs?.data.data)}
+              timeoffs={transformTimeOffData(pendingTimeOffs?.data.data)}
               isLoading={isPendingTimeOffsFetching}
               styles={timeOffsPendingGridStyles}
             />
 
             <TimeOffsGrid
               gridType={"approved"}
-              timeoffs={transformData(approvedTimeOffs?.data.data)}
+              timeoffs={transformTimeOffData(approvedTimeOffs?.data.data)}
               isLoading={isApprovedTimeOffsFetching}
               styles={timeOffsApprovedGridStyles}
               isPendingSectionEmpty={isPendingSectionEmpty}

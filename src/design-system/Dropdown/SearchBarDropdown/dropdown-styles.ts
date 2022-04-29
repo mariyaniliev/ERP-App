@@ -14,7 +14,6 @@ export const dropdownStyles = {
   ".MuiSelect-icon": {
     color: THEME_COLORS.grey04,
   },
-
   " .MuiTypography-body1": {
     color: THEME_COLORS.grey04,
     "&:hover": {

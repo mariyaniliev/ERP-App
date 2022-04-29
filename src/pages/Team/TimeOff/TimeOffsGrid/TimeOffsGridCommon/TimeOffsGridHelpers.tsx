@@ -95,6 +95,6 @@ export const columns: GridColumns = [
     field: "actions",
     width: 150,
     sortable: true,
-    flex: 1.5,
+    flex: 1,
   },
 ];
