@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useMutation } from "react-query";
 import { AxiosError, AxiosResponse } from "axios";
 
@@ -122,9 +123,11 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
           confirmButtonLabel={"Delete"}
         />
         <Tooltip title="Download" placement="bottom">
-          <IconButton size="small">
-            <DownloadIcon fontSize="small" />
-          </IconButton>
+          <Link to="/team/timeoffs/doc" state={params.row}>
+            <IconButton size="small">
+              <DownloadIcon fontSize="small" />
+            </IconButton>
+          </Link>
         </Tooltip>
         <Tooltip title="Approve" placement="bottom">
           <IconButton

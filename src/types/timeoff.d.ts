@@ -6,6 +6,7 @@ export type TimeOff = {
   startDate: Date | string;
   endDate: Date | string;
   createdAt: Date;
+  roles: AuthorityTypes[];
   updatedAt?: Date;
   approved: boolean;
   uploaded: boolean;
@@ -20,4 +21,11 @@ export enum TimeOffTypes {
   Sick,
   Motherhood,
   Paternity,
+}
+
+export enum AuthorityTypes {
+  Admin,
+  User,
+  Accounting,
+  HR,
 }

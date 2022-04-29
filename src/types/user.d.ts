@@ -22,6 +22,7 @@ export type User = {
   accessToken?: string;
   refreshToken?: string;
   timeOffRemainingDays: number;
+  position: string;
 };
 
 export enum AuthorityTypes {

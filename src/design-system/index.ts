@@ -1,5 +1,6 @@
 import {
   Box,
+  Container,
   Typography,
   CssBaseline,
   Pagination,
@@ -27,6 +28,7 @@ import Dropdown from "./Dropdown/Dropdown";
 import GrowAnimation from "./GrowAnimation/GrowAnimation";
 export {
   Box,
+  Container,
   Typography,
   CssBaseline,
   SearchInput,
