@@ -24,6 +24,7 @@
       "version": "detect"
     }
   },
+  "ignorePatterns": ["/public"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "no-duplicate-imports": "error",
@@ -40,10 +41,5 @@
     "no-else-return": "error",
     "dot-notation": "error",
     "no-param-reassign": "error"
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
   }
 }
