@@ -3,8 +3,8 @@ import { THEME_COLORS } from "../../theme/theme-constants";
 
 export const StyledInputElement = styled("input")({
   width: "100%",
-  height: "50px",
-  fontSize: "14px",
+  height: "32px",
+  fontSize: "12px",
   fontWeight: "600",
   fontFamily: "Open Sans, sans-serif",
   color: THEME_COLORS.grey03,

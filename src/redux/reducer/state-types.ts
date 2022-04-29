@@ -15,6 +15,16 @@ export type userState = {
   user: User | null;
 };
 
+export type SearchUsers = {
+  searchQuery: string;
+  lead: string;
+  timeOffs: string;
+  birthday: string;
+  startingDate: string;
+  rows: number;
+  pagination: string;
+};
+
 export type SearchState = {
   searchedQueries: {
     period: string;
