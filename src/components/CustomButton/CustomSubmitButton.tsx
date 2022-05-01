@@ -31,6 +31,7 @@ export default function CustomSubmitButton({
       ) : (
         label
       )}
+      {props.children}
     </Button>
   );
 }

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { DateRange, Range } from "react-date-range";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
 
 import { SelectChangeEvent } from "@mui/material";
 import {
@@ -7,20 +9,29 @@ import {
   Stack,
   Typography,
   FormDropdown,
+  Chip,
+  Tooltip,
 } from "../../../../design-system";
 import SubdirectoryArrowLeftIcon from "@mui/icons-material/SubdirectoryArrowLeft";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import CachedIcon from "@mui/icons-material/Cached";
 import BarChartIcon from "@mui/icons-material/BarChart";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import { calculateTimeOffDays } from "../../../../utils/timeOffsCalc";
 import { typeOptions } from "../SearchBar/dropdownOptions";
+import { useApiClient } from "../../../../utils/client";
+import { storage } from "../../../../../firebase";
+import queryClient from "../../../../utils/queryCLient";
+import api from "../../../../services/api-endpoints";
 
 import { CalendarProps } from "./timeOffsCalendar-types";
 
-import DisplayDate from "./DisplayDate";
 import CustomSubmitButton from "../../../../components/CustomButton/CustomSubmitButton";
 import Input from "../../../../design-system/Input/Input";
+import UploadProgressCircle from "./UploadProgressCircle";
+import DisplayDate from "./DisplayDate";
 
 import { THEME_COLORS } from "../../../../theme/theme-constants";
 import { styles } from "./timeOffsCalendarHolder-styles";
@@ -41,6 +52,8 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
     },
   };
 
+  const client = useApiClient();
+
   const initialType = info
     ? String(info.type).charAt(0).toUpperCase() + String(info.type).slice(1)
     : "";
@@ -49,6 +62,12 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
   const [timeOffDays, setTimeOffDays] = useState(0);
   const [selectedDays, setSelectedDays] = useState(initialRange);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [file, setFile] = useState(null);
+  const [documentUrl, setDocumentUrl] = useState<string | null>(
+    info?.sourceUrl
+  );
+
+  const [uploadProgress, setUploadProgress] = useState<null | number>(null);
   const [lastSelectedDate, setLastSelectedDate] = useState<number | null>(
     tomorrowDay.getDate()
   );
@@ -94,6 +113,39 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
     setTimeOffType(type);
   };
 
+  const handleUploadDocument = () => {
+    const fileName = `documents/${uuidv4()}-${file.name}`;
+
+    const docRef = ref(storage, fileName);
+    const uploadTask = uploadBytesResumable(docRef, file);
+    setUploadProgress(0);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setUploadProgress(progress);
+      },
+      (error) => {
+        setFile(null);
+        setUploadProgress(null);
+        setErrorMessage(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async (sourceUrl) => {
+          setFile(null);
+          setUploadProgress(null);
+          setDocumentUrl(sourceUrl);
+          await client.patch(api.timeOffs.updateTimeOff(info.id), {
+            uploaded: true,
+            sourceUrl,
+          });
+          queryClient.invalidateQueries(["timeoffs"]);
+        });
+      }
+    );
+  };
+
   const getDateInfo = (dateType: "endDate" | "startDate") => {
     return {
       month: String(selectedDays.selection[dateType]).slice(4, 7),
@@ -110,6 +162,9 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
   const buttonLabel = info
     ? `Update request for ${timeOffDays} days leave`
     : `Apply for ${timeOffDays} days leave`;
+
+  const isFileUploading =
+    typeof uploadProgress === "number" && uploadProgress < 100;
 
   return (
     <Box sx={styles.container}>
@@ -164,13 +219,71 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
             />
           </Stack>
         </Stack>
-        <Box sx={styles.submitButtonHolder}>
-          <CustomSubmitButton
-            label={buttonLabel}
-            styles={styles.submitButton}
-            disabled={timeOffDays === 0}
-          />
-        </Box>
+        <Stack gap={4}>
+          {documentUrl && info && (
+            <Chip
+              deleteIcon={
+                <Tooltip title="Update document" placement="bottom">
+                  <CachedIcon />
+                </Tooltip>
+              }
+              onDelete={() => {
+                setDocumentUrl(null);
+              }}
+              label="Download Document"
+              onClick={() => {
+                window.open(documentUrl);
+              }}
+            />
+          )}
+          {!documentUrl && (
+            <Box sx={styles.submitButtonsHolder}>
+              <CustomSubmitButton
+                label={buttonLabel}
+                styles={styles.submitButton}
+                flex={1}
+                disabled={
+                  timeOffDays === 0 || isFileUploading || info?.uploaded
+                }
+              />
+              {info?.approved && (
+                <label htmlFor="raised-button-file">
+                  <input
+                    style={{ display: "none" }}
+                    id="raised-button-file"
+                    type="file"
+                    onChange={(e) => {
+                      setFile(e.target.files[0]);
+                      e.target.value = "";
+                    }}
+                  />
+                  <CustomSubmitButton
+                    component="span"
+                    flex={1}
+                    label="Upload file"
+                    disabled={isFileUploading}
+                  />
+                </label>
+              )}
+            </Box>
+          )}
+          {isFileUploading && (
+            <UploadProgressCircle progress={uploadProgress} />
+          )}
+          {file && uploadProgress !== 100 && (
+            <Chip
+              disabled={isFileUploading}
+              color="primary"
+              label={`Submit ${file.name}`}
+              onClick={handleUploadDocument}
+              onDelete={() => {
+                setFile(null);
+              }}
+              deleteIcon={<DeleteIcon />}
+              variant="outlined"
+            />
+          )}
+        </Stack>
       </Stack>
     </Box>
   );

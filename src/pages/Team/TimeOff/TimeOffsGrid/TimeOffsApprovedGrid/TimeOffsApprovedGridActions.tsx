@@ -6,7 +6,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { useAppSelector, RootState } from "../../../../../redux/store";
 
 import { GridRenderCellParams } from "@mui/x-data-grid";
-import { Box, Tooltip, IconButton, CircularProgress } from "@mui/material";
+import { Box, Tooltip, IconButton } from "@mui/material";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 import ListAltIcon from "@mui/icons-material/ListAlt";
@@ -33,7 +33,7 @@ type Props = {
 
 const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
   const { id, roles } = useAppSelector((state: RootState) => state.user.user);
-  const { name, userId, approved } = params.row;
+  const { name, userId, uploaded } = params.row;
 
   // * If the user is not admin nor owner of the time off action buttons are not displayed
   if (!roles.includes("Admin") && id !== userId) {
@@ -41,8 +41,6 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
   }
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isApprovedModalOpen, setIsApprovedModalOpen] = useState(false);
-  const [isApproved, setIsApproved] = useState(approved);
 
   const client = useApiClient();
   // * Extracting delete handler from react query
@@ -56,40 +54,14 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["pendingTimeOffs"]);
+        queryClient.invalidateQueries(["timeoffs"]);
         setIsDeleteModalOpen(false);
       },
     }
   );
-  // * Extracting approve handler from react query
-  const {
-    mutate: approveTimeOffFn,
-    isLoading: isApproveLoading,
-    error: approveError,
-  } = useMutation<AxiosResponse<TimeOff>, AxiosError, string>(
-    async (id: string) => {
-      const res = await client.patch(api.timeOffs.updateTimeOff(id), {
-        approved: true,
-      });
 
-      return res;
-    },
-    {
-      onSuccess: () => {
-        setIsApproved(true);
-        queryClient.invalidateQueries(["timeoffs"]);
-        queryClient.invalidateQueries(["pendingTimeOffs"]);
-      },
-    }
-  );
-
-  const approveHandler = () => {
-    approveTimeOffFn(rowId);
-    setIsApprovedModalOpen(false);
-  };
   const deleteHandler = () => {
     deleteTimeOffFn(rowId);
-    setIsDeleteModalOpen(false);
   };
 
   if (rowId !== params.id) {
@@ -110,17 +82,8 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
       </CommonFormModal>
       <Box sx={timeOffsApprovedGridStyles.actions}>
         <ConfirmationDialog
-          isOpen={isApprovedModalOpen}
-          handleCancel={() => {
-            setIsApprovedModalOpen(false);
-          }}
-          handleConfirm={approveHandler}
-          content={`Approve ${name}'s time off request ?`}
-          error={approveError ? approveError.message : ""}
-          confirmButtonLabel={"Approve"}
-        />
-        <ConfirmationDialog
           isOpen={isDeleteModalOpen}
+          isLoading={isDeleteLoading}
           handleCancel={() => {
             setIsDeleteModalOpen(false);
           }}
@@ -136,11 +99,11 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
             </IconButton>
           </Link>
         </Tooltip>
-        <Tooltip title="Document" placement="bottom">
-          <IconButton size="small">
-            <ListAltIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
+        {uploaded && (
+          <Tooltip title="Uploaded" placement="bottom">
+            <ListAltIcon sx={{ mx: "5px" }} fontSize="small" color="primary" />
+          </Tooltip>
+        )}
         <Tooltip title="Edit" placement="bottom">
           <IconButton
             size="small"
@@ -159,11 +122,7 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
               setIsDeleteModalOpen(true);
             }}
           >
-            {isDeleteLoading ? (
-              <CircularProgress size={20} />
-            ) : (
-              <DeleteSweepIcon fontSize="small" />
-            )}
+            <DeleteSweepIcon fontSize="small" />
           </IconButton>
         </Tooltip>
       </Box>

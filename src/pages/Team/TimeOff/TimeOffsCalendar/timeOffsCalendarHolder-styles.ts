@@ -12,10 +12,11 @@ export const styles = {
     alignItems: "center",
     ml: 3,
   },
-  submitButtonHolder: {
+  submitButtonsHolder: {
     justifyContent: "center",
     display: "flex",
     mt: 4,
+    gap: 2,
   },
   submitButton: {
     width: "auto",

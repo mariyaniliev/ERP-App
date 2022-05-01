@@ -13,6 +13,7 @@ export type TimeOff = {
   type: TimeOffTypes;
   user: User;
   name?: string;
+  sourceUrl: string | null;
 };
 
 export enum TimeOffTypes {

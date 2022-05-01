@@ -25,6 +25,8 @@ import {
   MenuItem,
   FormControl,
   Select,
+  Chip,
+  Tooltip,
 } from "@mui/material";
 import SearchInput from "./SearchInput/SearchInput";
 import SearchBarDropdown from "./Dropdown/SearchBarDropdown/Dropdown";
@@ -61,4 +63,6 @@ export {
   MenuItem,
   FormControl,
   Select,
+  Chip,
+  Tooltip,
 };
