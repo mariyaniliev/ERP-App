@@ -50,6 +50,7 @@ const ConfirmationDialog = ({
         color="primary"
         label={confirmButtonLabel}
         loading={isLoading}
+        loadingColor="primary"
       />
       <CustomSubmitButton
         flex={1}
@@ -57,6 +58,7 @@ const ConfirmationDialog = ({
         onClick={handleCancel}
         color="primary"
         label={cancelButtonLabel}
+        disabled={isLoading}
       />
     </DialogActions>
   </Dialog>

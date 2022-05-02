@@ -34,6 +34,7 @@ const TimeOffsPage = () => {
   const { searchedQueries } = useAppSelector(
     (state: RootState) => state.search
   );
+  const controller = new AbortController();
 
   const { period, type, searchedName, page, limit } = searchedQueries;
 
@@ -48,7 +49,7 @@ const TimeOffsPage = () => {
       type,
       searchedName
     );
-    const res = await client.get(url);
+    const res = await client.get(url, { signal: controller.signal });
     if (status === "approved") {
       setQueries({
         ...searchedQueries,
@@ -80,6 +81,7 @@ const TimeOffsPage = () => {
   useEffect(() => {
     return () => {
       setQueries(searchedQueries);
+      controller.abort();
     };
   }, []);
 

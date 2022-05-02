@@ -13,12 +13,14 @@ const Dropdown = (props: DropdownProps) => {
     width = "120",
     onChange,
     noDefault = false,
+    isDisabled = false,
   } = props;
 
   return (
     <Box sx={{ ...dropdownStyles, width: `${width}px` }}>
       <FormControl fullWidth>
         <Select
+          disabled={isDisabled}
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           onChange={onChange}

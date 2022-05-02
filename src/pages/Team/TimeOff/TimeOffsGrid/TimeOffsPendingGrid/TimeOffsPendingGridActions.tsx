@@ -25,10 +25,10 @@ type Props = {
 };
 
 const TimeOffsPendingGridActions: React.FC<Props> = ({ params, rowId }) => {
-  const { id, roles } = useAppSelector((state: RootState) => state.user.user);
-  const { name, userId } = params.row;
+  const { roles } = useAppSelector((state: RootState) => state.user.user);
+  const { name } = params.row;
   // * If the user is not admin nor owner of the time off action buttons are not displayed
-  if (!roles.includes("Admin") && id !== userId) {
+  if (!roles.includes("Admin")) {
     return null;
   }
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);

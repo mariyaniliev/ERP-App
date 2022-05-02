@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import WebViewer from "@pdftron/webviewer";
 
-import { calculateTimeOffDays } from "../../../../utils/timeOffsCalc";
+import { useApiClient } from "../../../../utils/client";
 
 import { TimeOff } from "../../../../types/timeoff";
 
@@ -18,6 +18,7 @@ const transformDate = (date: string) => {
 const TimeOffRequestDoc = () => {
   const location = useLocation();
   const viewer = useRef(null);
+  const client = useApiClient();
 
   const timeOffData = location.state as TimeOff | null;
 
@@ -48,19 +49,21 @@ const TimeOffRequestDoc = () => {
         initialDoc: "/files/Profile.docx",
       },
       viewer.current
-    ).then((instance) => {
+    ).then(async (instance) => {
       const { documentViewer } = instance.Core;
 
       documentViewer.addEventListener("documentLoaded", async () => {
         await documentViewer.getDocument().documentCompletePromise();
         documentViewer.updateView();
-        const daysCount = await calculateTimeOffDays(
-          timeOffData.startDate as Date,
-          timeOffData.endDate as Date
-        );
-        await documentViewer
-          .getDocument()
-          .applyTemplateValues({ ...jsonData, daysCount: String(daysCount) });
+        const { data } = await client.post("/timeoffs/calculate", {
+          startDate: timeOffData.startDate,
+          endDate: timeOffData.endDate,
+        });
+
+        await documentViewer.getDocument().applyTemplateValues({
+          ...jsonData,
+          daysCount: String(data.count),
+        });
       });
     });
   }, []);

@@ -20,7 +20,7 @@ import TimeOffsPendingGridActions from "../TimeOffsPendingGrid/TimeOffsPendingGr
 
 import { timeOffsPendingGridStyles } from "../../TimeOffsGrid/TimeOffsPendingGrid/timeOffsPendingGrid-styles";
 
-const TimeOffsApprovedGrid: React.FC<TimeOffsGridProps> = ({
+const TimeOffsGrid: React.FC<TimeOffsGridProps> = ({
   timeoffs = [],
   isLoading,
   styles,
@@ -102,4 +102,4 @@ const TimeOffsApprovedGrid: React.FC<TimeOffsGridProps> = ({
     />
   );
 };
-export default TimeOffsApprovedGrid;
+export default TimeOffsGrid;

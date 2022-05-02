@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { DateRange, Range } from "react-date-range";
-import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import {
+  ref,
+  getDownloadURL,
+  uploadBytesResumable,
+  deleteObject,
+} from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 
 import { SelectChangeEvent } from "@mui/material";
@@ -19,7 +24,6 @@ import CachedIcon from "@mui/icons-material/Cached";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { calculateTimeOffDays } from "../../../../utils/timeOffsCalc";
 import { typeOptions } from "../SearchBar/dropdownOptions";
 import { useApiClient } from "../../../../utils/client";
 import { storage } from "../../../../../firebase";
@@ -54,6 +58,8 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
 
   const client = useApiClient();
 
+  const controller = new AbortController();
+
   const initialType = info
     ? String(info.type).charAt(0).toUpperCase() + String(info.type).slice(1)
     : "";
@@ -61,12 +67,12 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
   const [timeOffType, setTimeOffType] = useState(initialType);
   const [timeOffDays, setTimeOffDays] = useState(0);
   const [selectedDays, setSelectedDays] = useState(initialRange);
+  const [isCalculateDayLoading, setIsCalculateDaysLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [file, setFile] = useState(null);
   const [documentUrl, setDocumentUrl] = useState<string | null>(
     info?.sourceUrl
   );
-
   const [uploadProgress, setUploadProgress] = useState<null | number>(null);
   const [lastSelectedDate, setLastSelectedDate] = useState<number | null>(
     tomorrowDay.getDate()
@@ -75,17 +81,34 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
   const lastDate = selectedDays.selection.endDate.getDate();
 
   useEffect(() => {
-    const calculateDays = () => {
-      const { startDate, endDate } = selectedDays.selection;
-
-      const today = new Date();
-
-      if (startDate < today) {
+    const calculateDays = async () => {
+      if (info?.uploaded) {
         return;
       }
-      calculateTimeOffDays(startDate, endDate).then((res) =>
-        setTimeOffDays(res)
-      );
+
+      const { startDate, endDate } = selectedDays.selection;
+      setIsCalculateDaysLoading(true);
+
+      const from = `${startDate.getFullYear()}-${
+        startDate.getMonth() + 1
+      }-${startDate.getDate()}`;
+      const to = `${endDate.getFullYear()}-${
+        endDate.getMonth() + 1
+      }-${endDate.getDate()}`;
+
+      client
+        .post(
+          "/timeoffs/calculate",
+          {
+            startDate: from,
+            endDate: to,
+          },
+          { signal: controller.signal }
+        )
+        .then((res) => {
+          setTimeOffDays(res.data.count);
+          setIsCalculateDaysLoading(false);
+        });
     };
 
     calculateDays();
@@ -95,11 +118,13 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
       return;
     }
 
-    if (lastSelectedDate === null) {
-      return;
+    if (lastSelectedDate !== null) {
+      setLastSelectedDate(lastDate);
     }
 
-    setLastSelectedDate(lastDate);
+    return () => {
+      controller.abort();
+    };
   }, [selectedDays]);
 
   const handleSelectDays = (newRange: Range) => {
@@ -113,12 +138,22 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
     setTimeOffType(type);
   };
 
-  const handleUploadDocument = () => {
-    const fileName = `documents/${uuidv4()}-${file.name}`;
+  const handleUploadDocument = async () => {
+    if (info?.sourceUrl) {
+      const docRef = ref(storage, info.fileName);
+      try {
+        await deleteObject(docRef);
+      } catch (e) {
+        console.log(e);
+      }
+    }
 
+    const fileName = `documents/${uuidv4()}-${file.name}`;
     const docRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(docRef, file);
+
     setUploadProgress(0);
+
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -139,6 +174,7 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
           await client.patch(api.timeOffs.updateTimeOff(info.id), {
             uploaded: true,
             sourceUrl,
+            fileName,
           });
           queryClient.invalidateQueries(["timeoffs"]);
         });
@@ -166,6 +202,12 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
   const isFileUploading =
     typeof uploadProgress === "number" && uploadProgress < 100;
 
+  const isSubmitButtonDisabled =
+    timeOffDays === 0 ||
+    isFileUploading ||
+    info?.uploaded ||
+    isCalculateDayLoading;
+
   return (
     <Box sx={styles.container}>
       <Stack gap={4}>
@@ -189,6 +231,7 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
                 list={typeOptions}
                 noDefault={true}
                 onChange={handleChangeType}
+                isDisabled={info?.approved}
               />
             </Stack>
           </Stack>
@@ -220,7 +263,7 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
           </Stack>
         </Stack>
         <Stack gap={4}>
-          {documentUrl && info && (
+          {documentUrl ? (
             <Chip
               deleteIcon={
                 <Tooltip title="Update document" placement="bottom">
@@ -230,22 +273,22 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
               onDelete={() => {
                 setDocumentUrl(null);
               }}
-              label="Download Document"
+              label="Document"
               onClick={() => {
                 window.open(documentUrl);
               }}
             />
-          )}
-          {!documentUrl && (
+          ) : (
             <Box sx={styles.submitButtonsHolder}>
-              <CustomSubmitButton
-                label={buttonLabel}
-                styles={styles.submitButton}
-                flex={1}
-                disabled={
-                  timeOffDays === 0 || isFileUploading || info?.uploaded
-                }
-              />
+              {!info?.approved && (
+                <CustomSubmitButton
+                  label={buttonLabel}
+                  styles={styles.submitButton}
+                  flex={1}
+                  loading={isCalculateDayLoading}
+                  disabled={isSubmitButtonDisabled}
+                />
+              )}
               {info?.approved && (
                 <label htmlFor="raised-button-file">
                   <input
@@ -259,7 +302,6 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
                   />
                   <CustomSubmitButton
                     component="span"
-                    flex={1}
                     label="Upload file"
                     disabled={isFileUploading}
                   />
@@ -289,4 +331,4 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
   );
 };
 
-export default TimeOffsCalendar;
+export default React.memo(TimeOffsCalendar);

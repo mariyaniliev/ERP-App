@@ -14,6 +14,7 @@ export type TimeOff = {
   user: User;
   name?: string;
   sourceUrl: string | null;
+  fileName?: string;
 };
 
 export enum TimeOffTypes {
