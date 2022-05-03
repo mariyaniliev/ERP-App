@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "react-query";
 import { AxiosError, AxiosResponse } from "axios";
@@ -54,15 +54,31 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["timeoffs"]);
         setIsDeleteModalOpen(false);
+        queryClient.invalidateQueries(["timeoffs"]);
       },
     }
   );
 
-  const deleteHandler = () => {
+  const handleEditModalOpen = useCallback(() => {
+    setIsEditModalOpen(true);
+  }, []);
+
+  const handleEditModalCLose = useCallback(() => {
+    setIsEditModalOpen(false);
+  }, []);
+
+  const handleDeleteModalOpen = useCallback(() => {
+    setIsDeleteModalOpen(true);
+  }, []);
+
+  const handleDeleteModalClose = useCallback(() => {
+    setIsDeleteModalOpen(false);
+  }, []);
+
+  const deleteHandler = useCallback(() => {
     deleteTimeOffFn(rowId);
-  };
+  }, []);
 
   if (rowId !== params.id) {
     return null;
@@ -74,9 +90,7 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
         leftPic={leftDraw}
         isOpen={isEditModalOpen}
         rightPic={rightDraw}
-        closeModal={() => {
-          setIsEditModalOpen(false);
-        }}
+        closeModal={handleEditModalCLose}
       >
         <TimeOffsCalendar info={params.row} />
       </CommonFormModal>
@@ -84,9 +98,7 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
         <ConfirmationDialog
           isOpen={isDeleteModalOpen}
           isLoading={isDeleteLoading}
-          handleCancel={() => {
-            setIsDeleteModalOpen(false);
-          }}
+          handleCancel={handleDeleteModalClose}
           handleConfirm={deleteHandler}
           content={`Are you sure your want to delete ${name}'s time off`}
           error={deleteError ? "Something went wrong" : ""}
@@ -105,23 +117,13 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
           </Tooltip>
         )}
         <Tooltip title="Edit" placement="bottom">
-          <IconButton
-            size="small"
-            onClick={() => {
-              setIsEditModalOpen(true);
-            }}
-          >
+          <IconButton size="small" onClick={handleEditModalOpen}>
             <ModeEditIcon fontSize="small" />
           </IconButton>
         </Tooltip>
 
         <Tooltip title="Delete" placement="bottom">
-          <IconButton
-            size="small"
-            onClick={() => {
-              setIsDeleteModalOpen(true);
-            }}
-          >
+          <IconButton size="small" onClick={handleDeleteModalOpen}>
             <DeleteSweepIcon fontSize="small" />
           </IconButton>
         </Tooltip>

@@ -6,8 +6,8 @@ export type TimeOff = {
   startDate: Date | string;
   endDate: Date | string;
   createdAt: Date;
-  roles: AuthorityTypes[];
   updatedAt?: Date;
+  roles: AuthorityTypes[];
   approved: boolean;
   uploaded: boolean;
   type: TimeOffTypes;

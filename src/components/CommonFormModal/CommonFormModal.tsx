@@ -35,4 +35,4 @@ const CommonFormModal: React.FC<CommonFormModalProps> = ({
     document.getElementById("portal")
   );
 };
-export default CommonFormModal;
+export default React.memo(CommonFormModal);

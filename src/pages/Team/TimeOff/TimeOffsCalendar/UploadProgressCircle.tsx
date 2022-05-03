@@ -1,35 +1,17 @@
 import * as React from "react";
-import CircularProgress, {
-  CircularProgressProps,
-} from "@mui/material/CircularProgress";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+
+import { Typography, Box, CircularProgress } from "../../../../design-system";
+import { CircularProgressProps } from "@mui/material/CircularProgress";
+
+import { styles } from "./timeOffsCalendarHolder-styles";
 
 const CircularProgressWithLabel = (
   props: CircularProgressProps & { value: number }
 ) => {
   return (
-    <Box
-      sx={{
-        position: "relative",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+    <Box sx={styles.pcContainer}>
       <CircularProgress variant="determinate" {...props} />
-      <Box
-        sx={{
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0,
-          position: "absolute",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <Box sx={styles.pcInner}>
         <Typography
           variant="caption"
           component="div"

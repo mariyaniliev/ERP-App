@@ -35,4 +35,20 @@ export const styles = {
     justifyContent: "space-between",
     alignItems: "center",
   },
+  pcContainer: {
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  pcInner: {
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    position: "absolute",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 } as const;

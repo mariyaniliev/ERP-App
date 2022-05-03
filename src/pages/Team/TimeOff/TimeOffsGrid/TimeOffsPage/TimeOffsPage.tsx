@@ -1,4 +1,10 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, {
+  Suspense,
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+} from "react";
 import { useQuery } from "react-query";
 
 import { useAppSelector, RootState } from "../../../../../redux/store";
@@ -34,11 +40,12 @@ const TimeOffsPage = () => {
   const { searchedQueries } = useAppSelector(
     (state: RootState) => state.search
   );
+
+  const client = useApiClient();
+
   const controller = new AbortController();
 
   const { period, type, searchedName, page, limit } = searchedQueries;
-
-  const client = useApiClient();
 
   const fetchTimeOffs = async (actualPage: number, status: string) => {
     const url = urlCreator(
@@ -88,13 +95,22 @@ const TimeOffsPage = () => {
   const handleOpen = () => {
     setIsModalOpen(true);
   };
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsModalOpen(false);
-  };
+  }, []);
 
   const isPendingSectionEmpty = pendingTimeOffs?.data.data.length === 0;
 
   const displayGrid = isPendingSectionEmpty ? "none" : "";
+
+  const transformedPendingData = useMemo(
+    () => transformTimeOffData(pendingTimeOffs?.data.data),
+    [pendingTimeOffs]
+  );
+  const transformedApprovedData = useMemo(
+    () => transformTimeOffData(approvedTimeOffs?.data.data),
+    [approvedTimeOffs]
+  );
 
   return (
     <Box sx={styles.container}>
@@ -127,14 +143,14 @@ const TimeOffsPage = () => {
             <TimeOffsGrid
               gridType={"pending"}
               displayGrid={displayGrid}
-              timeoffs={transformTimeOffData(pendingTimeOffs?.data.data)}
+              timeoffs={transformedPendingData}
               isLoading={isPendingTimeOffsFetching}
               styles={timeOffsPendingGridStyles}
             />
 
             <TimeOffsGrid
               gridType={"approved"}
-              timeoffs={transformTimeOffData(approvedTimeOffs?.data.data)}
+              timeoffs={transformedApprovedData}
               isLoading={isApprovedTimeOffsFetching}
               styles={timeOffsApprovedGridStyles}
               isPendingSectionEmpty={isPendingSectionEmpty}

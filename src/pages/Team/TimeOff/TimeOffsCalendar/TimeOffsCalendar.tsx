@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { DateRange, Range } from "react-date-range";
 import {
   ref,
@@ -98,7 +98,7 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
 
       client
         .post(
-          "/timeoffs/calculate",
+          api.timeOffs.calculateDays,
           {
             startDate: from,
             endDate: to,
@@ -131,12 +131,13 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
     setSelectedDays({ ...selectedDays, ...newRange });
   };
 
-  const handleChangeType = async (
-    event: SelectChangeEvent<HTMLInputElement>
-  ) => {
-    const type = event.target.value as string;
-    setTimeOffType(type);
-  };
+  const handleChangeType = useCallback(
+    (event: SelectChangeEvent<HTMLInputElement>) => {
+      const type = event.target.value as string;
+      setTimeOffType(type);
+    },
+    []
+  );
 
   const handleUploadDocument = async () => {
     if (info?.sourceUrl) {
@@ -218,7 +219,7 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
                 <PersonOutlineOutlinedIcon color="primary" />
                 <Typography variant="subtitle1">Full Name</Typography>
               </Stack>
-              <Input placeholder="Ivan Kraev" disabled={true} />
+              <Input placeholder={info?.user.name} disabled={true} />
             </Stack>
             <Stack sx={{ flex: 1 }} gap={1}>
               <Stack direction="row" sx={styles.typeSelect} gap={1}>
@@ -331,4 +332,4 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
   );
 };
 
-export default React.memo(TimeOffsCalendar);
+export default TimeOffsCalendar;
