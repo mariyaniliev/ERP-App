@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { DateRange, Range } from "react-date-range";
+import { useMutation } from "react-query";
+import { AxiosError, AxiosResponse } from "axios";
 import {
   ref,
   getDownloadURL,
@@ -7,6 +9,8 @@ import {
   deleteObject,
 } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
+
+import { useAppSelector, RootState } from "../../../../redux/store";
 
 import { SelectChangeEvent } from "@mui/material";
 import {
@@ -31,6 +35,7 @@ import queryClient from "../../../../utils/queryCLient";
 import api from "../../../../services/api-endpoints";
 
 import { CalendarProps } from "./timeOffsCalendar-types";
+import { TimeOff, TimeOffTypes, TimeOffInput } from "../../../../types/timeoff";
 
 import CustomSubmitButton from "../../../../components/CustomButton/CustomSubmitButton";
 import Input from "../../../../design-system/Input/Input";
@@ -47,7 +52,7 @@ const LAST_DAY_OF_MONTH_MIN = 28;
 
 const tomorrowDay = new Date(new Date().setDate(new Date().getDate() + 1));
 
-const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
+const TimeOffsCalendar: React.FC<CalendarProps> = ({ info, handleClose }) => {
   const initialRange = {
     selection: {
       startDate: info ? new Date(info.startDate) : tomorrowDay,
@@ -59,6 +64,10 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
   const client = useApiClient();
 
   const controller = new AbortController();
+
+  const { name: userName, id: userId } = useAppSelector(
+    (state: RootState) => state.user.user
+  );
 
   const initialType = info
     ? String(info.type).charAt(0).toUpperCase() + String(info.type).slice(1)
@@ -80,21 +89,21 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
 
   const lastDate = selectedDays.selection.endDate.getDate();
 
+  const { startDate, endDate } = selectedDays.selection;
+  const from = `${startDate.getFullYear()}/${
+    startDate.getMonth() + 1
+  }/${startDate.getDate()}`;
+  const to = `${endDate.getFullYear()}-${
+    endDate.getMonth() + 1
+  }/${endDate.getDate()}`;
+
   useEffect(() => {
     const calculateDays = async () => {
       if (info?.uploaded) {
         return;
       }
 
-      const { startDate, endDate } = selectedDays.selection;
       setIsCalculateDaysLoading(true);
-
-      const from = `${startDate.getFullYear()}-${
-        startDate.getMonth() + 1
-      }-${startDate.getDate()}`;
-      const to = `${endDate.getFullYear()}-${
-        endDate.getMonth() + 1
-      }-${endDate.getDate()}`;
 
       client
         .post(
@@ -126,6 +135,39 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
       controller.abort();
     };
   }, [selectedDays]);
+
+  const { mutate, isLoading: isSubmitLoading } = useMutation<
+    AxiosResponse<TimeOff>,
+    AxiosError,
+    TimeOffInput
+  >(
+    async (data) => {
+      const res = await client.post(api.timeOffs.postTimeOff(userId), data);
+      return res;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["pendingTimeOffs"]);
+        handleClose();
+      },
+      onError: (err: AxiosError) => {
+        setErrorMessage(err.response.data.message);
+      },
+    }
+  );
+
+  const handleSubmitTimeOff = () => {
+    if (timeOffType === "") {
+      setErrorMessage("Type is required.");
+      return;
+    }
+    // * We have to set the date with one day ahead becouse for some reason the request is sent with one day behind
+    mutate({
+      startDate: new Date(new Date(from).setDate(new Date(from).getDate() + 1)),
+      endDate: new Date(new Date(to).setDate(new Date(to).getDate() + 1)),
+      type: TimeOffTypes[timeOffType],
+    });
+  };
 
   const handleSelectDays = (newRange: Range) => {
     setSelectedDays({ ...selectedDays, ...newRange });
@@ -207,7 +249,8 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
     timeOffDays === 0 ||
     isFileUploading ||
     info?.uploaded ||
-    isCalculateDayLoading;
+    isCalculateDayLoading ||
+    isSubmitLoading;
 
   return (
     <Box sx={styles.container}>
@@ -219,7 +262,10 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
                 <PersonOutlineOutlinedIcon color="primary" />
                 <Typography variant="subtitle1">Full Name</Typography>
               </Stack>
-              <Input placeholder={info?.user.name} disabled={true} />
+              <Input
+                placeholder={info?.user.name || userName}
+                disabled={true}
+              />
             </Stack>
             <Stack sx={{ flex: 1 }} gap={1}>
               <Stack direction="row" sx={styles.typeSelect} gap={1}>
@@ -263,6 +309,11 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
             />
           </Stack>
         </Stack>
+        {errorMessage && (
+          <Typography color="error" sx={{ textAlign: "center" }}>
+            {errorMessage}
+          </Typography>
+        )}
         <Stack gap={4}>
           {documentUrl ? (
             <Chip
@@ -286,8 +337,9 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info }) => {
                   label={buttonLabel}
                   styles={styles.submitButton}
                   flex={1}
-                  loading={isCalculateDayLoading}
+                  loading={isCalculateDayLoading || isSubmitLoading}
                   disabled={isSubmitButtonDisabled}
+                  onClick={handleSubmitTimeOff}
                 />
               )}
               {info?.approved && (

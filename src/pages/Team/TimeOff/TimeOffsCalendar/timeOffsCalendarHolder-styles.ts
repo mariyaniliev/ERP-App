@@ -15,7 +15,6 @@ export const styles = {
   submitButtonsHolder: {
     justifyContent: "center",
     display: "flex",
-    mt: 4,
     gap: 2,
   },
   submitButton: {

@@ -17,10 +17,16 @@ export type TimeOff = {
   fileName?: string;
 };
 
+export type TimeOffInput = {
+  startDate: Date;
+  endDate: Date;
+  type: TimeOffTypes;
+};
+
 export enum TimeOffTypes {
-  paid,
-  unpaid,
-  sick,
+  Paid = "paid",
+  Unpaid = "unpaid",
+  "Sick Leave" = "sick",
 }
 
 export enum AuthorityTypes {

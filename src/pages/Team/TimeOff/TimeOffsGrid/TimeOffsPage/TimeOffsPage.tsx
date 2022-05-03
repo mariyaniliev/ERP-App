@@ -120,7 +120,7 @@ const TimeOffsPage = () => {
         isOpen={isModalOpen}
         closeModal={handleClose}
       >
-        <TimeOffsCalendar />
+        <TimeOffsCalendar handleClose={handleClose} />
       </CommonFormModal>
 
       <Box sx={styles.innerContainer}>

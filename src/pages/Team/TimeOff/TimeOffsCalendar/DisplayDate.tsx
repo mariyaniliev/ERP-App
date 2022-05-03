@@ -32,4 +32,4 @@ const displayDate: React.FC<DisplayDateProps> = ({
   );
 };
 
-export default React.memo(displayDate);
+export default displayDate;
