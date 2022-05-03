@@ -26,7 +26,7 @@ export type TimeOffInput = {
 export enum TimeOffTypes {
   Paid = "paid",
   Unpaid = "unpaid",
-  "Sick Leave" = "sick",
+  "Sick leave" = "sick",
 }
 
 export enum AuthorityTypes {

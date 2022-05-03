@@ -136,6 +136,10 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info, handleClose }) => {
     };
   }, [selectedDays]);
 
+  useEffect(() => {
+    setErrorMessage(null);
+  }, [selectedDays, timeOffType]);
+
   const { mutate, isLoading: isSubmitLoading } = useMutation<
     AxiosResponse<TimeOff>,
     AxiosError,
@@ -161,6 +165,7 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info, handleClose }) => {
       setErrorMessage("Type is required.");
       return;
     }
+
     // * We have to set the date with one day ahead becouse for some reason the request is sent with one day behind
     mutate({
       startDate: new Date(new Date(from).setDate(new Date(from).getDate() + 1)),
@@ -204,10 +209,10 @@ const TimeOffsCalendar: React.FC<CalendarProps> = ({ info, handleClose }) => {
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setUploadProgress(progress);
       },
-      (error) => {
+      () => {
         setFile(null);
         setUploadProgress(null);
-        setErrorMessage(error);
+        setErrorMessage("Something went wrong");
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then(async (sourceUrl) => {
