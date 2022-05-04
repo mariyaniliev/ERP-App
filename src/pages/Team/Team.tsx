@@ -4,6 +4,7 @@ import { useNavigate, Outlet } from "react-router-dom";
 import { Box } from "../../design-system";
 import { switchSubpageActions } from "../../redux/reducer/subpage";
 import { TeamSectionSubPages } from "../../services/navigation-items-constants";
+import { BreadcrumbsMenu } from "../../design-system/BreadcrumbsMenu/BreadcrumbsMenu";
 import { StyledTabs, StyledTabsList, StyledTab } from "./team-styles";
 
 const Team = () => {
@@ -22,6 +23,7 @@ const Team = () => {
   return (
     <Box sx={{ width: "100%" }}>
       <StyledTabs value={subpage} onChange={handleChange}>
+        <BreadcrumbsMenu />
         <StyledTabsList>
           {TeamSectionSubPages.map((subpage) => (
             <StyledTab key={subpage.name}>
