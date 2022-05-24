@@ -1,5 +1,6 @@
 import {
   Box,
+  Container,
   Typography,
   CssBaseline,
   Pagination,
@@ -24,6 +25,8 @@ import {
   MenuItem,
   FormControl,
   Select,
+  Chip,
+  Tooltip,
 } from "@mui/material";
 import SearchInput from "./SearchInput/SearchInput";
 import SearchBarDropdown from "./Dropdown/SearchBarDropdown/Dropdown";
@@ -31,6 +34,7 @@ import FormDropdown from "./Dropdown/FormDropdown/Dropdown";
 import GrowAnimation from "./GrowAnimation/GrowAnimation";
 export {
   Box,
+  Container,
   Typography,
   CssBaseline,
   SearchInput,
@@ -59,4 +63,6 @@ export {
   MenuItem,
   FormControl,
   Select,
+  Chip,
+  Tooltip,
 };

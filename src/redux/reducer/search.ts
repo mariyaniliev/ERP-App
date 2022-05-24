@@ -8,7 +8,7 @@ const initialState = {
     period: "Period",
     type: "Type",
     searchedName: "",
-    limit: 7,
+    limit: 5,
     page: 1,
     totalPages: 0,
   },

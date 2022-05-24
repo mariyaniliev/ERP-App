@@ -12,4 +12,5 @@ export type DisplayDateProps = {
 
 export type CalendarProps = {
   info?: TimeOff;
+  handleClose?: () => void;
 };

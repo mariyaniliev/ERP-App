@@ -12,10 +12,10 @@ export const styles = {
     alignItems: "center",
     ml: 3,
   },
-  submitButtonHolder: {
+  submitButtonsHolder: {
     justifyContent: "center",
     display: "flex",
-    mt: 4,
+    gap: 2,
   },
   submitButton: {
     width: "auto",
@@ -33,5 +33,21 @@ export const styles = {
     borderRadius: "16px",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  pcContainer: {
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  pcInner: {
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    position: "absolute",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 } as const;

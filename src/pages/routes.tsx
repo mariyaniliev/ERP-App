@@ -6,7 +6,7 @@ import UsersSubPage from "./Team/Users/Users";
 import TimeOffsSubPage from "./Team/TimeOff/TimeOffsGrid/TimeOffsPage/TimeOffsPage";
 import PersonalInfoSubPage from "./Team/PersonalInfo/PersonalInfo";
 import Login from "./Login/LoginPage";
-
+import TimeOffRequestDoc from "./Team/TimeOff/Document/TimeOffRequestDoc";
 export const routes: RouteObject[] = [
   {
     path: "/",
@@ -33,5 +33,9 @@ export const routes: RouteObject[] = [
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/team/timeoffs/doc",
+    element: <TimeOffRequestDoc />,
   },
 ];

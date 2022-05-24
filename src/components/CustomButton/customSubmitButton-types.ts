@@ -6,4 +6,5 @@ export type SubmitButtonProps = {
   loadingColor?: CircularProgressProps["color"];
   flex?: number;
   styles?: CSSObject;
+  component?: string;
 } & ButtonProps;

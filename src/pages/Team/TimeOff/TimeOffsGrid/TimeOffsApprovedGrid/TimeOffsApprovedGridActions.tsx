@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { useMutation } from "react-query";
 import { AxiosError, AxiosResponse } from "axios";
 
 import { useAppSelector, RootState } from "../../../../../redux/store";
 
 import { GridRenderCellParams } from "@mui/x-data-grid";
-import { Box, Tooltip, IconButton, CircularProgress } from "@mui/material";
+import { Box, Tooltip, IconButton } from "@mui/material";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 import ListAltIcon from "@mui/icons-material/ListAlt";
@@ -32,7 +33,7 @@ type Props = {
 
 const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
   const { id, roles } = useAppSelector((state: RootState) => state.user.user);
-  const { name, userId, approved } = params.row;
+  const { name, userId, uploaded } = params.row;
 
   // * If the user is not admin nor owner of the time off action buttons are not displayed
   if (!roles.includes("Admin") && id !== userId) {
@@ -40,8 +41,6 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
   }
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isApprovedModalOpen, setIsApprovedModalOpen] = useState(false);
-  const [isApproved, setIsApproved] = useState(approved);
 
   const client = useApiClient();
   // * Extracting delete handler from react query
@@ -55,41 +54,31 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["pendingTimeOffs"]);
         setIsDeleteModalOpen(false);
-      },
-    }
-  );
-  // * Extracting approve handler from react query
-  const {
-    mutate: approveTimeOffFn,
-    isLoading: isApproveLoading,
-    error: approveError,
-  } = useMutation<AxiosResponse<TimeOff>, AxiosError, string>(
-    async (id: string) => {
-      const res = await client.patch(api.timeOffs.updateTimeOff(id), {
-        approved: true,
-      });
-
-      return res;
-    },
-    {
-      onSuccess: () => {
-        setIsApproved(true);
         queryClient.invalidateQueries(["timeoffs"]);
-        queryClient.invalidateQueries(["pendingTimeOffs"]);
       },
     }
   );
 
-  const approveHandler = () => {
-    approveTimeOffFn(rowId);
-    setIsApprovedModalOpen(false);
-  };
-  const deleteHandler = () => {
-    deleteTimeOffFn(rowId);
+  const handleEditModalOpen = useCallback(() => {
+    setIsEditModalOpen(true);
+  }, []);
+
+  const handleEditModalCLose = useCallback(() => {
+    setIsEditModalOpen(false);
+  }, []);
+
+  const handleDeleteModalOpen = useCallback(() => {
+    setIsDeleteModalOpen(true);
+  }, []);
+
+  const handleDeleteModalClose = useCallback(() => {
     setIsDeleteModalOpen(false);
-  };
+  }, []);
+
+  const deleteHandler = useCallback(() => {
+    deleteTimeOffFn(rowId);
+  }, []);
 
   if (rowId !== params.id) {
     return null;
@@ -101,66 +90,41 @@ const TimeOffsApprovedGridActions: React.FC<Props> = ({ params, rowId }) => {
         leftPic={leftDraw}
         isOpen={isEditModalOpen}
         rightPic={rightDraw}
-        closeModal={() => {
-          setIsEditModalOpen(false);
-        }}
+        closeModal={handleEditModalCLose}
       >
         <TimeOffsCalendar info={params.row} />
       </CommonFormModal>
       <Box sx={timeOffsApprovedGridStyles.actions}>
         <ConfirmationDialog
-          isOpen={isApprovedModalOpen}
-          handleCancel={() => {
-            setIsApprovedModalOpen(false);
-          }}
-          handleConfirm={approveHandler}
-          content={`Approve ${name}'s time off request ?`}
-          error={approveError ? approveError.message : ""}
-          confirmButtonLabel={"Approve"}
-        />
-        <ConfirmationDialog
           isOpen={isDeleteModalOpen}
-          handleCancel={() => {
-            setIsDeleteModalOpen(false);
-          }}
+          isLoading={isDeleteLoading}
+          handleCancel={handleDeleteModalClose}
           handleConfirm={deleteHandler}
           content={`Are you sure your want to delete ${name}'s time off`}
           error={deleteError ? "Something went wrong" : ""}
           confirmButtonLabel={"Delete"}
         />
         <Tooltip title="Download" placement="bottom">
-          <IconButton size="small">
-            <DownloadIcon fontSize="small" />
-          </IconButton>
+          <Link to="/team/timeoffs/doc" state={params.row}>
+            <IconButton size="small">
+              <DownloadIcon fontSize="small" />
+            </IconButton>
+          </Link>
         </Tooltip>
-        <Tooltip title="Document" placement="bottom">
-          <IconButton size="small">
-            <ListAltIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
+        {uploaded && (
+          <Tooltip title="Uploaded" placement="bottom">
+            <ListAltIcon sx={{ mx: "5px" }} fontSize="small" color="primary" />
+          </Tooltip>
+        )}
         <Tooltip title="Edit" placement="bottom">
-          <IconButton
-            size="small"
-            onClick={() => {
-              setIsEditModalOpen(true);
-            }}
-          >
+          <IconButton size="small" onClick={handleEditModalOpen}>
             <ModeEditIcon fontSize="small" />
           </IconButton>
         </Tooltip>
 
         <Tooltip title="Delete" placement="bottom">
-          <IconButton
-            size="small"
-            onClick={() => {
-              setIsDeleteModalOpen(true);
-            }}
-          >
-            {isDeleteLoading ? (
-              <CircularProgress size={20} />
-            ) : (
-              <DeleteSweepIcon fontSize="small" />
-            )}
+          <IconButton size="small" onClick={handleDeleteModalOpen}>
+            <DeleteSweepIcon fontSize="small" />
           </IconButton>
         </Tooltip>
       </Box>

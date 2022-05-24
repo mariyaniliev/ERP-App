@@ -20,6 +20,7 @@ export interface DropdownProps {
   boxShadow?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   noDefault?: boolean;
+  isDisabled?: boolean;
 }
 
 export interface ButtonProps {

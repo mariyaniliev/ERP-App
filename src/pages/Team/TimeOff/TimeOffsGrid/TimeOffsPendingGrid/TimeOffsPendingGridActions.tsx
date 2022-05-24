@@ -5,7 +5,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { useAppSelector, RootState } from "../../../../../redux/store";
 
 import { GridRenderCellParams } from "@mui/x-data-grid";
-import { Box, Tooltip, IconButton, CircularProgress } from "@mui/material";
+import { Box, Tooltip, IconButton } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
 
@@ -25,15 +25,14 @@ type Props = {
 };
 
 const TimeOffsPendingGridActions: React.FC<Props> = ({ params, rowId }) => {
-  const { id, roles } = useAppSelector((state: RootState) => state.user.user);
-  const { name, userId, approved } = params.row;
+  const { roles } = useAppSelector((state: RootState) => state.user.user);
+  const { name } = params.row;
   // * If the user is not admin nor owner of the time off action buttons are not displayed
-  if (!roles.includes("Admin") && id !== userId) {
+  if (!roles.includes("Admin")) {
     return null;
   }
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [approveModalOpen, setApproveModalOpen] = useState(false);
-  const [isApproved, setIsApproved] = useState(approved);
 
   const client = useApiClient();
   // * Extracting delete handler from react query
@@ -67,28 +66,18 @@ const TimeOffsPendingGridActions: React.FC<Props> = ({ params, rowId }) => {
     },
     {
       onSuccess: () => {
-        setIsApproved(true);
         queryClient.invalidateQueries(["timeoffs"]);
         queryClient.invalidateQueries(["pendingTimeOffs"]);
+        setApproveModalOpen(false);
       },
     }
   );
 
-  const handleApproveModalOpen = (isOpen: boolean) => {
-    setApproveModalOpen(isOpen);
-  };
-
-  const handleDeleteModalOpen = (isOpen: boolean) => {
-    setDeleteModalOpen(isOpen);
-  };
-
   const approveHandler = () => {
     approveTimeOffFn(rowId);
-    setApproveModalOpen(false);
   };
   const deleteHandler = () => {
     deleteTimeOffFn(rowId);
-    setDeleteModalOpen(false);
   };
 
   if (rowId !== params.id) {
@@ -100,8 +89,9 @@ const TimeOffsPendingGridActions: React.FC<Props> = ({ params, rowId }) => {
       <Box sx={timeOffsPendingGridStyles.actions}>
         <ConfirmationDialog
           isOpen={approveModalOpen}
+          isLoading={isApproveLoading}
           handleCancel={() => {
-            handleApproveModalOpen(false);
+            setApproveModalOpen(false);
           }}
           handleConfirm={approveHandler}
           content={`Approve ${name}'s time off request ?`}
@@ -110,8 +100,9 @@ const TimeOffsPendingGridActions: React.FC<Props> = ({ params, rowId }) => {
         />
         <ConfirmationDialog
           isOpen={deleteModalOpen}
+          isLoading={isDeleteLoading}
           handleCancel={() => {
-            handleDeleteModalOpen(false);
+            setDeleteModalOpen(false);
           }}
           handleConfirm={deleteHandler}
           content={`Decline ${name}'s time off request ?`}
@@ -123,21 +114,17 @@ const TimeOffsPendingGridActions: React.FC<Props> = ({ params, rowId }) => {
           <IconButton
             size="small"
             onClick={() => {
-              handleApproveModalOpen(true);
+              setApproveModalOpen(true);
             }}
           >
-            {isApproveLoading ? (
-              <CircularProgress color="primary" size={20} />
-            ) : (
-              <CheckIcon fontSize="small" />
-            )}
+            <CheckIcon fontSize="small" />
           </IconButton>
         </Tooltip>
         <Tooltip title="Decline" placement="bottom">
           <IconButton
             size="small"
             onClick={() => {
-              handleDeleteModalOpen(true);
+              setDeleteModalOpen(true);
             }}
           >
             <ClearIcon fontSize="small" />

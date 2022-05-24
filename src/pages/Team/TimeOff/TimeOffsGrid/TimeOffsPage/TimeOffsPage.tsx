@@ -1,4 +1,10 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, {
+  Suspense,
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+} from "react";
 import { useQuery } from "react-query";
 
 import { useAppSelector, RootState } from "../../../../../redux/store";
@@ -35,9 +41,11 @@ const TimeOffsPage = () => {
     (state: RootState) => state.search
   );
 
-  const { period, type, searchedName, page, limit } = searchedQueries;
-
   const client = useApiClient();
+
+  const controller = new AbortController();
+
+  const { period, type, searchedName, page, limit } = searchedQueries;
 
   const fetchTimeOffs = async (actualPage: number, status: string) => {
     const url = urlCreator(
@@ -48,7 +56,7 @@ const TimeOffsPage = () => {
       type,
       searchedName
     );
-    const res = await client.get(url);
+    const res = await client.get(url, { signal: controller.signal });
     if (status === "approved") {
       setQueries({
         ...searchedQueries,
@@ -80,19 +88,29 @@ const TimeOffsPage = () => {
   useEffect(() => {
     return () => {
       setQueries(searchedQueries);
+      controller.abort();
     };
   }, []);
 
   const handleOpen = () => {
     setIsModalOpen(true);
   };
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsModalOpen(false);
-  };
+  }, []);
 
   const isPendingSectionEmpty = pendingTimeOffs?.data.data.length === 0;
 
   const displayGrid = isPendingSectionEmpty ? "none" : "";
+
+  const transformedPendingData = useMemo(
+    () => transformTimeOffData(pendingTimeOffs?.data.data),
+    [pendingTimeOffs]
+  );
+  const transformedApprovedData = useMemo(
+    () => transformTimeOffData(approvedTimeOffs?.data.data),
+    [approvedTimeOffs]
+  );
 
   return (
     <Box sx={styles.container}>
@@ -102,7 +120,7 @@ const TimeOffsPage = () => {
         isOpen={isModalOpen}
         closeModal={handleClose}
       >
-        <TimeOffsCalendar />
+        <TimeOffsCalendar handleClose={handleClose} />
       </CommonFormModal>
 
       <Box sx={styles.innerContainer}>
@@ -125,14 +143,14 @@ const TimeOffsPage = () => {
             <TimeOffsGrid
               gridType={"pending"}
               displayGrid={displayGrid}
-              timeoffs={transformTimeOffData(pendingTimeOffs?.data.data)}
+              timeoffs={transformedPendingData}
               isLoading={isPendingTimeOffsFetching}
               styles={timeOffsPendingGridStyles}
             />
 
             <TimeOffsGrid
               gridType={"approved"}
-              timeoffs={transformTimeOffData(approvedTimeOffs?.data.data)}
+              timeoffs={transformedApprovedData}
               isLoading={isApprovedTimeOffsFetching}
               styles={timeOffsApprovedGridStyles}
               isPendingSectionEmpty={isPendingSectionEmpty}

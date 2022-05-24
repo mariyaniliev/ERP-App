@@ -16,4 +16,4 @@ const SearchInput = (props: InputProps) => {
     </FormControl>
   );
 };
-export default SearchInput;
+export default React.memo(SearchInput);

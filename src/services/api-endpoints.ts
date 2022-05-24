@@ -39,6 +39,7 @@ export default {
     getTimeOff: (id: string) => `/timeoffs/${id}`,
     updateTimeOff: (id: string) => `/timeoffs/${id}`,
     deleteTimeOff: (id: string) => `/timeoffs/${id}`,
+    calculateDays: "/timeoffs/calculate",
   },
   celebrations: {
     postCelebration: (userId: string) => `/celebrations/${userId}`,
