@@ -27,5 +27,14 @@ describe("Login page", () => {
         .invoke("attr", "class")
         .should("contain", "Mui-checked");
     });
+    it("should display error if we submit empty fields", () => {
+      cy.get("form")
+        .find("button")
+        .click()
+        .get("form")
+        .find("p")
+        .eq(2)
+        .should("contain", "Invalid Email!");
+    });
   });
 });
