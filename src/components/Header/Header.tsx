@@ -10,7 +10,7 @@ import { styles } from "./header-styles";
 
 const HeaderComponent = () => {
   const open = useAppSelector((state: RootState) => state.drawerHeader.open);
-  const { name } = useAppSelector((state: RootState) => state.user.user);
+  const name = useAppSelector((state: RootState) => state.user.user?.name);
   const { toggle } = toggleActions();
   const menuToggleButton = open ? <ChevronLeftIcon /> : <ChevronRightIcon />;
 

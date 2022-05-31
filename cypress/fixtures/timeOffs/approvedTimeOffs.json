@@ -1,0 +1,75 @@
+{
+  "data": [
+    {
+      "id": "99e9303b-e899-4efb-940a-69df91a19231",
+      "userId": "85ac7c0c-4689-44e8-b773-f4d053917862",
+      "startDate": "2022-05-29T21:00:00.000Z",
+      "endDate": "2022-05-31T21:00:00.000Z",
+      "createdAt": "2022-05-28T13:47:58.831Z",
+      "updatedAt": "2022-05-28T13:48:07.515Z",
+      "approved": true,
+      "uploaded": false,
+      "sourceUrl": null,
+      "fileName": null,
+      "type": "unpaid",
+      "user": { "name": "Mock Data1", "position": "Developer" },
+      "approvedTimeOff": {
+        "id": "7edbaf1b-c5dc-4e3c-856c-7697648500d1",
+        "userId": "85ac7c0c-4689-44e8-b773-f4d053917862",
+        "dates": ["5/30/2022", "5/31/2022"],
+        "holderId": "4eee39d1-a7d5-473d-8c7c-d3b992593294",
+        "timeOffSourceId": "99e9303b-e899-4efb-940a-69df91a19231"
+      }
+    },
+    {
+      "id": "44e687b4-ae64-4177-996d-fe2407cced69",
+      "userId": "85ac7c0c-4689-44e8-b773-f4d053917862",
+      "startDate": "2022-07-15T21:00:00.000Z",
+      "endDate": "2022-07-22T21:00:00.000Z",
+      "createdAt": "2022-05-24T09:16:56.648Z",
+      "updatedAt": "2022-05-24T09:17:04.055Z",
+      "approved": true,
+      "uploaded": false,
+      "sourceUrl": null,
+      "fileName": null,
+      "type": "sick",
+      "user": { "name": "Mock Data2", "position": "Developer" },
+      "approvedTimeOff": {
+        "id": "1bd0030c-71f4-4110-b87d-5bbba41c683a",
+        "userId": "85ac7c0c-4689-44e8-b773-f4d053917862",
+        "dates": [
+          "7/15/2022",
+          "7/18/2022",
+          "7/19/2022",
+          "7/20/2022",
+          "7/21/2022",
+          "7/22/2022"
+        ],
+        "holderId": "4eee39d1-a7d5-473d-8c7c-d3b992593294",
+        "timeOffSourceId": "44e687b4-ae64-4177-996d-fe2407cced69"
+      }
+    },
+    {
+      "id": "2838e77f-2306-4a61-a527-1f4b4175221b",
+      "userId": "85ac7c0c-4689-44e8-b773-f4d053917862",
+      "startDate": "2022-05-11T21:00:00.000Z",
+      "endDate": "2022-05-13T21:00:00.000Z",
+      "createdAt": "2022-05-03T13:48:15.140Z",
+      "updatedAt": "2022-05-03T13:48:33.691Z",
+      "approved": true,
+      "uploaded": true,
+      "sourceUrl": "https://firebasestorage.googleapis.com/v0/b/time-off-storage.appspot.com/o/documents%2Faff2ccf0-356a-4f24-ad1e-fe7e82b87f00-Profile.docx%20(3).pdf?alt=media&token=e071b14a-2c48-4ddd-80e0-997663d53c8f",
+      "fileName": "documents/aff2ccf0-356a-4f24-ad1e-fe7e82b87f00-Profile.docx (3).pdf",
+      "type": "paid",
+      "user": { "name": "Mock Data3", "position": "Developer" },
+      "approvedTimeOff": {
+        "id": "cc4b134e-2448-4d88-92b7-f588903a42af",
+        "userId": "85ac7c0c-4689-44e8-b773-f4d053917862",
+        "dates": ["5/11/2022", "5/12/2022", "5/13/2022"],
+        "holderId": "4eee39d1-a7d5-473d-8c7c-d3b992593294",
+        "timeOffSourceId": "2838e77f-2306-4a61-a527-1f4b4175221b"
+      }
+    }
+  ],
+  "resultsCount": 26
+}

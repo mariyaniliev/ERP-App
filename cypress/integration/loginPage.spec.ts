@@ -3,8 +3,9 @@
 describe("Login page", () => {
   describe("login section", () => {
     beforeEach(() => {
-      cy.visit("/login");
+      cy.visitLoginPage();
     });
+
     it("should check if texts are correct", () => {
       cy.contains("Sign in to our platform")
         .parent()
@@ -35,6 +36,12 @@ describe("Login page", () => {
         .find("p")
         .eq(2)
         .should("contain", "Invalid Email!");
+    });
+
+    it("should sign in and go to time offs page page", () => {
+      cy.loginToApplication();
+      cy.contains("Time Offs").should("be.visible");
+      cy.url().should("contain", "team");
     });
   });
 });
